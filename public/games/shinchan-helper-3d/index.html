@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHIN-CHAN: THE GREAT KASUKABE RUN! 3D</title>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700;900&family=Fredoka:wght@400;600;700&family=Inter:wght@400;600;700;800;900&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="../common-voice.js"></script>
+  <style>
+    :root {
+      --shin-red: #e63946;
+      --shin-yellow: #ffbe0b;
+      --shin-blue: #0077b6;
+      --shin-green: #2ec4b6;
+      --neon-cyan: #00f0ff;
+      --neon-gold: #ffd166;
+      --neon-amber: #ff9f1c;
+      --neon-red: #ff3366;
+      --panel-dark: rgba(13, 17, 27, 0.88);
+      --glass-border: rgba(255, 255, 255, 0.15);
+      --font-telemetry: 'Chakra Petch', sans-serif;
+      --font-display: 'Orbitron', sans-serif;
+      --font-fun: 'Fredoka', cursive;
+      --font-body: 'Inter', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    body, html { width: 100%; height: 100%; overflow: hidden; background: #080b12; font-family: var(--font-body); color: #fff; }
+    #game-container { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
+    #three-canvas { width: 100%; height: 100%; display: block; }
+
+    /* REAL-WORLD VIGNETTE & SCANLINE OVERLAY */
+    .screen-vignette {
+      position: absolute; inset: 0; pointer-events: none; z-index: 50;
+      background: radial-gradient(circle at center, transparent 60%, rgba(0, 0, 0, 0.65) 100%);
+      box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8);
+    }
+    .speed-streaks {
+      position: absolute; inset: 0; pointer-events: none; z-index: 51; opacity: 0;
+      background: repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255, 255, 255, 0.04) 40px, rgba(255, 255, 255, 0.04) 42px);
+      transition: opacity 0.3s ease;
+    }
+    .speed-streaks.active { opacity: 1; }
+
+    /* ─── REAL-WORLD MAIN MENU ─── */
+    #main-menu {
+      position: absolute; inset: 0; z-index: 600;
+      background: radial-gradient(circle at top, rgba(28, 40, 65, 0.95), rgba(7, 10, 20, 0.98)),
+                  linear-gradient(180deg, #101827 0%, #060913 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      transition: opacity 0.4s ease, transform 0.4s ease; overflow-y: auto; padding: 20px;
+    }
+    #main-menu.hidden { opacity: 0; pointer-events: none; transform: scale(1.05); }
+
+    .menu-card {
+      position: relative; z-index: 10; width: 100%; max-width: 640px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+      border: 1px solid var(--glass-border);
+      border-top: 2px solid rgba(255, 215, 0, 0.6);
+      border-radius: 24px; padding: 32px 28px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(20px); text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(90deg, rgba(230, 57, 70, 0.2), rgba(255, 190, 11, 0.2));
+      border: 1px solid rgba(255, 190, 11, 0.4);
+      padding: 6px 16px; border-radius: 999px;
+      font-family: var(--font-telemetry); font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--neon-gold);
+      margin-bottom: 12px;
+    }
+    .hero-title {
+      font-family: var(--font-display); font-size: clamp(1.8rem, 4.2vw, 2.6rem); font-weight: 900;
+      letter-spacing: -0.5px; line-height: 1.15; margin-bottom: 10px;
+      background: linear-gradient(135deg, #ffffff 0%, #ffd166 50%, #ff4b4b 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 10px rgba(255, 75, 75, 0.3));
+    }
+    .hero-subtitle {
+      font-size: 0.9rem; color: #94a3b8; line-height: 1.5; max-width: 520px; margin: 0 auto 20px auto;
+    }
+
+    /* REAL-WORLD ROSTER / HAZARD MARQUEE */
+    .hazard-showcase {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+      background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px; padding: 12px; margin-bottom: 24px;
+    }
+    .hazard-item {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      padding: 8px 4px; border-radius: 8px; background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05); transition: transform 0.2s;
+    }
+    .hazard-item:hover { transform: translateY(-2px); background: rgba(255, 255, 255, 0.06); }
+    .hazard-ico { font-size: 1.6rem; }
+    .hazard-name { font-family: var(--font-telemetry); font-size: 0.65rem; font-weight: 700; color: #e2e8f0; letter-spacing: 0.5px; }
+    .hazard-type { font-size: 0.58rem; color: #ff6b6b; font-weight: 700; text-transform: uppercase; }
+    .hazard-type.hurdle { color: #facc15; }
+
+    /* MENU BUTTONS */
+    .menu-actions { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 360px; margin: 0 auto; }
+    .btn-real {
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 15px 24px; border-radius: 14px;
+      font-family: var(--font-fun); font-size: 1.05rem; font-weight: 700;
+      letter-spacing: 0.5px; cursor: pointer; border: none; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-real:hover { transform: translateY(-2px); filter: brightness(1.1); }
+    .btn-real:active { transform: translateY(1px) scale(0.98); }
+    .btn-real-primary {
+      background: linear-gradient(135deg, #ffd166 0%, #ff8c00 100%);
+      color: #0b0f19; font-weight: 900;
+      box-shadow: 0 8px 30px rgba(255, 140, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+    .btn-real-secondary {
+      background: rgba(255, 255, 255, 0.08); color: #f8fafc;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(10px);
+    }
+    .btn-real-secondary:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); }
+    .btn-real-danger {
+      background: rgba(239, 68, 68, 0.12); color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.25);
+    }
+    .btn-real-danger:hover { background: rgba(239, 68, 68, 0.25); color: #fff; }
+
+    .control-deck {
+      margin-top: 18px; padding: 10px 16px; border-radius: 10px;
+      background: rgba(0, 0, 0, 0.35); border: 1px solid rgba(255, 255, 255, 0.06);
+      font-family: var(--font-telemetry); font-size: 0.72rem; color: #94a3b8;
+      display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap;
+    }
+    .key-badge {
+      background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 5px; padding: 2px 7px; color: #fff; font-weight: 700;
+    }
+
+    /* ─── REAL-WORLD AUTOMOTIVE / RUNNER TELEMETRY HUD ─── */
+    #game-hud {
+      position: absolute; inset: 0; pointer-events: none; z-index: 100;
+      display: none; flex-direction: column; justify-content: space-between; padding: 16px 20px;
+    }
+
+    /* TOP ROAD SIGN & HIGHWAY MARQUEE */
+    .hud-top-bar {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+    }
+
+    /* REAL JAPANESE HIGHWAY SIGNBOARD */
+    .road-signboard {
+      display: flex; align-items: center; gap: 12px;
+      background: linear-gradient(180deg, #106c3b 0%, #0a4626 100%);
+      border: 3px solid #f1f5f9; border-radius: 10px;
+      padding: 8px 14px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+      pointer-events: auto;
+    }
+    .sign-kanji {
+      font-family: 'Hiragino Kaku Gothic Pro', 'Meiryo', sans-serif;
+      font-weight: 900; font-size: 1.2rem; color: #fff; line-height: 1;
+    }
+    .sign-sub { font-size: 0.65rem; color: #bbf7d0; font-family: var(--font-telemetry); font-weight: 700; letter-spacing: 1px; }
+    .sign-dist {
+      background: #f1f5f9; color: #0a4626; border-radius: 6px;
+      padding: 3px 8px; font-family: var(--font-telemetry); font-weight: 900; font-size: 0.82rem;
+    }
+
+    /* TELEMETRY MAIN CLUSTER */
+    .telemetry-cluster {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--panel-dark); border: 1px solid var(--glass-border);
+      border-radius: 18px; padding: 8px 16px; backdrop-filter: blur(20px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      pointer-events: auto;
+    }
+    .telem-box { display: flex; flex-direction: column; align-items: flex-start; }
+    .telem-label {
+      font-family: var(--font-telemetry); font-size: 0.6rem; font-weight: 700;
+      color: #94a3b8; letter-spacing: 1px; text-transform: uppercase;
+    }
+    .telem-value {
+      font-family: var(--font-display); font-size: 1.25rem; font-weight: 900; color: #fff;
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.4); line-height: 1.1;
+    }
+    .telem-value.score { color: var(--neon-cyan); text-shadow: 0 0 14px rgba(0, 240, 255, 0.5); }
+    .telem-value.cookies { color: var(--neon-gold); text-shadow: 0 0 14px rgba(255, 209, 102, 0.5); }
+    .telem-divider { width: 1px; height: 32px; background: rgba(255, 255, 255, 0.12); }
+
+    /* REAL-WORLD MOM'S ANGER STEAM PRESSURE GAUGE */
+    .pressure-gauge {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--panel-dark); border: 1px solid var(--glass-border);
+      border-radius: 18px; padding: 8px 14px; backdrop-filter: blur(20px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); pointer-events: auto;
+    }
+    .gauge-dial-wrap {
+      width: 44px; height: 44px; position: relative; display: flex; align-items: center; justify-content: center;
+    }
+    .gauge-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .gauge-circle-bg { fill: none; stroke: rgba(255, 255, 255, 0.1); stroke-width: 4; }
+    .gauge-circle-fill {
+      fill: none; stroke: url(#angerGradient); stroke-width: 4;
+      stroke-dasharray: 100; stroke-dashoffset: 100;
+      transition: stroke-dashoffset 0.3s ease; stroke-linecap: round;
+    }
+    .gauge-icon { position: absolute; font-size: 1.2rem; }
+    .gauge-info { display: flex; flex-direction: column; }
+    .gauge-title { font-family: var(--font-telemetry); font-size: 0.6rem; font-weight: 700; color: #ff6b6b; letter-spacing: 0.8px; }
+    .gauge-status { font-family: var(--font-display); font-size: 0.85rem; font-weight: 900; color: #4ade80; }
+    .gauge-status.warning { color: #facc15; }
+    .gauge-status.danger { color: #ef4444; animation: blinkDanger 0.6s infinite alternate; }
+    @keyframes blinkDanger { from { opacity: 0.6; } to { opacity: 1; text-shadow: 0 0 10px #ef4444; } }
+
+    /* EXIT BUTTON */
+    .btn-exit-hud {
+      background: rgba(239, 68, 68, 0.18); border: 1px solid rgba(239, 68, 68, 0.35);
+      border-radius: 12px; color: #fca5a5; padding: 8px 14px;
+      font-family: var(--font-telemetry); font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 1px; cursor: pointer; pointer-events: auto; transition: all 0.2s;
+    }
+    .btn-exit-hud:hover { background: rgba(239, 68, 68, 0.4); color: #fff; transform: scale(1.03); }
+
+    /* ─── REAL-WORLD KASUKABE MINI-GPS RADAR & HAZARD SCANNER ─── */
+    .radar-deck {
+      position: absolute; top: 88px; right: 20px;
+      width: 140px; height: 140px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(6, 30, 24, 0.92) 0%, rgba(3, 14, 12, 0.98) 100%);
+      border: 2px solid #2ec4b6; box-shadow: 0 0 25px rgba(46, 196, 182, 0.3), inset 0 0 20px rgba(0, 255, 170, 0.15);
+      backdrop-filter: blur(12px); overflow: hidden; pointer-events: auto;
+    }
+    .radar-sweep {
+      position: absolute; inset: 0; border-radius: 50%;
+      background: conic-gradient(from 0deg, rgba(46, 196, 182, 0.35) 0deg, transparent 60deg, transparent 360deg);
+      animation: radarSpin 2.4s linear infinite; pointer-events: none;
+    }
+    @keyframes radarSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .radar-crosshair-h { position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(46, 196, 182, 0.25); }
+    .radar-crosshair-v { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: rgba(46, 196, 182, 0.25); }
+    .radar-player {
+      position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);
+      width: 10px; height: 10px; background: #ffd166; border: 2px solid #fff; border-radius: 50%;
+      box-shadow: 0 0 8px #ffd166; z-index: 5;
+    }
+    .radar-blip-container { position: absolute; inset: 0; pointer-events: none; }
+    .radar-title {
+      position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
+      font-family: var(--font-telemetry); font-size: 0.55rem; font-weight: 700;
+      color: #2ec4b6; letter-spacing: 1px; text-transform: uppercase;
+    }
+
+    /* REAL-WORLD SPEEDOMETER CLUSTER (BOTTOM LEFT) */
+    .speedo-cluster {
+      position: absolute; bottom: 20px; left: 20px;
+      display: flex; align-items: center; gap: 14px;
+      background: var(--panel-dark); border: 1px solid var(--glass-border);
+      border-radius: 20px; padding: 12px 18px; backdrop-filter: blur(20px);
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6); pointer-events: auto;
+    }
+    .speedo-dial { width: 68px; height: 68px; position: relative; display: flex; align-items: center; justify-content: center; }
+    .speedo-needle {
+      position: absolute; width: 2px; height: 28px; background: #ff3366;
+      bottom: 50%; left: calc(50% - 1px); transform-origin: bottom center;
+      transform: rotate(-120deg); transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 0 8px #ff3366;
+    }
+    .speedo-center { width: 8px; height: 8px; border-radius: 50%; background: #fff; z-index: 2; box-shadow: 0 0 6px #fff; }
+    .speedo-info { display: flex; flex-direction: column; align-items: flex-start; }
+    .speedo-num {
+      font-family: var(--font-display); font-size: 1.8rem; font-weight: 900; line-height: 1;
+      color: #fff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+    .speedo-unit { font-family: var(--font-telemetry); font-size: 0.65rem; color: #94a3b8; font-weight: 700; }
+    .speedo-gear {
+      font-family: var(--font-telemetry); font-size: 0.72rem; font-weight: 900;
+      color: var(--neon-cyan); background: rgba(0, 240, 255, 0.12); border: 1px solid rgba(0, 240, 255, 0.3);
+      padding: 2px 8px; border-radius: 6px; margin-top: 4px;
+    }
+
+    /* REAL HAZARD WARNING STROBE */
+    #hazard-flasher {
+      position: absolute; top: 90px; left: 50%; transform: translateX(-50%);
+      display: none; align-items: center; gap: 10px;
+      background: linear-gradient(90deg, rgba(239, 68, 68, 0.92), rgba(185, 28, 28, 0.95));
+      border: 2px solid #fecaca; border-radius: 12px; padding: 8px 24px;
+      font-family: var(--font-telemetry); font-size: 0.9rem; font-weight: 900;
+      color: #fff; letter-spacing: 1px; z-index: 250;
+      box-shadow: 0 0 35px rgba(239, 68, 68, 0.8);
+      animation: hazardStrobe 0.4s infinite alternate; pointer-events: none;
+    }
+    @keyframes hazardStrobe {
+      from { transform: translateX(-50%) scale(0.96); filter: brightness(1); }
+      to { transform: translateX(-50%) scale(1.02); filter: brightness(1.3); }
+    }
+
+    /* DIALOGUE BOX (RADIO COMMUNICATOR AESTHETIC) */
+    #dialogue-box {
+      position: absolute; bottom: 120px; left: 50%; transform: translateX(-50%);
+      background: rgba(10, 15, 28, 0.95); border: 2px solid var(--neon-gold);
+      border-radius: 18px; padding: 14px 20px; max-width: 580px; width: 92%;
+      z-index: 250; display: none; align-items: center; gap: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(255, 209, 102, 0.25);
+      backdrop-filter: blur(20px); pointer-events: auto;
+    }
+    .dlg-ava {
+      width: 56px; height: 56px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 2.1rem;
+      background: radial-gradient(circle, #ffd166 0%, #ff007f 100%);
+      border: 2px solid #fff; box-shadow: 0 0 15px rgba(255, 209, 102, 0.6);
+    }
+    .dlg-content { flex: 1; }
+    .dlg-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
+    .dlg-name { font-family: var(--font-telemetry); font-size: 0.85rem; font-weight: 900; color: var(--neon-gold); letter-spacing: 0.5px; }
+    .dlg-freq { font-family: var(--font-telemetry); font-size: 0.65rem; color: #64748b; }
+    .dlg-msg { font-size: 0.92rem; color: #f8fafc; line-height: 1.4; }
+
+    /* REAL-WORLD FAMILY TACTICAL ABILITIES BAR */
+    #ability-bar {
+      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+      display: none; align-items: center; gap: 12px; z-index: 150; pointer-events: auto;
+    }
+    .abtn {
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 18px; border-radius: 14px;
+      font-family: var(--font-telemetry); font-size: 0.85rem; font-weight: 800;
+      letter-spacing: 0.5px; cursor: pointer; border: 2px solid transparent;
+      color: #fff; backdrop-filter: blur(16px); transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+    .abtn:hover { transform: translateY(-3px) scale(1.03); filter: brightness(1.15); }
+    .abtn:active { transform: scale(0.95); }
+    .abtn.disabled { opacity: 0.38; cursor: not-allowed; filter: grayscale(0.8); }
+    .abtn-mom {
+      background: linear-gradient(135deg, rgba(255, 107, 157, 0.25), rgba(230, 57, 70, 0.35));
+      border-color: #ff6b9d; box-shadow: 0 0 16px rgba(255, 107, 157, 0.3);
+    }
+    .abtn-dad {
+      background: linear-gradient(135deg, rgba(0, 119, 182, 0.25), rgba(2, 62, 125, 0.35));
+      border-color: #0077b6; box-shadow: 0 0 16px rgba(0, 119, 182, 0.3);
+    }
+    .abtn-dash {
+      background: linear-gradient(135deg, rgba(255, 190, 11, 0.3), rgba(255, 140, 0, 0.4));
+      border-color: #ffbe0b; box-shadow: 0 0 20px rgba(255, 190, 11, 0.4);
+    }
+
+    /* CAMERA RIG SELECTION */
+    #camera-bar {
+      position: absolute; bottom: 20px; right: 20px;
+      display: none; align-items: center; gap: 6px;
+      background: var(--panel-dark); border: 1px solid var(--glass-border);
+      border-radius: 14px; padding: 6px 10px; backdrop-filter: blur(16px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); pointer-events: auto; z-index: 150;
+    }
+    .cbtn {
+      padding: 7px 11px; border-radius: 8px;
+      font-family: var(--font-telemetry); font-size: 0.68rem; font-weight: 700;
+      cursor: pointer; background: transparent; border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #94a3b8; transition: all 0.2s;
+    }
+    .cbtn:hover, .cbtn.active {
+      border-color: var(--neon-cyan); color: var(--neon-cyan);
+      background: rgba(0, 240, 255, 0.15); box-shadow: 0 0 10px rgba(0, 240, 255, 0.25);
+    }
+
+    /* ON-SCREEN TOUCH / MOBILE CONTROLS */
+    #touch-controls {
+      position: absolute; bottom: 120px; right: 20px;
+      display: none; flex-direction: column; gap: 8px; z-index: 150; align-items: center;
+    }
+    .touch-row { display: flex; gap: 8px; }
+    .tbtn {
+      width: 54px; height: 54px; border-radius: 14px;
+      background: var(--panel-dark); border: 2px solid rgba(255, 255, 255, 0.2);
+      color: #fff; font-size: 1.3rem; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: transform 0.1s; backdrop-filter: blur(10px);
+    }
+    .tbtn:active { transform: scale(0.88); background: rgba(255, 255, 255, 0.2); }
+
+    /* TOAST & POPUPS */
+    #prize-toast {
+      position: absolute; top: 140px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(135deg, rgba(255, 209, 102, 0.95), rgba(255, 140, 0, 0.95));
+      border: 2px solid #fff; border-radius: 16px; padding: 12px 28px;
+      color: #0b0f19; font-family: var(--font-fun); font-size: 1.1rem; font-weight: 700;
+      z-index: 300; display: none; align-items: center; gap: 12px;
+      box-shadow: 0 10px 40px rgba(255, 140, 0, 0.7); pointer-events: none;
+    }
+    #combo-display {
+      position: absolute; top: 88px; left: 20px;
+      font-family: var(--font-display); font-size: 1.6rem; font-weight: 900;
+      color: var(--neon-gold); z-index: 200; display: none;
+      text-shadow: 0 0 15px rgba(255, 209, 102, 0.8);
+    }
+    #level-indicator {
+      position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);
+      font-family: var(--font-display); font-size: 3.5rem; font-weight: 900;
+      color: #fff; z-index: 400; display: none; text-align: center;
+      text-shadow: 0 0 40px rgba(0, 240, 255, 0.9), 0 4px 10px rgba(0, 0, 0, 0.8);
+      pointer-events: none;
+    }
+
+    /* REAL-WORLD MODAL (ROSTER & PRIZE ROOM) */
+    #modal-overlay {
+      position: absolute; inset: 0; background: rgba(4, 7, 16, 0.88);
+      backdrop-filter: blur(20px); display: none; align-items: center; justify-content: center;
+      z-index: 700; padding: 20px;
+    }
+    .modal-card {
+      background: linear-gradient(180deg, #131c33 0%, #090e1f 100%);
+      border: 2px solid rgba(0, 240, 255, 0.5); border-radius: 24px;
+      padding: 32px 28px; text-align: center; max-width: 520px; width: 100%;
+      max-height: 90vh; overflow-y: auto;
+      box-shadow: 0 20px 70px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 240, 255, 0.25);
+      animation: modalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .modal-ico { font-size: 3.2rem; margin-bottom: 8px; }
+    .modal-title { font-family: var(--font-fun); font-size: 1.8rem; font-weight: 700; color: var(--neon-gold); margin-bottom: 12px; }
+    .modal-row { font-size: 0.92rem; color: #94a3b8; margin: 8px 0; }
+    .modal-row strong { color: #f8fafc; }
+    .modal-payout {
+      background: rgba(255, 209, 102, 0.08); border: 1px solid rgba(255, 209, 102, 0.35);
+      border-radius: 14px; padding: 16px; margin: 18px 0;
+    }
+    .modal-big { font-family: var(--font-display); font-size: 2.2rem; font-weight: 900; color: var(--neon-gold); }
+    .modal-actions { display: flex; gap: 12px; justify-content: center; margin-top: 22px; }
+    .roster-card {
+      background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px; padding: 12px 16px; margin: 10px 0; text-align: left;
+      display: flex; gap: 14px; align-items: center;
+    }
+    .roster-card:hover { border-color: rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.07); }
+    .roster-avatar { font-size: 2.2rem; flex-shrink: 0; }
+    .roster-details { flex: 1; }
+    .roster-head { font-family: var(--font-fun); font-size: 0.98rem; font-weight: 700; color: #fff; }
+    .roster-desc { font-size: 0.8rem; color: #94a3b8; line-height: 1.35; margin-top: 2px; }
+
+    /* SVG GRADIENT DEFINITIONS */
+    svg.defs-only { position: absolute; width: 0; height: 0; }
+  </style>
+</head>
+<body>
+<div id="game-container">
+  <canvas id="three-canvas"></canvas>
+  <div class="screen-vignette"></div>
+  <div class="speed-streaks" id="speed-streaks"></div>
+
+  <!-- SVG GRADIENTS FOR METERS -->
+  <svg class="defs-only">
+    <defs>
+      <linearGradient id="angerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#4ade80" />
+        <stop offset="50%" stop-color="#facc15" />
+        <stop offset="100%" stop-color="#ef4444" />
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <!-- ─── REAL-WORLD MAIN MENU ─── -->
+  <div id="main-menu">
+    <div class="menu-card">
+      <div class="hero-badge">⚡ KASUKABE CITY METROPOLITAN RUN 3D</div>
+      <h1 class="hero-title">SHIN-CHAN: THE GREAT<br>KASUKABE RUN! 🏃‍♂️💨</h1>
+      <p class="hero-subtitle">Sprint through authentic Kasukabe suburban streets! Evade Angry Misae, Kazama's cram school hurdles, Sensei's exam blitz, Principal Enchou, and fierce dogs while collecting Chocobi cookies for high-tier arcade prizes!</p>
+      
+      <!-- REAL-WORLD HAZARDS & VILLAINS ROSTER -->
+      <div class="hazard-showcase">
+        <div class="hazard-item">
+          <div class="hazard-ico">👩‍🦰🍳</div>
+          <span class="hazard-name">ANGRY MISAE</span>
+          <span class="hazard-type">VILLAIN</span>
+        </div>
+        <div class="hazard-item">
+          <div class="hazard-ico">🧒📚</div>
+          <span class="hazard-name">TORU KAZAMA</span>
+          <span class="hazard-type">VILLAIN</span>
+        </div>
+        <div class="hazard-item">
+          <div class="hazard-ico">👔🕶️</div>
+          <span class="hazard-name">ENCHOU SENSEI</span>
+          <span class="hazard-type">VILLAIN</span>
+        </div>
+        <div class="hazard-item">
+          <div class="hazard-ico">🐕💢</div>
+          <span class="hazard-name">SHIBA DOG</span>
+          <span class="hazard-type">VILLAIN</span>
+        </div>
+        <div class="hazard-item">
+          <div class="hazard-ico">🚧⚠️</div>
+          <span class="hazard-name">ROADWORKS</span>
+          <span class="hazard-type hurdle">HURDLE (JUMP)</span>
+        </div>
+        <div class="hazard-item">
+          <div class="hazard-ico">🏮🎋</div>
+          <span class="hazard-name">AWNING CABLE</span>
+          <span class="hazard-type hurdle">HURDLE (SLIDE)</span>
+        </div>
+        <div class="hazard-item">
+          <div class="hazard-ico">🗑️🛢️</div>
+          <span class="hazard-name">TRASH BARRICADE</span>
+          <span class="hazard-type hurdle">HURDLE (DODGE)</span>
+        </div>
+        <div class="hazard-item">
+          <div class="hazard-ico">🍜💥</div>
+          <span class="hazard-name">RAMEN OIL SLICK</span>
+          <span class="hazard-type hurdle">HAZARD (SLIP)</span>
+        </div>
+      </div>
+
+      <!-- MENU ACTIONS -->
+      <div class="menu-actions">
+        <button class="btn-real btn-real-primary" onclick="startGame()">🏃 START RUNNING NOW!</button>
+        <button class="btn-real btn-real-secondary" onclick="openModal('roster')">👨‍👩‍👦 FAMILY ROSTER & ABILITIES</button>
+        <button class="btn-real btn-real-secondary" onclick="openModal('prizes')">🏆 PRIZE VAULT & REWARDS</button>
+        <button class="btn-real btn-real-danger" onclick="window.location.href='../../index.html'">✕ EXIT TO ADVENTURE PARK</button>
+      </div>
+
+      <div class="control-deck">
+        <div><span class="key-badge">⬅️ ➡️</span> or <span class="key-badge">A / D</span> Change Lane</div>
+        <div><span class="key-badge">⬆️ / W</span> Jump Hurdle</div>
+        <div><span class="key-badge">⬇️ / S</span> Slide Under</div>
+        <div><span class="key-badge">M</span> Mom's Bike</div>
+        <div><span class="key-badge">D</span> Dad's Sock</div>
+        <div><span class="key-badge">SPACE</span> Butt-Dash ⚡</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── REAL-WORLD AUTOMOTIVE / RUNNER HUD ─── -->
+  <div id="game-hud">
+    <div class="hud-top-bar">
+      <!-- REAL-WORLD HIGHWAY / STREET SIGN -->
+      <div class="road-signboard">
+        <div style="font-size:1.6rem;">🛣️</div>
+        <div>
+          <div class="sign-kanji">春日部市 本町通り</div>
+          <div class="sign-sub">KASUKABE CENTRAL DIST.</div>
+        </div>
+        <div class="sign-dist" id="hud-distance">0.0 KM</div>
+      </div>
+
+      <!-- TELEMETRY CLUSTER -->
+      <div class="telemetry-cluster">
+        <div class="telem-box">
+          <span class="telem-label">SCORE</span>
+          <span class="telem-value score" id="hud-score">000000</span>
+        </div>
+        <div class="telem-divider"></div>
+        <div class="telem-box">
+          <span class="telem-label">CHOCOBI 🍪</span>
+          <span class="telem-value cookies" id="hud-chocobi">x0</span>
+        </div>
+        <div class="telem-divider"></div>
+        <div class="telem-box">
+          <span class="telem-label">ZONE LEVEL</span>
+          <span class="telem-value" id="hud-speed">LVL 1</span>
+        </div>
+      </div>
+
+      <!-- MOM'S ANGER GAUGE & EXIT -->
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="pressure-gauge">
+          <div class="gauge-dial-wrap">
+            <svg class="gauge-svg" viewBox="0 0 36 36">
+              <path class="gauge-circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+              <path class="gauge-circle-fill" id="anger-circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+            </svg>
+            <span class="gauge-icon" id="gauge-icon">😡</span>
+          </div>
+          <div class="gauge-info">
+            <span class="gauge-title">MOM'S ANGER</span>
+            <span class="gauge-status" id="hud-anger">0% (CALM)</span>
+          </div>
+        </div>
+        <button class="btn-exit-hud" id="top-play-again-btn" style="background:#10b981; border-color:#059669; color:#fff; font-weight:800; padding:8px 14px; box-shadow:0 0 14px rgba(16,185,129,0.6);" onclick="restartShinChanGame()">🔄 PLAY AGAIN</button>
+        <button class="btn-exit-hud" onclick="window.location.href='../../index.html'">✕ EXIT</button>
+      </div>
+    </div>
+
+    <!-- REAL-WORLD MINI-GPS RADAR SCANNER -->
+    <div class="radar-deck" id="radar-deck">
+      <div class="radar-title">GPS RADAR</div>
+      <div class="radar-crosshair-h"></div>
+      <div class="radar-crosshair-v"></div>
+      <div class="radar-sweep"></div>
+      <div class="radar-player"></div>
+      <div class="radar-blip-container" id="radar-blips"></div>
+    </div>
+
+    <!-- SPEEDOMETER CLUSTER -->
+    <div class="speedo-cluster">
+      <div class="speedo-dial">
+        <svg viewBox="0 0 80 80" style="width:100%;height:100%;">
+          <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="6"/>
+          <circle cx="40" cy="40" r="32" fill="none" stroke="#00f0ff" stroke-width="6" stroke-dasharray="150" stroke-dashoffset="60" stroke-linecap="round"/>
+        </svg>
+        <div class="speedo-needle" id="speedo-needle"></div>
+        <div class="speedo-center"></div>
+      </div>
+      <div class="speedo-info">
+        <span class="speedo-num" id="speedo-val">28</span>
+        <span class="speedo-unit">KM / H</span>
+        <span class="speedo-gear" id="speedo-gear">GEAR: D1</span>
+      </div>
+    </div>
+
+    <!-- HAZARD / VILLAIN ALERT STROBE -->
+    <div id="hazard-flasher">
+      <span style="font-size:1.3rem;">⚠️</span>
+      <span id="hazard-text">ALERT: MISAE INCOMING IN 30M!</span>
+    </div>
+
+    <!-- RADIO COMMUNICATOR DIALOGUE BOX -->
+    <div id="dialogue-box">
+      <div class="dlg-ava" id="dlg-ava">👦</div>
+      <div class="dlg-content">
+        <div class="dlg-header">
+          <div class="dlg-name" id="dlg-name">Shin-chan</div>
+          <div class="dlg-freq">CH 108.5 MHz · KASUKABE VHF</div>
+        </div>
+        <div class="dlg-msg" id="dlg-msg">Let's go! Time for Chocobi cookies!</div>
+      </div>
+    </div>
+
+    <!-- FAMILY & ACTION KAMEN ABILITY TACTICAL BAR (PC & MOBILE) -->
+    <div id="ability-bar" style="display:flex; flex-wrap:wrap; gap:8px;">
+      <button class="abtn abtn-dash" id="btn-action-beam" onclick="triggerActionKamenBeam()" style="background:linear-gradient(135deg, #10b981, #06b6d4); color:#fff; border:1px solid #10b981;" title="PC: K | Tap">
+        <span style="font-size:1.2rem;">⚡</span>
+        <span>[PC: K | TAP] ACTION KAMEN BEAM</span>
+      </button>
+      <button class="abtn abtn-dash" id="btn-buriburi" onclick="triggerBuriBuriZaimon()" style="background:linear-gradient(135deg, #f43f5e, #fb923c); color:#fff; border:1px solid #f43f5e;" title="PC: B | Tap">
+        <span style="font-size:1.2rem;">🐷</span>
+        <span>[PC: B | TAP] BURI BURI ZAIMON</span>
+      </button>
+      <button class="abtn abtn-mom" id="btn-mom" onclick="triggerCallMom()" title="PC: M | Tap">
+        <span style="font-size:1.2rem;">🚲</span>
+        <span>[PC: M | TAP] CALL MOM</span>
+      </button>
+      <button class="abtn abtn-dad" id="btn-dad" onclick="triggerCallDad()" title="PC: D | Tap">
+        <span style="font-size:1.2rem;">👞</span>
+        <span>[PC: D | TAP] CALL DAD</span>
+      </button>
+      <button class="abtn abtn-dash" id="btn-dash" onclick="triggerButtDash()" title="PC: Space | Tap">
+        <span style="font-size:1.2rem;">⚡</span>
+        <span>[PC: SPACE | TAP] BUTT-DASH</span>
+      </button>
+    </div>
+
+    <!-- CAMERA ANGLES -->
+    <div id="camera-bar">
+      <button class="cbtn active" onclick="setCamera('chase')" id="cam-chase">🎥 CHASE</button>
+      <button class="cbtn" onclick="setCamera('front')" id="cam-front">📸 FRONT</button>
+      <button class="cbtn" onclick="setCamera('top')" id="cam-top">🚁 TOP</button>
+      <button class="cbtn" onclick="setCamera('side')" id="cam-side">📐 SIDE</button>
+    </div>
+
+    <!-- MOBILE TOUCH CONTROLS -->
+    <div id="touch-controls">
+      <div class="touch-row"><button class="tbtn" onclick="doAction('jump')">⬆️</button></div>
+      <div class="touch-row">
+        <button class="tbtn" onclick="doAction('left')">⬅️</button>
+        <button class="tbtn" style="background:rgba(255,0,127,0.3)" onclick="doAction('slide')">🍑</button>
+        <button class="tbtn" onclick="doAction('right')">➡️</button>
+      </div>
+    </div>
+
+    <div id="combo-display"></div>
+    <div id="level-indicator"></div>
+    <div id="prize-toast"><span style="font-size:1.5rem;">🏆</span><span id="prize-text">Prize Unlocked!</span></div>
+  </div>
+
+  <!-- MODAL (ROSTER, PRIZES, GAME OVER) -->
+  <div id="modal-overlay" onclick="if(event.target===this)closeModal()">
+    <div class="modal-card" id="modal-content"></div>
+  </div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>

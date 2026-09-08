@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SUPERMAN: PROTECTOR OF METROPOLIS | 30 Stages</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Chakra+Petch:wght@500;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="../../js/shared-3d-engine.js"></script>
+  <script src="../common-voice.js"></script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;user-select:none}
+    body,html{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Chakra Petch',sans-serif}
+    #game-container{width:100vw;height:100vh;position:relative;overflow:hidden}
+    #three-canvas{width:100%;height:100%;display:block}
+    #main-menu{position:absolute;inset:0;z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 30%,#001a4d 0%,#000820 60%,#000 100%)}
+    .menu-glow-title{font-family:'Orbitron',sans-serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:900;color:#fff;text-shadow:0 0 40px #ffd60a,0 0 80px #ffd60a;text-align:center;letter-spacing:4px;margin-bottom:8px}
+    .menu-subtitle{font-size:clamp(0.75rem,1.5vw,1rem);color:#94a3b8;margin-bottom:32px;text-align:center;max-width:560px;line-height:1.6}
+    .menu-hero-icon{font-size:clamp(4rem,8vw,6rem);margin-bottom:16px;filter:drop-shadow(0 0 20px #ffd60a)}
+    .menu-btns{display:flex;flex-direction:column;gap:12px;width:100%;max-width:360px;align-items:center}
+    .btn-start{width:100%;padding:18px 32px;border-radius:16px;border:none;cursor:pointer;background:linear-gradient(135deg,#1d4ed8,#1e3a8a);color:#fff;font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:2px;box-shadow:0 0 30px rgba(29,78,216,0.6);transition:all .2s}
+    .btn-start:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(255,214,10,0.8)}
+    .btn-sec{width:100%;padding:12px 24px;border-radius:12px;border:1px solid rgba(255,255,255,0.2);cursor:pointer;background:rgba(255,255,255,0.05);backdrop-filter:blur(8px);color:#94a3b8;font-family:'Chakra Petch',sans-serif;font-size:0.9rem;font-weight:600;transition:all .2s}
+    .btn-sec:hover{background:rgba(255,255,255,0.12);color:#fff}
+    .menu-controls{margin-top:24px;padding:16px 24px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);font-size:0.78rem;color:#64748b;line-height:2;text-align:center;max-width:540px}
+    .menu-controls strong{color:#ffd60a}
+    #hud-strip{position:absolute;top:0;left:0;right:0;height:54px;z-index:100;display:none;align-items:center;justify-content:space-between;padding:0 16px;gap:6px;background:linear-gradient(180deg,rgba(0,0,0,0.9) 0%,transparent 100%)}
+    .hud-pill{display:flex;flex-direction:column;align-items:center;padding:2px 10px;background:rgba(0,0,0,0.55);border-radius:8px;border:1px solid rgba(255,255,255,0.08)}
+    .hud-pill-label{font-size:0.5rem;color:#475569;letter-spacing:1px;text-transform:uppercase}
+    .hud-pill-value{font-size:0.78rem;font-weight:700;color:#fff;font-family:'Orbitron',sans-serif}
+    .gold{color:#ffd60a}.cyan{color:#38bdf8}.green{color:#10b981}.red{color:#f43f5e}
+    #stage-timer{font-family:'Orbitron',sans-serif;font-size:2.2rem;font-weight:900;color:#fff;text-shadow:0 0 20px rgba(255,255,255,0.5);letter-spacing:4px;text-align:center;min-width:80px}
+    #stage-timer.urgent{color:#f43f5e;text-shadow:0 0 30px rgba(244,63,94,0.9);animation:pulse 0.5s infinite}
+    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+    #bottom-hud{position:absolute;bottom:0;left:0;right:0;z-index:100;display:none;flex-direction:column;align-items:center;padding:0 0 10px;background:linear-gradient(0deg,rgba(0,0,0,0.88) 0%,transparent 100%);pointer-events:none}
+    #ability-bar{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:5px;pointer-events:all}
+    .abl-btn{padding:6px 11px;border-radius:10px;border:1px solid rgba(255,255,255,0.18);background:rgba(0,0,0,0.72);backdrop-filter:blur(8px);color:#fff;font-family:'Chakra Petch',sans-serif;font-size:0.68rem;font-weight:700;cursor:pointer;transition:all .15s;white-space:nowrap}
+    .abl-btn:hover,.abl-btn:active{background:rgba(255,255,255,0.15);transform:scale(1.05)}
+    .abl-btn.r{border-color:#f43f5e;color:#f43f5e}.abl-btn.b{border-color:#38bdf8;color:#38bdf8}.abl-btn.g{border-color:#10b981;color:#10b981}.abl-btn.y{border-color:#ffd60a;color:#ffd60a}.abl-btn.p{border-color:#a855f7;color:#c084fc}
+    #mobile-pad{position:absolute;bottom:80px;left:14px;z-index:110;display:flex;flex-direction:column;align-items:center;gap:4px}
+    #action-pad{position:absolute;bottom:80px;right:14px;z-index:110;display:grid;grid-template-columns:1fr 1fr;gap:5px}
+    .dpad-btn{width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,214,10,0.4);background:rgba(0,0,0,0.72);backdrop-filter:blur(6px);font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;color:#fff}
+    .dpad-btn:active{background:rgba(255,255,255,0.2);transform:scale(0.92)}
+    .dpad-row{display:flex;gap:4px;align-items:center}
+    .act-btn{width:50px;height:50px;border-radius:12px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.72);backdrop-filter:blur(6px);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px;transition:all .15s}
+    .act-btn span{font-size:0.42rem;color:#94a3b8;font-family:'Chakra Petch',sans-serif}
+    .act-btn:active{transform:scale(0.9)}
+    #boss-bar{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);width:260px;max-width:48%;z-index:110;display:none;background:rgba(0,0,0,0.75);border:1px solid rgba(255,214,10,0.45);border-radius:8px;padding:6px 10px}
+    #boss-name{font-size:0.62rem;font-family:'Orbitron',sans-serif;color:#ffd60a;margin-bottom:4px;text-align:center}
+    #boss-hp-track{width:100%;height:6px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden}
+    #boss-hp-fill{height:100%;width:100%;background:linear-gradient(90deg,#f43f5e,#fbbf24);border-radius:3px;transition:width .3s}
+    #stage-banner{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:200;display:none;background:linear-gradient(135deg,rgba(0,8,32,0.97),rgba(0,20,80,0.97));border:2px solid #ffd60a;border-radius:20px;padding:28px 48px;text-align:center;box-shadow:0 0 60px rgba(255,214,10,0.4),0 20px 60px rgba(0,0,0,0.8);backdrop-filter:blur(20px)}
+    #stage-banner-num{font-family:'Orbitron',sans-serif;font-size:0.8rem;color:#ffd60a;letter-spacing:4px;margin-bottom:4px}
+    #stage-banner-title{font-family:'Orbitron',sans-serif;font-size:1.6rem;color:#fff;font-weight:900;margin-bottom:4px}
+    #stage-banner-villain{font-size:0.9rem;color:#38bdf8;margin-bottom:10px}
+    #stage-banner-tip{font-size:0.7rem;color:#64748b}
+    #result-modal{position:absolute;inset:0;z-index:900;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.88);backdrop-filter:blur(20px)}
+    .result-card{background:linear-gradient(160deg,#000820,#001a4d);border-radius:28px;padding:36px 44px;max-width:460px;width:90%;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,0.9),0 0 60px rgba(255,214,10,0.2)}
+    .result-icon{font-size:4rem;margin-bottom:12px}
+    .result-title{font-family:'Orbitron',sans-serif;font-size:1.7rem;color:#fff;font-weight:900;margin-bottom:8px}
+    .result-sub{font-size:0.9rem;color:#64748b;margin-bottom:28px;line-height:1.6}
+    .result-btns{display:flex;flex-direction:column;gap:10px}
+    .btn-win{padding:15px;border-radius:14px;border:none;cursor:pointer;font-family:'Orbitron',sans-serif;font-size:0.95rem;font-weight:800;letter-spacing:1px;transition:all .2s}
+    .btn-win.g{background:linear-gradient(135deg,#10b981,#059669);color:#fff}
+    .btn-win.b{background:linear-gradient(135deg,#1d4ed8,#1e3a8a);color:#fff}
+    .btn-win.ghost{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#94a3b8}
+    .btn-win:hover{transform:translateY(-2px)}
+    #dialogue{position:absolute;bottom:155px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.82);backdrop-filter:blur(12px);border:1px solid rgba(255,214,10,0.3);border-radius:14px;padding:10px 16px;max-width:420px;width:90%;z-index:120;display:none;align-items:center;gap:10px}
+    #dlg-avatar{font-size:1.8rem}
+    #dlg-name{font-size:0.62rem;color:#ffd60a;font-family:'Orbitron',sans-serif;margin-bottom:2px}
+    #dlg-text{font-size:0.78rem;color:#e2e8f0;line-height:1.5}
+  </style>
+</head>
+<body>
+<div id="game-container">
+  <canvas id="three-canvas"></canvas>
+
+  <div id="main-menu">
+    <div class="menu-hero-icon">?????</div>
+    <div class="menu-glow-title">SUPERMAN<br>PROTECTOR OF METROPOLIS</div>
+    <p class="menu-subtitle">30 Stages · Supersonic Flight · Heat Vision · Freeze Breath<br>Help Police · Fight All 27 Villains · Darkseid Grand Finale</p>
+    <div class="menu-btns">
+      <button class="btn-start" onclick="startGame()">????? PATROL METROPOLIS AIRSPACE</button>
+      <button class="btn-sec" onclick="window.speakCartoonLine&&window.speakCartoonLine('superman')">??? Superman Voice</button>
+      <button class="btn-sec" onclick="exitToHub()">? Exit to Adventure Park</button>
+    </div>
+    <div class="menu-controls">
+      <strong>PC Controls:</strong> W/S = Pitch &nbsp;|&nbsp; A/D = Bank &nbsp;|&nbsp; Space = Mach Boost &nbsp;|&nbsp; F/Click = Heat Vision &nbsp;|&nbsp; R = Freeze Breath &nbsp;|&nbsp; E = Super Punch &nbsp;|&nbsp; Q = Shield &nbsp;|&nbsp; S/Down = Dive to Street<br>
+      <strong>Mobile:</strong> D-Pad (left) + Power buttons (right)
+    </div>
+  </div>
+
+  <div id="stage-banner">
+    <div id="stage-banner-num">STAGE 1 / 30</div>
+    <div id="stage-banner-title">LEXCORP INVASION</div>
+    <div id="stage-banner-villain">?? Boss: Lex Luthor</div>
+    <div id="stage-banner-tip">????? Subdue thieves · Fight villains · 50 seconds!</div>
+  </div>
+
+  <div id="hud-strip">
+    <div class="hud-pill"><span class="hud-pill-label">STAGE</span><span class="hud-pill-value gold" id="hud-stage">1/30</span></div>
+    <div class="hud-pill"><span class="hud-pill-label">THIEVES</span><span class="hud-pill-value cyan" id="hud-thieves">0/3</span></div>
+    <div id="stage-timer">50</div>
+    <div class="hud-pill"><span class="hud-pill-label">SOLAR</span><span class="hud-pill-value gold" id="hud-solar">100%</span></div>
+    <div class="hud-pill"><span class="hud-pill-label">ALTITUDE</span><span class="hud-pill-value green" id="hud-altitude">SKY</span></div>
+  </div>
+
+  <div id="bottom-hud">
+    <div id="ability-bar">
+      <button class="abl-btn y" onclick="triggerSonicFlight()">?? Space Mach Boost</button>
+      <button class="abl-btn r" onclick="triggerHeatVision()">?? F Heat Vision</button>
+      <button class="abl-btn b" onclick="triggerFreezeBreath()">?? R Freeze Breath</button>
+      <button class="abl-btn g" onclick="triggerSuperPunch()">?? E Super Punch</button>
+      <button class="abl-btn p" onclick="triggerShield()">??? Q Shield</button>
+      <button class="abl-btn y" onclick="diveToGround()" id="btn-dive">?? S Dive (Police Assist)</button>
+    </div>
+  </div>
+
+  <div id="mobile-pad">
+    <div class="dpad-row"><button class="dpad-btn" onclick="targetAltitude=120">??</button></div>
+    <div class="dpad-row">
+      <button class="dpad-btn" onclick="targetX=Math.max(-16,(typeof targetX!='undefined'?targetX:0)-4)">??</button>
+      <button class="dpad-btn" style="border-color:#f43f5e" onclick="triggerHeatVision()">??</button>
+      <button class="dpad-btn" onclick="targetX=Math.min(16,(typeof targetX!='undefined'?targetX:0)+4)">??</button>
+    </div>
+    <div class="dpad-row"><button class="dpad-btn" onclick="diveToGround()">??</button></div>
+  </div>
+
+  <div id="action-pad">
+    <button class="act-btn" style="border-color:#f43f5e" onclick="triggerHeatVision()">??<span>HEAT</span></button>
+    <button class="act-btn" style="border-color:#38bdf8" onclick="triggerFreezeBreath()">??<span>FREEZE</span></button>
+    <button class="act-btn" style="border-color:#10b981" onclick="triggerSuperPunch()">??<span>PUNCH</span></button>
+    <button class="act-btn" style="border-color:#ffd60a" onclick="triggerSonicFlight()">??<span>BOOST</span></button>
+  </div>
+
+  <div id="boss-bar">
+    <div id="boss-name">?? LEX LUTHOR</div>
+    <div id="boss-hp-track"><div id="boss-hp-fill"></div></div>
+  </div>
+
+  <div id="dialogue">
+    <div id="dlg-avatar">?????</div>
+    <div><div id="dlg-name">Superman</div><div id="dlg-text">Metropolis is under my watch!</div></div>
+  </div>
+
+  <div id="result-modal">
+    <div class="result-card">
+      <div class="result-icon" id="result-icon">??</div>
+      <div class="result-title" id="result-title">METROPOLIS SECURED!</div>
+      <p class="result-sub" id="result-sub">Superman and the Police defeated the villain syndicate!</p>
+      <div class="result-btns">
+        <button class="btn-win g" onclick="loadNextStage()">? NEXT STAGE</button>
+        <button class="btn-win b" onclick="restartSupermanGame()">?? PLAY AGAIN</button>
+        <button class="btn-win ghost" onclick="exitToHub()">? Exit to Park</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="game.js"></script>
+</body>
+</html>

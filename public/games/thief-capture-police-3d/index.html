@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THIEF CAPTURE: DISTRICT PATROL 👮‍♂️🚓 | Police Tactical MDT</title>
+  <link rel="stylesheet" href="../common-game.css">
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700;900&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="../../js/shared-3d-engine.js"></script>
+  <script src="../common-voice.js"></script>
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="three-canvas"></canvas>
+    <!-- Always-Visible Permanent Top Bar with PLAY AGAIN -->
+    <div id="permanent-top-bar" style="position: absolute; top: 12px; right: 20px; z-index: 1000; display: flex; gap: 8px;">
+      <button class="hud-btn btn-primary" style="background:#10b981; border:2px solid #059669; color:#fff; font-weight:900; font-size:0.95rem; padding:10px 20px; border-radius:12px; box-shadow:0 0 16px rgba(16,185,129,0.7); cursor:pointer;" onclick="typeof restartGame!=='undefined'?restartGame():window.location.reload()">
+        ?? PLAY AGAIN
+      </button>
+      <button class="hud-btn btn-pink" style="padding:10px 16px; border-radius:12px; cursor:pointer;" onclick="exitToHub()">
+        ? EXIT
+      </button>
+    </div>
+
+    <!-- Mobile Touch D-Pad (PC & Mobile Controls) -->
+    <div id="mobile-pad" style="position:absolute; bottom:20px; left:20px; z-index:50; display:flex; flex-direction:column; gap:6px;">
+      <div style="display:flex; justify-content:center; gap:6px;">
+        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(59,130,246,0.25); border:2px solid #3b82f6;" onclick="typeof triggerJump!=='undefined'?triggerJump():void(0)">??</button>
+      </div>
+      <div style="display:flex; gap:6px;">
+        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(59,130,246,0.25); border:2px solid #3b82f6;" onclick="if(typeof targetX!=='undefined')targetX=Math.max(-16,targetX-4)">??</button>
+        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(239,68,68,0.5); border:2px solid #ef4444;" onclick="typeof triggerAction!=='undefined'?triggerAction():void(0)">??</button>
+        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(59,130,246,0.25); border:2px solid #3b82f6;" onclick="if(typeof targetX!=='undefined')targetX=Math.min(16,targetX+4)">??</button>
+      </div>
+    </div>
+    <div class="real-vignette"></div>
+    <div class="real-speed-streaks" id="speed-streaks"></div>
+
+    <!-- Main Menu Overlay -->
+    <div id="main-menu" class="game-main-menu">
+      <div style="font-size: 3.5rem; margin-bottom: 8px; animation: agentFloat 2.5s infinite ease-in-out;">🚓 🚨 👮‍♂️ ⛓️ 🚧</div>
+      <h1 class="menu-title-glow">THIEF CAPTURE: DISTRICT PATROL</h1>
+      <p class="menu-subtitle">Police MDT Dispatch Telemetry & Tactical Radio Voice!</p>
+      
+      <div class="menu-options-grid" style="max-width: 500px;">
+        <button class="real-btn real-btn-primary" onclick="startGame()">🚓 DISPATCH INTERCEPTOR (CODE 3)</button>
+        <button class="real-btn real-btn-secondary" onclick="window.speakCartoonLine('police')">🗣️ POLICE DISPATCH VOICE</button>
+        <button class="real-btn real-btn-danger" onclick="exitToHub()">✕ EXIT TO ADVENTURE PARK</button>
+      </div>
+
+      <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 14px; font-family: 'Chakra Petch', sans-serif;">
+        Controls: <strong>A / D or ⬅️ ➡️</strong> Steer Interceptor | <strong>[SPACE]</strong> Deploy Spike Strip | <strong>[E]</strong> Call Cruiser Barricade | <strong>W</strong> Pursuit Boost
+      </div>
+    </div>
+
+    <!-- In-Game Top Telemetry HUD -->
+    <div id="in-game-hud" class="game-hud-top" style="display: none;">
+      <!-- Police District Signboard -->
+      <div class="real-signboard blue">
+        <span style="font-size: 1.6rem;">🚓</span>
+        <div>
+          <div class="real-sign-text">METRO POLICE DEPT · DISTRICT 09</div>
+          <div class="real-sign-sub">CODE 3 EMERGENCY PURSUIT ACTIVE</div>
+        </div>
+        <div class="real-sign-dist" id="hud-suspects-left" style="background:#fff;color:#0284c7;">3 SUSPECTS</div>
+      </div>
+
+      <!-- MDT Telemetry Cluster -->
+      <div class="real-telemetry-cluster">
+        <div class="real-telem-box">
+          <span class="real-telem-label">FLEEING SUSPECT SPEED</span>
+          <span class="real-telem-val red" id="hud-suspect-speed">95 MPH</span>
+        </div>
+        <div class="real-telem-div"></div>
+        <div class="real-telem-box">
+          <span class="real-telem-label">SPIKE STRIPS</span>
+          <span class="real-telem-val emerald" id="hud-spikes-count">3 READY ⛓️</span>
+        </div>
+        <div class="real-telem-div"></div>
+        <div class="real-telem-box">
+          <span class="real-telem-label">PERIMETER LOCK</span>
+          <span class="real-telem-val gold" id="hud-perimeter">CONTAINED 85%</span>
+        </div>
+      </div>
+
+      <!-- Exit Button -->
+      <button class="hud-btn btn-pink" onclick="exitToHub()">✕ EXIT</button>
+    </div>
+
+    <!-- Tactical Radar (Top Right) -->
+    <div class="real-radar-deck" id="police-radar" style="display: none;">
+      <div class="real-radar-title">TACTICAL GPS</div>
+      <div class="real-radar-cross-h"></div>
+      <div class="real-radar-cross-v"></div>
+      <div class="real-radar-sweep"></div>
+      <div class="real-radar-player" style="background:#38bdf8;"></div>
+      <div class="real-radar-blips" id="radar-blips"></div>
+    </div>
+
+    <!-- Interceptor Speedometer Gauge (Bottom Left) -->
+    <div class="real-speedo-cluster" id="speedo-cluster" style="display: none;">
+      <div class="real-speedo-dial">
+        <svg viewBox="0 0 80 80" style="width:100%;height:100%;">
+          <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="6"/>
+          <circle cx="40" cy="40" r="32" fill="none" stroke="#ef4444" stroke-width="6" stroke-dasharray="150" stroke-dashoffset="35" stroke-linecap="round"/>
+        </svg>
+        <div class="real-speedo-needle" id="speedo-needle" style="background:#ef4444;box-shadow:0 0 8px #ef4444;"></div>
+        <div class="real-speedo-center"></div>
+      </div>
+      <div class="real-speedo-info">
+        <span class="real-speedo-num" id="hud-police-speed">110</span>
+        <span class="real-speedo-unit">MPH · PURSUIT UNIT</span>
+        <span class="real-speedo-gear" id="hud-siren-mode">SIREN CODE 3 🚨</span>
+      </div>
+    </div>
+
+    <!-- Hazard Flasher -->
+    <div class="real-hazard-flasher" id="hazard-flasher">
+      <span style="font-size: 1.3rem;">🚨</span>
+      <span id="hazard-text">10-99 EMERGENCY: GETAWAY VEHICLE ATTEMPTING RAM!</span>
+    </div>
+
+    <!-- Police Radio Dialogue Box -->
+    <div id="dialogue-box" class="dialogue-overlay-box" style="display: none; top: 90px;">
+      <div class="dialogue-avatar" id="dialogue-avatar">🚨</div>
+      <div style="flex-grow: 1;">
+        <div class="dialogue-speaker" id="dialogue-speaker">Central Dispatch (VHF 460.0 MHz)</div>
+        <div class="dialogue-text" id="dialogue-text">"All units, suspect vehicle in sight on highway overpass. Box him in with spike strips!"</div>
+      </div>
+    </div>
+
+    <!-- Action Ability Bar -->
+    <div id="ability-bar" class="action-ability-bar" style="display: none; bottom: 84px;">
+      <button class="ability-btn cyan" onclick="deploySquadBlockade()">
+        🚧 [E] Cruiser Roadblock
+      </button>
+      <button class="ability-btn pink" onclick="deploySpikeStrip()">
+        ⛓️ [SPACE] Deploy Spike Strip
+      </button>
+    </div>
+
+    <!-- 5-Angle Camera Bar -->
+    <div class="camera-control-bar" style="bottom: 20px; right: 20px;">
+      <button class="hud-btn active" id="cam-back" onclick="setCameraView('back')">🎥 CHASE</button>
+      <button class="hud-btn" id="cam-front" onclick="setCameraView('front')">📸 HOOD</button>
+      <button class="hud-btn" id="cam-left" onclick="setCameraView('left')">📐 LEFT</button>
+      <button class="hud-btn" id="cam-right" onclick="setCameraView('right')">📐 RIGHT</button>
+      <button class="hud-btn" id="cam-top" onclick="setCameraView('top')">🚁 TOP TACTICAL</button>
+    </div>
+
+    <!-- Modals -->
+    <div id="custom-modal" class="custom-arcade-modal" style="display: none;" onclick="if(event.target===this)closeCustomModal()">
+      <div class="modal-card-glow" id="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>

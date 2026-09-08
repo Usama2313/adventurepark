@@ -1,0 +1,404 @@
+/* ==========================================================================
+   ULTIMATE 3D ADVENTURE PARK & ARCADE - THEME SYSTEM
+   Cyberpunk Wonderland, Holographic Glassmorphism, Neon Glows & AAA Polish
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@500;700;900&family=Press+Start+2P&display=swap');
+
+:root {
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Orbitron', 'Inter', sans-serif;
+  --font-fun: 'Fredoka', cursive, sans-serif;
+  --font-arcade: 'Press Start 2P', monospace;
+
+  /* Color Palette - Vibrant Adventure Neon */
+  --bg-dark: #070913;
+  --bg-card: rgba(16, 20, 38, 0.75);
+  --bg-card-hover: rgba(26, 32, 60, 0.9);
+  --bg-glass: rgba(255, 255, 255, 0.05);
+
+  --neon-cyan: #00f0ff;
+  --neon-pink: #ff007f;
+  --neon-purple: #9d4edd;
+  --neon-gold: #ffd60a;
+  --neon-emerald: #00f59b;
+  --neon-orange: #ff7b00;
+  --neon-crimson: #ff2a5f;
+
+  --border-glass: rgba(255, 255, 255, 0.12);
+  --border-glow-cyan: rgba(0, 240, 255, 0.4);
+  --border-glow-pink: rgba(255, 0, 127, 0.4);
+  --border-glow-gold: rgba(255, 214, 10, 0.5);
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --shadow-neon-cyan: 0 0 25px rgba(0, 240, 255, 0.35);
+  --shadow-neon-pink: 0 0 25px rgba(255, 0, 127, 0.35);
+  --shadow-neon-gold: 0 0 25px rgba(255, 214, 10, 0.4);
+  --shadow-card: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+}
+
+/* Global Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(157, 78, 221, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 85% 20%, rgba(0, 240, 255, 0.15) 0%, transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(255, 0, 127, 0.12) 0%, transparent 50%),
+    linear-gradient(180deg, #050711 0%, #0c1022 50%, #060814 100%);
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(8, 10, 20, 0.8);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--neon-cyan), var(--neon-purple));
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--neon-pink), var(--neon-gold));
+}
+
+/* Utility Animations */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.3), inset 0 0 15px rgba(0, 240, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(0, 240, 255, 0.7), inset 0 0 25px rgba(0, 240, 255, 0.4);
+  }
+}
+
+@keyframes floatAnim {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(1deg); }
+}
+
+@keyframes cardTiltShine {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes ticketRain {
+  0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+
+@keyframes laserSweep {
+  0% { transform: translateX(-100%) skewX(-25deg); }
+  100% { transform: translateX(200%) skewX(-25deg); }
+}
+
+/* Holographic Glass Card */
+.glass-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+.glass-panel:hover {
+  border-color: var(--border-glow-cyan);
+  box-shadow: 0 15px 35px -10px rgba(0, 240, 255, 0.25), 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.glass-panel-glow-pink:hover {
+  border-color: var(--border-glow-pink);
+  box-shadow: 0 15px 35px -10px rgba(255, 0, 127, 0.35);
+}
+
+.glass-panel-glow-gold:hover {
+  border-color: var(--border-glow-gold);
+  box-shadow: 0 15px 35px -10px rgba(255, 214, 10, 0.35);
+}
+
+/* SMART CARD (Holographic RFID Card Component) */
+.smart-nfc-card {
+  width: 360px;
+  max-width: 100%;
+  height: 220px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, #0d132b 0%, #1c2754 45%, #2a1b4e 75%, #0e1224 100%);
+  position: relative;
+  padding: 22px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 240, 255, 0.25);
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  overflow: hidden;
+  color: white;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+  user-select: none;
+}
+.smart-nfc-card:hover {
+  transform: translateY(-6px) rotateX(4deg) rotateY(-4deg);
+  box-shadow: 0 28px 50px rgba(0, 0, 0, 0.9), 0 0 45px rgba(0, 240, 255, 0.5);
+}
+.smart-nfc-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -150%; width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  transform: skewX(-25deg);
+  transition: left 0.75s ease;
+}
+.smart-nfc-card:hover::before {
+  left: 200%;
+}
+.chip-icon {
+  width: 42px;
+  height: 32px;
+  background: linear-gradient(135deg, #ffd700, #b8860b, #ffe4b5);
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chip-icon::after {
+  content: '';
+  width: 80%;
+  height: 70%;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+/* Buttons & Badges */
+.btn-neon {
+  background: linear-gradient(135deg, var(--neon-cyan), #00a8ff);
+  color: #040817;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 18px rgba(0, 240, 255, 0.4);
+  text-decoration: none;
+}
+.btn-neon:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 25px rgba(0, 240, 255, 0.7);
+  filter: brightness(1.1);
+}
+.btn-neon:active {
+  transform: translateY(1px);
+}
+
+.btn-pink {
+  background: linear-gradient(135deg, var(--neon-pink), #d90479);
+  color: #ffffff;
+  box-shadow: 0 4px 18px rgba(255, 0, 127, 0.4);
+}
+.btn-pink:hover {
+  box-shadow: 0 6px 25px rgba(255, 0, 127, 0.7);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--neon-gold), #e67e22);
+  color: #111422;
+  box-shadow: 0 4px 18px rgba(255, 214, 10, 0.4);
+}
+.btn-gold:hover {
+  box-shadow: 0 6px 25px rgba(255, 214, 10, 0.7);
+}
+
+.btn-emerald {
+  background: linear-gradient(135deg, var(--neon-emerald), #00b894);
+  color: #04140c;
+  box-shadow: 0 4px 18px rgba(0, 245, 155, 0.4);
+}
+.btn-emerald:hover {
+  box-shadow: 0 6px 25px rgba(0, 245, 155, 0.7);
+}
+
+.btn-glass {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  border: 1px solid var(--border-glass);
+  backdrop-filter: blur(10px);
+}
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--neon-cyan);
+}
+
+/* Neon Badge */
+.neon-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+.badge-cyan {
+  background: rgba(0, 240, 255, 0.15);
+  color: var(--neon-cyan);
+  border: 1px solid rgba(0, 240, 255, 0.4);
+}
+.badge-pink {
+  background: rgba(255, 0, 127, 0.15);
+  color: var(--neon-pink);
+  border: 1px solid rgba(255, 0, 127, 0.4);
+}
+.badge-gold {
+  background: rgba(255, 214, 10, 0.15);
+  color: var(--neon-gold);
+  border: 1px solid rgba(255, 214, 10, 0.4);
+}
+.badge-purple {
+  background: rgba(157, 78, 221, 0.15);
+  color: var(--neon-purple);
+  border: 1px solid rgba(157, 78, 221, 0.4);
+}
+.badge-emerald {
+  background: rgba(0, 245, 155, 0.15);
+  color: var(--neon-emerald);
+  border: 1px solid rgba(0, 245, 155, 0.4);
+}
+
+/* Ticket Counter Display */
+.ticket-vault-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(255, 214, 10, 0.15), rgba(255, 123, 0, 0.2));
+  border: 1px solid rgba(255, 214, 10, 0.5);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  color: var(--neon-gold);
+  font-family: var(--font-display);
+  font-weight: 700;
+  box-shadow: 0 0 15px rgba(255, 214, 10, 0.2);
+}
+
+/* Modal Overlay */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 7, 18, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-container {
+  background: #0d1226;
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 240, 255, 0.25);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* CRT Arcade Scanline Effect for Games */
+.arcade-screen-wrapper {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.4), inset 0 0 20px rgba(0, 0, 0, 0.8);
+  border: 3px solid #1a2342;
+  background: #000;
+}
+.arcade-screen-wrapper::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  z-index: 20;
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* Audio Visualizer Waves */
+.sound-bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 18px;
+}
+.sound-bar {
+  width: 3px;
+  background: var(--neon-cyan);
+  border-radius: 2px;
+  animation: equalize 1s infinite alternate ease-in-out;
+}
+.sound-bar:nth-child(1) { height: 60%; animation-delay: 0.1s; }
+.sound-bar:nth-child(2) { height: 100%; animation-delay: 0.3s; }
+.sound-bar:nth-child(3) { height: 40%; animation-delay: 0.5s; }
+.sound-bar:nth-child(4) { height: 80%; animation-delay: 0.2s; }
+@keyframes equalize {
+  0% { transform: scaleY(0.3); }
+  100% { transform: scaleY(1); }
+}
+
+/* Grid Layouts */
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+@media (max-width: 640px) {
+  .game-grid {
+    grid-template-columns: 1fr;
+  }
+  .smart-nfc-card {
+    height: 200px;
+    padding: 16px;
+  }
+}

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SWEET BLAST: JELLY PARADISE 🍬🍰 | Real-World Confectionery Cockpit</title>
+  <link rel="stylesheet" href="../common-game.css">
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700;900&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="../../js/shared-3d-engine.js"></script>
+  <script src="../common-voice.js"></script>
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="three-canvas"></canvas>
+    <!-- Always-Visible Permanent Top Bar with PLAY AGAIN -->
+    <div id="permanent-top-bar" style="position: absolute; top: 12px; right: 20px; z-index: 1000; display: flex; gap: 8px;">
+      <button class="hud-btn btn-primary" style="background:#10b981; border:2px solid #059669; color:#fff; font-weight:900; font-size:0.95rem; padding:10px 20px; border-radius:12px; box-shadow:0 0 16px rgba(16,185,129,0.7); cursor:pointer;" onclick="typeof restartGame!=='undefined'?restartGame():window.location.reload()">
+        ?? PLAY AGAIN
+      </button>
+      <button class="hud-btn btn-pink" style="padding:10px 16px; border-radius:12px; cursor:pointer;" onclick="exitToHub()">
+        ? EXIT
+      </button>
+    </div>
+
+    <!-- Mobile Touch D-Pad (PC & Mobile Controls) -->
+    <div id="mobile-pad" style="position:absolute; bottom:20px; left:20px; z-index:50; display:flex; flex-direction:column; gap:6px;">
+      <div style="display:flex; justify-content:center; gap:6px;">
+        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(59,130,246,0.25); border:2px solid #3b82f6;" onclick="typeof triggerJump!=='undefined'?triggerJump():void(0)">??</button>
+      </div>
+      <div style="display:flex; gap:6px;">
+        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(59,130,246,0.25); border:2px solid #3b82f6;" onclick="if(typeof targetX!=='undefined')targetX=Math.max(-16,targetX-4)">??</button>
+        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(239,68,68,0.5); border:2px solid #ef4444;" onclick="typeof triggerAction!=='undefined'?triggerAction():void(0)">??</button>
+        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(59,130,246,0.25); border:2px solid #3b82f6;" onclick="if(typeof targetX!=='undefined')targetX=Math.min(16,targetX+4)">??</button>
+      </div>
+    </div>
+    <div class="real-vignette"></div>
+    <div class="real-speed-streaks" id="speed-streaks"></div>
+
+    <!-- Main Menu Overlay -->
+    <div id="main-menu" class="game-main-menu">
+      <div style="font-size: 3.5rem; margin-bottom: 8px; animation: agentFloat 2s infinite ease-in-out;">🍬 🍰 🍩 🍭 🍫</div>
+      <h1 class="menu-title-glow">SWEET BLAST: JELLY PARADISE</h1>
+      <p class="menu-subtitle">Confectionery Telemetry, Sugar Rush Gauges & Sweet Combo Voice!</p>
+      
+      <div class="menu-options-grid" style="max-width: 500px;">
+        <button class="real-btn real-btn-primary" onclick="startGame()">🍰 ENTER JELLY LEVEL 01</button>
+        <button class="real-btn real-btn-secondary" onclick="window.speakCartoonLine('candy')">🗣️ CANDY CHEF VOICE</button>
+        <button class="real-btn real-btn-danger" onclick="exitToHub()">✕ EXIT TO ADVENTURE PARK</button>
+      </div>
+
+      <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 14px; font-family: 'Chakra Petch', sans-serif;">
+        Controls: <strong>[CLICK / DRAG]</strong> Adjacent Candies to Swap | Match 4 for Striped Blast | Match 5 for Rainbow Donut
+      </div>
+    </div>
+
+    <!-- In-Game Top Telemetry HUD -->
+    <div id="in-game-hud" class="game-hud-top" style="display: none;">
+      <!-- Bakery Signboard -->
+      <div class="real-signboard" style="background:linear-gradient(180deg,#db2777 0%,#9d174d 100%);">
+        <span style="font-size: 1.6rem;">🍰</span>
+        <div>
+          <div class="real-sign-text">PATISSERIE ROYALE · LEVEL 12</div>
+          <div class="real-sign-sub">JELLY PARADISE · 3D MATCH GRID</div>
+        </div>
+        <div class="real-sign-dist" id="hud-moves" style="background:#fff;color:#be185d;">15 MOVES</div>
+      </div>
+
+      <!-- Telemetry Cluster -->
+      <div class="real-telemetry-cluster">
+        <div class="real-telem-box">
+          <span class="real-telem-label">SCORE</span>
+          <span class="real-telem-val gold" id="hud-score">000000</span>
+        </div>
+        <div class="real-telem-div"></div>
+        <div class="real-telem-box">
+          <span class="real-telem-label">RECIPE GOALS</span>
+          <span class="real-telem-val cyan" id="hud-recipe">🍰 x10 / 🍩 x15</span>
+        </div>
+        <div class="real-telem-div"></div>
+        <div class="real-telem-box">
+          <span class="real-telem-label">SUGAR RUSH</span>
+          <span class="real-telem-val emerald" id="hud-rush-status">READY 🍭</span>
+        </div>
+      </div>
+
+      <!-- Exit Button -->
+      <button class="hud-btn btn-pink" onclick="exitToHub()">✕ EXIT</button>
+    </div>
+
+    <!-- Confectionery Radar (Top Right) -->
+    <div class="real-radar-deck" id="candy-radar" style="display: none;">
+      <div class="real-radar-title">CANDY SCAN</div>
+      <div class="real-radar-cross-h"></div>
+      <div class="real-radar-cross-v"></div>
+      <div class="real-radar-sweep"></div>
+      <div class="real-radar-player" style="background:#ff007f;"></div>
+      <div class="real-radar-blips" id="radar-blips"></div>
+    </div>
+
+    <!-- Sugar Rush Meter Gauge (Bottom Left) -->
+    <div class="real-speedo-cluster" id="speedo-cluster" style="display: none;">
+      <div class="real-speedo-dial">
+        <svg viewBox="0 0 80 80" style="width:100%;height:100%;">
+          <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="6"/>
+          <circle cx="40" cy="40" r="32" fill="none" stroke="#ff007f" stroke-width="6" stroke-dasharray="150" stroke-dashoffset="45" stroke-linecap="round"/>
+        </svg>
+        <div class="real-speedo-needle" id="speedo-needle" style="background:#ff007f;box-shadow:0 0 8px #ff007f;"></div>
+        <div class="real-speedo-center"></div>
+      </div>
+      <div class="real-speedo-info">
+        <span class="real-speedo-num" id="hud-rush-num">75%</span>
+        <span class="real-speedo-unit">SUGAR RUSH COMBO</span>
+        <span class="real-speedo-gear" id="hud-combo-title">DELICIOUS!</span>
+      </div>
+    </div>
+
+    <!-- Hazard Flasher -->
+    <div class="real-hazard-flasher" id="hazard-flasher">
+      <span style="font-size: 1.3rem;">🍫</span>
+      <span id="hazard-text">ALERT: CHOCOLATE BLOCKER EXPANDING ON GRID!</span>
+    </div>
+
+    <!-- Dialogue Box -->
+    <div id="dialogue-box" class="dialogue-overlay-box" style="display: none; top: 90px;">
+      <div class="dialogue-avatar" id="dialogue-avatar">👩‍🍳</div>
+      <div style="flex-grow: 1;">
+        <div class="dialogue-speaker" id="dialogue-speaker">Master Baker Lily</div>
+        <div class="dialogue-text" id="dialogue-text">"Sweet combo! Match 4 cakes in a row to forge a Striped Jelly line-clear!"</div>
+      </div>
+    </div>
+
+    <!-- 5-Angle Camera Bar -->
+    <div class="camera-control-bar" style="bottom: 20px; right: 20px;">
+      <button class="hud-btn active" id="cam-front" onclick="setCameraView('front')">📐 FRONT GRID</button>
+      <button class="hud-btn" id="cam-back" onclick="setCameraView('back')">🎥 3D TILT</button>
+      <button class="hud-btn" id="cam-top" onclick="setCameraView('top')">🚁 TOP-DOWN</button>
+    </div>
+
+    <!-- Modals -->
+    <div id="custom-modal" class="custom-arcade-modal" style="display: none;" onclick="if(event.target===this)closeCustomModal()">
+      <div class="modal-card-glow" id="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>

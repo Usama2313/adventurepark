@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NINJA SHADOW BLADE 3D 🥷 | Real Shinobi Stealth & 30 Stages</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../common-game.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="../../js/shared-3d-engine.js"></script>
+  <script src="../common-voice.js"></script>
+  <script src="../common-music.js"></script>
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="three-canvas"></canvas>
+    <!-- Always-Visible Permanent Top Bar with PLAY AGAIN -->
+    <div id="permanent-top-bar" style="position: absolute; top: 12px; right: 20px; z-index: 1000; display: flex; gap: 8px;">
+      <button class="hud-btn btn-primary" style="background:#10b981; border:2px solid #059669; color:#fff; font-weight:900; font-size:0.95rem; padding:10px 20px; border-radius:12px; box-shadow:0 0 16px rgba(16,185,129,0.7); cursor:pointer;" onclick="typeof restartGame!=='undefined'?restartGame():window.location.reload()">
+        ?? PLAY AGAIN
+      </button>
+      <button class="hud-btn btn-pink" style="padding:10px 16px; border-radius:12px; cursor:pointer;" onclick="exitToHub()">
+        ? EXIT
+      </button>
+    </div>
+
+    <!-- Mobile Touch D-Pad (PC & Mobile Controls) -->
+    <div id="mobile-pad" style="position:absolute; bottom:20px; left:20px; z-index:50; display:flex; flex-direction:column; gap:6px;">
+      <div style="display:flex; justify-content:center; gap:6px;">
+        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(59,130,246,0.25); border:2px solid #3b82f6;" onclick="typeof triggerJump!=='undefined'?triggerJump():void(0)">??</button>
+      </div>
+      <div style="display:flex; gap:6px;">
+        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(59,130,246,0.25); border:2px solid #3b82f6;" onclick="if(typeof targetX!=='undefined')targetX=Math.max(-16,targetX-4)">??</button>
+        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(239,68,68,0.5); border:2px solid #ef4444;" onclick="typeof triggerAction!=='undefined'?triggerAction():void(0)">??</button>
+        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(59,130,246,0.25); border:2px solid #3b82f6;" onclick="if(typeof targetX!=='undefined')targetX=Math.min(16,targetX+4)">??</button>
+      </div>
+    </div>
+    <div class="real-vignette"></div>
+    <div class="real-speed-streaks" id="speed-streaks"></div>
+
+    <!-- Hazard Alert Flasher -->
+    <div class="real-hazard-flasher" id="hazard-flasher">
+      ⚠️ DANGER: SAMURAI WARLORD PATROL IN AMBUSH ZONE ⚠️
+    </div>
+
+    <!-- Real-World Telemetry Header -->
+    <div class="real-telemetry-cluster">
+      <div class="real-badge">
+        <span class="real-badge-icon">🥷</span>
+        <div class="real-badge-info">
+          <div class="real-badge-title">NINJA SHADOW BLADE 3D</div>
+          <div class="real-badge-sub">SHINOBI STEALTH • KATANA SLASH • 30 STAGES</div>
+        </div>
+      </div>
+
+      <div class="real-stat-pill">
+        <span class="real-stat-label">STAGE</span>
+        <span class="real-stat-value" id="hud-stage-num" style="color: #f59e0b;">LEVEL 1 / 30</span>
+      </div>
+
+      <div class="real-stat-pill">
+        <span class="real-stat-label">SHURIKENS 🥷</span>
+        <span class="real-stat-value" id="hud-shuriken" style="color: #00f0ff;">25</span>
+      </div>
+
+      <div class="real-stat-pill">
+        <span class="real-stat-label">STEALTH ENERGY</span>
+        <span class="real-stat-value" id="hud-stealth" style="color: #10b981;">100% SHADOW</span>
+      </div>
+
+      <div class="real-stat-pill">
+        <span class="real-stat-label">SCORE</span>
+        <span class="real-stat-value" id="hud-score" style="color: #ec4899;">0</span>
+      </div>
+
+      <button class="real-btn-exit" onclick="exitToHub()">✕ EXIT SHINOBI</button>
+    </div>
+
+    <!-- Ninja Speedometer Dial -->
+    <div class="real-speedo-cluster">
+      <div class="real-speedo-dial">
+        <svg class="real-speedo-svg" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="6" />
+          <circle id="speedo-progress" cx="50" cy="50" r="42" fill="none" stroke="#f59e0b" stroke-width="6" stroke-dasharray="264" stroke-dashoffset="150" stroke-linecap="round" />
+        </svg>
+        <div class="real-speedo-needle" id="speedo-needle"></div>
+        <div class="real-speedo-val" id="hud-ninja-speed">75</div>
+        <div class="real-speedo-unit">KM / H SHADOW</div>
+      </div>
+    </div>
+
+    <!-- Circular Stealth Radar Deck -->
+    <div class="real-radar-deck">
+      <div class="real-radar-dish">
+        <div class="real-radar-sweep"></div>
+        <div class="real-radar-grid"></div>
+        <div id="radar-blips"></div>
+        <div class="real-radar-center"></div>
+      </div>
+      <div class="real-radar-title">SHINOBI SONAR</div>
+    </div>
+
+    <!-- 30 Stages & Controls Bar -->
+    <div class="stage-control-bar">
+      <select id="stage-select" onchange="select30Stage(this.value)" style="background: rgba(245, 158, 11, 0.2); color: #fff; border: 1px solid #f59e0b; border-radius: 8px; padding: 6px 12px; font-family: 'Orbitron', sans-serif; font-size: 0.85rem; font-weight: 700;">
+        <option value="1">STAGE 01: Edo Castle Rooftops</option>
+        <option value="2">STAGE 02: Bamboo Forest Ambush</option>
+        <option value="5">STAGE 05: Samurai Dojo Fortress</option>
+        <option value="10">STAGE 10: Shadow Warlord Temple</option>
+        <option value="20">STAGE 20: Volcanic Dragon Cavern</option>
+        <option value="30">STAGE 30: Grand Shogun Palace</option>
+      </select>
+      <button class="hud-btn" style="background: rgba(245, 158, 11, 0.3);" onclick="window.speakCartoonLine('korosuke')">🗣️ NINJA VOICE</button>
+      <button class="hud-btn" style="background: rgba(16, 185, 129, 0.3);" onclick="window.playCartoonThemeSong('ninja')">🎵 SHINOBI MUSIC</button>
+    </div>
+
+    <!-- Camera Control Bar -->
+    <div class="camera-control-bar">
+      <button class="hud-btn active" id="cam-back" onclick="setCameraView('back')">🎥 CHASE</button>
+      <button class="hud-btn" id="cam-front" onclick="setCameraView('front')">📸 FRONT</button>
+      <button class="hud-btn" id="cam-left" onclick="setCameraView('left')">📐 LEFT</button>
+      <button class="hud-btn" id="cam-right" onclick="setCameraView('right')">📐 RIGHT</button>
+      <button class="hud-btn" id="cam-top" onclick="setCameraView('top')">🚁 TOP</button>
+    </div>
+
+    <!-- Touch Mobile Controls -->
+    <div class="touch-controls">
+      <button class="touch-btn" id="touch-left">⬅️</button>
+      <button class="touch-btn" id="touch-right">➡️</button>
+      <button class="touch-btn" id="touch-jump" style="background: rgba(245, 158, 11, 0.4);">🦘</button>
+      <button class="touch-btn" id="touch-slash" style="background: rgba(0, 240, 255, 0.4);">⚔️</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,576 @@
+{
+  "users": [
+    {
+      "id": "usr_demo123",
+      "name": "Demo Adventurer",
+      "email": "player@park.com",
+      "phone": "+923211808390",
+      "cardId": "PK-ADV-8899",
+      "pin": "1234",
+      "cashCredits": 165,
+      "bonusCredits": 70,
+      "tickets": 1042,
+      "vipTier": "VIP Gold",
+      "hasFreePass": true,
+      "createdAt": "2026-09-03T23:18:46.869Z",
+      "history": [
+        {
+          "id": "h_1788879780243",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-08T15:03:00.243Z"
+        },
+        {
+          "id": "h_1788879751191",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 500)",
+          "amount": 25,
+          "timestamp": "2026-09-08T15:02:31.191Z"
+        },
+        {
+          "id": "h_1788879714966",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-08T15:01:54.966Z"
+        },
+        {
+          "id": "h_1788679536550",
+          "type": "TICKETS_WON",
+          "desc": "Won 20 Tickets in Robo Bomberman 3D (Score: 0)",
+          "amount": 20,
+          "timestamp": "2026-09-06T07:25:36.550Z"
+        },
+        {
+          "id": "h_1788679356457",
+          "type": "TICKETS_WON",
+          "desc": "Won 50 Tickets in 3D Aeroplane & Helicopter Sky Defender (Score: 2000)",
+          "amount": 50,
+          "timestamp": "2026-09-06T07:22:36.457Z"
+        },
+        {
+          "id": "h_1788679334174",
+          "type": "TICKETS_WON",
+          "desc": "Won 10 Tickets in 3D Aeroplane & Helicopter Sky Defender (Score: 0)",
+          "amount": 10,
+          "timestamp": "2026-09-06T07:22:14.174Z"
+        },
+        {
+          "id": "h_1788679325683",
+          "type": "TICKETS_WON",
+          "desc": "Won 10 Tickets in 3D Aeroplane & Helicopter Sky Defender (Score: 0)",
+          "amount": 10,
+          "timestamp": "2026-09-06T07:22:05.683Z"
+        },
+        {
+          "id": "h_1788679258254",
+          "type": "TICKETS_WON",
+          "desc": "Won 15 Tickets in Candy Crunch Mania & Chocolate Avalanche (Score: 0)",
+          "amount": 15,
+          "timestamp": "2026-09-06T07:20:58.254Z"
+        },
+        {
+          "id": "h_1788679195997",
+          "type": "TICKETS_WON",
+          "desc": "Won 110 Tickets in 3D Ghostly Horror Swing & Haunted Cinema (Score: 1400)",
+          "amount": 110,
+          "timestamp": "2026-09-06T07:19:55.997Z"
+        },
+        {
+          "id": "h_1788679189730",
+          "type": "TICKETS_WON",
+          "desc": "Won 110 Tickets in 3D Ghostly Horror Swing & Haunted Cinema (Score: 1400)",
+          "amount": 110,
+          "timestamp": "2026-09-06T07:19:49.730Z"
+        },
+        {
+          "id": "h_1788679180495",
+          "type": "TICKETS_WON",
+          "desc": "Won 17 Tickets in Family 3D Play Park, Spring Trampoline & Net Crossing (Score: 410)",
+          "amount": 17,
+          "timestamp": "2026-09-06T07:19:40.495Z"
+        },
+        {
+          "id": "h_1788679019164",
+          "type": "TICKETS_WON",
+          "desc": "Won 8 Tickets in 3D Police Highway Pursuit & Thief Capture (Score: 174)",
+          "amount": 8,
+          "timestamp": "2026-09-06T07:16:59.164Z"
+        },
+        {
+          "id": "h_1788679019038",
+          "type": "TICKETS_WON",
+          "desc": "Won 8 Tickets in 3D Police Highway Pursuit & Thief Capture (Score: 174)",
+          "amount": 8,
+          "timestamp": "2026-09-06T07:16:59.038Z"
+        },
+        {
+          "id": "h_1788679014053",
+          "type": "TICKETS_WON",
+          "desc": "Won 8 Tickets in 3D Police Highway Pursuit & Thief Capture (Score: 171)",
+          "amount": 8,
+          "timestamp": "2026-09-06T07:16:54.053Z"
+        },
+        {
+          "id": "h_1788678931033",
+          "type": "TICKETS_WON",
+          "desc": "Won 12 Tickets in Sonic Sega Speed Dash & Jack Runner (Score: 198)",
+          "amount": 12,
+          "timestamp": "2026-09-06T07:15:31.033Z"
+        },
+        {
+          "id": "h_1788678878013",
+          "type": "TICKETS_WON",
+          "desc": "Won 15 Tickets in Kiteretsu & Korosuke 3D (Score: 591)",
+          "amount": 15,
+          "timestamp": "2026-09-06T07:14:38.013Z"
+        },
+        {
+          "id": "h_1788678813663",
+          "type": "TICKETS_WON",
+          "desc": "Won 6 Tickets in Super Saiyan Dragon Ki Fighter (Score: 450)",
+          "amount": 6,
+          "timestamp": "2026-09-06T07:13:33.701Z"
+        },
+        {
+          "id": "h_1788678746505",
+          "type": "TICKETS_WON",
+          "desc": "Won 20 Tickets in Doraemon Bamboo-Copter 3D (Score: 889)",
+          "amount": 20,
+          "timestamp": "2026-09-06T07:12:26.505Z"
+        },
+        {
+          "id": "h_1788678591523",
+          "type": "TICKETS_WON",
+          "desc": "Won 42 Tickets in Shin-chan Little Helper 3D (Score: 2154)",
+          "amount": 42,
+          "timestamp": "2026-09-06T07:09:51.523Z"
+        },
+        {
+          "id": "h_1788678467359",
+          "type": "ADMIN_EMAIL_APPROVAL",
+          "desc": "Admin Approved Access for player@park.com (Admin Approved Package) (+160 Cash, +70 Bonus)",
+          "amount": 230,
+          "timestamp": "2026-09-06T07:07:47.359Z"
+        },
+        {
+          "id": "h_1788490794149",
+          "type": "TICKETS_WON",
+          "desc": "Won 69 Tickets in Sonic Sega Speed Dash & Jack Runner (Score: 2074)",
+          "amount": 69,
+          "timestamp": "2026-09-04T02:59:54.149Z"
+        },
+        {
+          "id": "h_1788490756270",
+          "type": "GAME_PLAY",
+          "desc": "Played Sonic Sega Speed Dash & Jack Runner (-10 credits)",
+          "amount": -10,
+          "timestamp": "2026-09-04T02:59:16.270Z"
+        },
+        {
+          "id": "h_1788490750609",
+          "type": "TICKETS_WON",
+          "desc": "Won 12 Tickets in Sonic Sega Speed Dash & Jack Runner (Score: 200)",
+          "amount": 12,
+          "timestamp": "2026-09-04T02:59:10.609Z"
+        },
+        {
+          "id": "h_1788490724227",
+          "type": "GAME_PLAY",
+          "desc": "Played Sonic Sega Speed Dash & Jack Runner (-10 credits)",
+          "amount": -10,
+          "timestamp": "2026-09-04T02:58:44.227Z"
+        },
+        {
+          "id": "h_1788488702407",
+          "type": "GAME_PLAY",
+          "desc": "Played Candy Crunch Mania & Chocolate Avalanche (-10 credits)",
+          "amount": -10,
+          "timestamp": "2026-09-04T02:25:02.407Z"
+        },
+        {
+          "id": "h_1788488676395",
+          "type": "GAME_PLAY",
+          "desc": "Played 3D Hyper Supercar & Motorbike Highway Racer (-15 credits)",
+          "amount": -15,
+          "timestamp": "2026-09-04T02:24:36.395Z"
+        },
+        {
+          "id": "h_1788488664330",
+          "type": "TICKETS_WON",
+          "desc": "Won 8 Tickets in 3D Police Highway Pursuit & Thief Capture (Score: 210)",
+          "amount": 8,
+          "timestamp": "2026-09-04T02:24:24.330Z"
+        },
+        {
+          "id": "h_1788488613249",
+          "type": "GAME_PLAY",
+          "desc": "Played 3D Police Highway Pursuit & Thief Capture (-15 credits)",
+          "amount": -15,
+          "timestamp": "2026-09-04T02:23:33.249Z"
+        },
+        {
+          "id": "h_1788488571636",
+          "type": "GAME_PLAY",
+          "desc": "Played 3D Tactical Army & Zombie Survival (-15 credits)",
+          "amount": -15,
+          "timestamp": "2026-09-04T02:22:51.636Z"
+        },
+        {
+          "id": "h_1788488547610",
+          "type": "GAME_PLAY",
+          "desc": "Played 3D Ghostly Horror Swing & Haunted Cinema (-20 credits)",
+          "amount": -20,
+          "timestamp": "2026-09-04T02:22:27.610Z"
+        },
+        {
+          "id": "h_1788488529233",
+          "type": "GAME_PLAY",
+          "desc": "Played 3D Whale Ocean Odyssey & Shark Reef Feeding (-15 credits)",
+          "amount": -15,
+          "timestamp": "2026-09-04T02:22:09.233Z"
+        },
+        {
+          "id": "h_1788488481563",
+          "type": "GAME_PLAY",
+          "desc": "Played Family 3D Play Park, Spring Trampoline & Net Crossing (-10 credits)",
+          "amount": -10,
+          "timestamp": "2026-09-04T02:21:21.563Z"
+        },
+        {
+          "id": "h_1788488465243",
+          "type": "GAME_PLAY",
+          "desc": "Played Superhero Battle & Army Tactical IQ Academy (-15 credits)",
+          "amount": -15,
+          "timestamp": "2026-09-04T02:21:05.243Z"
+        },
+        {
+          "id": "h_1788488456759",
+          "type": "TICKETS_WON",
+          "desc": "Won 80 Tickets in 3D Snow Queen Castle & Cartoon Wonderland (Score: 2700)",
+          "amount": 80,
+          "timestamp": "2026-09-04T02:20:56.759Z"
+        },
+        {
+          "id": "h_1788488446576",
+          "type": "GAME_PLAY",
+          "desc": "Played 3D Snow Queen Castle & Cartoon Wonderland (-10 credits)",
+          "amount": -10,
+          "timestamp": "2026-09-04T02:20:46.576Z"
+        },
+        {
+          "id": "h_1788488417257",
+          "type": "GAME_PLAY",
+          "desc": "Played 3D Sports Grand Slam: Basketball & Arcade Arena (-10 credits)",
+          "amount": -10,
+          "timestamp": "2026-09-04T02:20:17.257Z"
+        },
+        {
+          "id": "h_1788488373914",
+          "type": "GAME_PLAY",
+          "desc": "Played 3D Aeroplane & Helicopter Sky Defender (-15 credits)",
+          "amount": -15,
+          "timestamp": "2026-09-04T02:19:33.914Z"
+        },
+        {
+          "id": "h_1788488366865",
+          "type": "TICKETS_WON",
+          "desc": "Won 12 Tickets in Sonic Sega Speed Dash & Jack Runner (Score: 224)",
+          "amount": 12,
+          "timestamp": "2026-09-04T02:19:26.865Z"
+        },
+        {
+          "id": "h_1788488340702",
+          "type": "GAME_PLAY",
+          "desc": "Played Sonic Sega Speed Dash & Jack Runner (-10 credits)",
+          "amount": -10,
+          "timestamp": "2026-09-04T02:19:00.702Z"
+        },
+        {
+          "id": "h_1788478888801",
+          "type": "TICKETS_WON",
+          "desc": "Won 5 Tickets in 3D Tactical Army & Zombie Survival (Score: 0)",
+          "amount": 5,
+          "timestamp": "2026-09-03T23:41:28.801Z"
+        },
+        {
+          "id": "h_1788478521225",
+          "type": "GAME_PLAY",
+          "desc": "Played 3D Tactical Army & Zombie Survival (-15 credits)",
+          "amount": -15,
+          "timestamp": "2026-09-03T23:35:21.225Z"
+        },
+        {
+          "id": "h_1",
+          "type": "BONUS",
+          "desc": "Welcome Bonus Credits",
+          "amount": 50,
+          "timestamp": "2026-09-03T23:18:46.884Z"
+        },
+        {
+          "id": "h_2",
+          "type": "TOPUP",
+          "desc": "Starter Package Approved",
+          "amount": 150,
+          "timestamp": "2026-09-03T23:18:46.884Z"
+        }
+      ]
+    },
+    {
+      "id": "usr_1788674672332",
+      "name": "Player One",
+      "email": "player1@test.com",
+      "phone": "+923001234567",
+      "cardId": "PK-ADV-2470",
+      "pin": "1234",
+      "cashCredits": 430,
+      "bonusCredits": 230,
+      "tickets": 50,
+      "vipTier": "VIP Galaxy Master",
+      "hasFreePass": true,
+      "createdAt": "2026-09-06T06:04:32.333Z",
+      "history": [
+        {
+          "id": "h_1788674672358",
+          "type": "ADMIN_EMAIL_APPROVAL",
+          "desc": "Admin Approved Access for player1@test.com (WhatsApp Proof Verified (+97332377688)) (+380 Cash, +200 Bonus)",
+          "amount": 580,
+          "timestamp": "2026-09-06T06:04:32.358Z"
+        },
+        {
+          "id": "h_1788674672333",
+          "type": "WELCOME",
+          "desc": "Welcome Bonus Credits",
+          "amount": 30,
+          "timestamp": "2026-09-06T06:04:32.333Z"
+        },
+        {
+          "id": "h_1788674672334",
+          "type": "WELCOME",
+          "desc": "Welcome Cash Gift",
+          "amount": 50,
+          "timestamp": "2026-09-06T06:04:32.333Z"
+        }
+      ]
+    }
+  ],
+  "admin": {
+    "username": "admin",
+    "pin": "9988",
+    "email": "admin@adventurepark.com"
+  },
+  "packages": [
+    {
+      "id": "pkg_starter",
+      "name": "Adventurer Starter",
+      "pricePKR": 500,
+      "cashCredits": 60,
+      "bonusCredits": 20,
+      "badge": "Popular for Kids",
+      "color": "from-blue-500 to-cyan-500",
+      "features": [
+        "Access to 10+ Standard Games",
+        "20 Bonus Game Credits",
+        "Free Park Digital Card",
+        "Earn Arcade Tickets"
+      ]
+    },
+    {
+      "id": "pkg_family",
+      "name": "Family Mega Explorer",
+      "pricePKR": 1200,
+      "cashCredits": 160,
+      "bonusCredits": 70,
+      "badge": "Best Family Value",
+      "color": "from-purple-500 to-pink-500",
+      "features": [
+        "Access to ALL 14+ 3D & VR Games",
+        "70 Bonus Credits",
+        "Double Ticket Multiplier",
+        "Family Play Area Included",
+        "Priority E-Claw Boost"
+      ]
+    },
+    {
+      "id": "pkg_vip",
+      "name": "VIP Galaxy Master",
+      "pricePKR": 2500,
+      "cashCredits": 380,
+      "bonusCredits": 200,
+      "badge": "VIP Elite",
+      "color": "from-amber-400 to-orange-500",
+      "features": [
+        "Unlimited Horror 3D Cinema Access",
+        "200 Bonus Credits",
+        "Triple Ticket Win Rates",
+        "VIP Gold Holographic Card",
+        "Instant Prize Store Discounts"
+      ]
+    },
+    {
+      "id": "pkg_infinite",
+      "name": "Infinite Royal Champion",
+      "pricePKR": 5000,
+      "cashCredits": 850,
+      "bonusCredits": 500,
+      "badge": "Ultimate Experience",
+      "color": "from-emerald-400 to-teal-600",
+      "features": [
+        "VIP Diamond Status",
+        "500 Bonus Game Credits",
+        "Max Ticket Yield",
+        "Free Pass for Family Guest",
+        "All Special Events Unlocked"
+      ]
+    }
+  ],
+  "pendingPayments": [
+    {
+      "id": "pay_1788490907788",
+      "userId": "usr_demo123",
+      "userName": "Demo Adventurer",
+      "userPhone": "+923211808390",
+      "cardId": "PK-ADV-8899",
+      "packageId": "pkg_family",
+      "packageName": "Family Mega Explorer",
+      "amountPKR": 1200,
+      "cashCreditsGranted": 160,
+      "bonusCreditsGranted": 70,
+      "paymentMethod": "JazzCash (+923211808390)",
+      "senderAccount": "ytry645654654",
+      "transactionId": "6546",
+      "screenshotUrl": "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=600&auto=format&fit=crop&q=60",
+      "notes": "Payment proof submitted for credit verification",
+      "status": "APPROVED",
+      "submittedAt": "2026-09-04T03:01:47.788Z",
+      "approvedAt": "2026-09-06T07:07:47.358Z"
+    },
+    {
+      "id": "pay_sample1",
+      "userId": "usr_demo123",
+      "userName": "Demo Adventurer",
+      "userPhone": "+923211808390",
+      "cardId": "PK-ADV-8899",
+      "packageId": "pkg_family",
+      "packageName": "Family Mega Explorer",
+      "amountPKR": 1200,
+      "paymentMethod": "JazzCash (+923211808390)",
+      "senderAccount": "0321-1808390",
+      "transactionId": "JC-TXN-998841",
+      "screenshotUrl": "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=600&auto=format&fit=crop&q=60",
+      "notes": "Paid via JazzCash app, kindly approve family bundle credits",
+      "status": "APPROVED",
+      "submittedAt": "2026-09-03T23:18:46.884Z",
+      "approvedAt": "2026-09-06T07:07:47.359Z"
+    }
+  ],
+  "pendingCertificates": [
+    {
+      "id": "cert_1788676966900",
+      "userId": "usr_demo123",
+      "userName": "Demo Adventurer",
+      "userPhone": "+923211808390",
+      "cardId": "PK-ADV-8899",
+      "certificateType": "Special Student / Hardship Free Pass",
+      "documentUrl": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&auto=format&fit=crop&q=60",
+      "reason": "rewrwe",
+      "status": "PENDING",
+      "submittedAt": "2026-09-06T06:42:46.900Z"
+    },
+    {
+      "id": "cert_sample1",
+      "userId": "usr_demo123",
+      "userName": "Demo Adventurer",
+      "userPhone": "+923211808390",
+      "cardId": "PK-ADV-8899",
+      "certificateType": "Student / Hardship Free Pass",
+      "documentUrl": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&auto=format&fit=crop&q=60",
+      "reason": "Applying for student welfare recreational free pass for kids learning park.",
+      "status": "PENDING",
+      "submittedAt": "2026-09-03T23:18:46.884Z"
+    }
+  ],
+  "prizes": [
+    {
+      "id": "prz_beyblade",
+      "name": "Pro Metal Fusion Beyblade Set + Dual Launcher",
+      "ticketCost": 180,
+      "stock": 25,
+      "category": "Toys & Action",
+      "image": "https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=60",
+      "description": "Authentic high-velocity metal battling top with light-up gyro launcher."
+    },
+    {
+      "id": "prz_yoyo",
+      "name": "Hyper-Speed Ball Bearing Pro Yo-Yo",
+      "ticketCost": 90,
+      "stock": 40,
+      "category": "Skill Toys",
+      "image": "https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?w=600&auto=format&fit=crop&q=60",
+      "description": "Aluminum alloy responsive yo-yo for advanced tricks and sleep spins."
+    },
+    {
+      "id": "prz_backpack",
+      "name": "Adventure Theme Park Ergonomic Kids Backpack",
+      "ticketCost": 350,
+      "stock": 15,
+      "category": "School & Bags",
+      "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&auto=format&fit=crop&q=60",
+      "description": "Durable waterproof school & travel backpack with vibrant park emblems."
+    },
+    {
+      "id": "prz_plush_doraemon",
+      "name": "Giant Doraemon & Shinchan Plushies (Dual Pack)",
+      "ticketCost": 260,
+      "stock": 20,
+      "category": "Cartoons & Plushies",
+      "image": "https://images.unsplash.com/photo-1558060370-d644479cb6f7?w=600&auto=format&fit=crop&q=60",
+      "description": "Ultra-soft premium plush cartoon characters with authentic embroidery."
+    },
+    {
+      "id": "prz_candy_box",
+      "name": "Mega Candy Rain Chocolate & Sweets Hamper",
+      "ticketCost": 120,
+      "stock": 50,
+      "category": "Sweets & Treats",
+      "image": "https://images.unsplash.com/photo-1582058091505-f87a2e55a40f?w=600&auto=format&fit=crop&q=60",
+      "description": "Assorted imported chocolates, rainbow candies, and fruit gummies."
+    },
+    {
+      "id": "prz_keyring",
+      "name": "Light-Up Superhero & Anime Collector Keyring Bundle",
+      "ticketCost": 50,
+      "stock": 80,
+      "category": "Collectibles",
+      "image": "https://images.unsplash.com/photo-1618336753974-aae8e04506aa?w=600&auto=format&fit=crop&q=60",
+      "description": "Pack of 3 metal keyrings featuring Spider Hero, Iron Armor, and Frozen snowflakes."
+    },
+    {
+      "id": "prz_rc_drone",
+      "name": "Aeroplane Sky Patrol Mini Drone with LED",
+      "ticketCost": 500,
+      "stock": 8,
+      "category": "Tech & Electronics",
+      "image": "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=600&auto=format&fit=crop&q=60",
+      "description": "Altitude-hold stunt drone with 360-degree flips and night-glow lights."
+    }
+  ],
+  "redemptions": [],
+  "games": {
+    "sessions": [
+      {
+        "hero": "spiderman",
+        "state": {
+          "powerMode": "normal",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "capturedThieves": []
+        }
+      }
+    ]
+  }
+}

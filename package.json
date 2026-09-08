@@ -1,0 +1,22 @@
+{
+  "name": "ultimate-3d-adventure-park",
+  "version": "1.0.0",
+  "description": "State of the art 3D Virtual Adventure Park & Arcade Gaming Universe with Smart NFC Card, Top-up Packages, WhatsApp Verification, Admin Portal, Ticket Redemptions and 14+ 3D Playable Games",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "server": "node server.js"
+  },
+  "keywords": [
+    "adventure-park",
+    "arcade-games",
+    "threejs-3d",
+    "smart-card-nfc",
+    "ticket-redemption",
+    "admin-portal",
+    "whatsapp-verification"
+  ],
+  "author": "SYED Usama Tanveer",
+  "license": "MIT"
+}

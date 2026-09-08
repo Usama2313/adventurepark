@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SONIC SEGA DASH: GENERATIONS 🦔⚡ | Real-World Sonic Cockpit</title>
+  <link rel="stylesheet" href="../common-game.css">
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700;900&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="../../js/shared-3d-engine.js"></script>
+  <script src="../common-voice.js"></script>
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="three-canvas"></canvas>
+    <!-- Always-Visible Permanent Top Bar with PLAY AGAIN -->
+    <div id="permanent-top-bar" style="position: absolute; top: 12px; right: 20px; z-index: 1000; display: flex; gap: 8px;">
+      <button class="hud-btn btn-primary" style="background:#10b981; border:2px solid #059669; color:#fff; font-weight:900; font-size:0.95rem; padding:10px 20px; border-radius:12px; box-shadow:0 0 16px rgba(16,185,129,0.7); cursor:pointer;" onclick="typeof restartGame!=='undefined'?restartGame():window.location.reload()">
+        ?? PLAY AGAIN
+      </button>
+      <button class="hud-btn btn-pink" style="padding:10px 16px; border-radius:12px; cursor:pointer;" onclick="exitToHub()">
+        ? EXIT
+      </button>
+    </div>
+
+    <!-- Mobile Touch D-Pad (PC & Mobile Controls) -->
+    <div id="mobile-pad" style="position:absolute; bottom:20px; left:20px; z-index:50; display:flex; flex-direction:column; gap:6px;">
+      <div style="display:flex; justify-content:center; gap:6px;">
+        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(59,130,246,0.25); border:2px solid #3b82f6;" onclick="typeof triggerJump!=='undefined'?triggerJump():void(0)">??</button>
+      </div>
+      <div style="display:flex; gap:6px;">
+        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(59,130,246,0.25); border:2px solid #3b82f6;" onclick="if(typeof targetX!=='undefined')targetX=Math.max(-16,targetX-4)">??</button>
+        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(239,68,68,0.5); border:2px solid #ef4444;" onclick="typeof triggerAction!=='undefined'?triggerAction():void(0)">??</button>
+        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(59,130,246,0.25); border:2px solid #3b82f6;" onclick="if(typeof targetX!=='undefined')targetX=Math.min(16,targetX+4)">??</button>
+      </div>
+    </div>
+    <div class="real-vignette"></div>
+    <div class="real-speed-streaks" id="speed-streaks"></div>
+
+    <!-- Main Menu Overlay -->
+    <div id="main-menu" class="game-main-menu">
+      <div style="font-size: 3.5rem; margin-bottom: 8px; animation: agentFloat 2s infinite ease-in-out;">🦔 ⚡ 🪙 💎 🌀</div>
+      <h1 class="menu-title-glow">SONIC SEGA DASH: GENERATIONS</h1>
+      <p class="menu-subtitle">Supersonic Running Telemetry, Badnik Motobugs & Real Sonic Voice!</p>
+      
+      <div class="menu-options-grid" style="max-width: 500px;">
+        <button class="real-btn real-btn-primary" onclick="startGame()">🌀 ENTER GREEN HILL ZONE ACT 1</button>
+        <button class="real-btn real-btn-secondary" onclick="window.speakCartoonLine('sonic')">🗣️ SONIC REAL VOICE</button>
+        <button class="real-btn real-btn-danger" onclick="exitToHub()">✕ EXIT TO ADVENTURE PARK</button>
+      </div>
+
+      <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 14px; font-family: 'Chakra Petch', sans-serif;">
+        Controls: <strong>A / D or ⬅️ ➡️</strong> Lane Steer | <strong>W / ⬆️</strong> Jump | <strong>[HOLD S / ⬇️]</strong> Charge Spin Dash | <strong>[SPACE]</strong> Homing Attack
+      </div>
+    </div>
+
+    <!-- In-Game Top Telemetry HUD -->
+    <div id="in-game-hud" class="game-hud-top" style="display: none;">
+      <!-- Zone Signboard -->
+      <div class="real-signboard blue">
+        <span style="font-size: 1.6rem;">🌴</span>
+        <div>
+          <div class="real-sign-text">GREEN HILL ZONE · ACT 1</div>
+          <div class="real-sign-sub">SOUTH ISLAND HIGH-SPEED LOOP</div>
+        </div>
+        <div class="real-sign-dist" id="hud-distance" style="background:#fff;color:#0284c7;">0.0 KM</div>
+      </div>
+
+      <!-- Telemetry Cluster -->
+      <div class="real-telemetry-cluster">
+        <div class="real-telem-box">
+          <span class="real-telem-label">GOLDEN RINGS</span>
+          <span class="real-telem-val gold" id="hud-rings">🪙 x0</span>
+        </div>
+        <div class="real-telem-div"></div>
+        <div class="real-telem-box">
+          <span class="real-telem-label">STAGE TIMER</span>
+          <span class="real-telem-val cyan" id="hud-timer">00:00.00</span>
+        </div>
+        <div class="real-telem-div"></div>
+        <div class="real-telem-box">
+          <span class="real-telem-label">SPIN CHARGE</span>
+          <span class="real-telem-val emerald" id="hud-spin-status">READY ⚡</span>
+        </div>
+      </div>
+
+      <!-- Exit Button -->
+      <button class="hud-btn btn-pink" onclick="exitToHub()">✕ EXIT</button>
+    </div>
+
+    <!-- Green Hill Radar (Top Right) -->
+    <div class="real-radar-deck" id="sonic-radar" style="display: none;">
+      <div class="real-radar-title">ZONE RADAR</div>
+      <div class="real-radar-cross-h"></div>
+      <div class="real-radar-cross-v"></div>
+      <div class="real-radar-sweep"></div>
+      <div class="real-radar-player" style="background:#00f0ff;"></div>
+      <div class="real-radar-blips" id="radar-blips"></div>
+    </div>
+
+    <!-- Supersonic Speedometer Gauge (Bottom Left) -->
+    <div class="real-speedo-cluster" id="speedo-cluster" style="display: none;">
+      <div class="real-speedo-dial">
+        <svg viewBox="0 0 80 80" style="width:100%;height:100%;">
+          <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="6"/>
+          <circle cx="40" cy="40" r="32" fill="none" stroke="#ffd60a" stroke-width="6" stroke-dasharray="150" stroke-dashoffset="35" stroke-linecap="round"/>
+        </svg>
+        <div class="real-speedo-needle" id="speedo-needle" style="background:#ffd60a;box-shadow:0 0 8px #ffd60a;"></div>
+        <div class="real-speedo-center"></div>
+      </div>
+      <div class="real-speedo-info">
+        <span class="real-speedo-num" id="hud-sonic-speed">180</span>
+        <span class="real-speedo-unit">MPH · SONIC VELOCITY</span>
+        <span class="real-speedo-gear" id="hud-sonic-gear">MACH RUN</span>
+      </div>
+    </div>
+
+    <!-- Hazard Flasher -->
+    <div class="real-hazard-flasher" id="hazard-flasher">
+      <span style="font-size: 1.3rem;">⚠️</span>
+      <span id="hazard-text">ALERT: EGGMOBILE BADNIK BARRICADE!</span>
+    </div>
+
+    <!-- Dialogue Box -->
+    <div id="dialogue-box" class="dialogue-overlay-box" style="display: none; top: 90px;">
+      <div class="dialogue-avatar" id="dialogue-avatar">🦔</div>
+      <div style="flex-grow: 1;">
+        <div class="dialogue-speaker" id="dialogue-speaker">Sonic the Hedgehog</div>
+        <div class="dialogue-text" id="dialogue-text">"You're too slow! Time to rev up the Spin Dash and blast through Dr. Eggman's Badniks!"</div>
+      </div>
+    </div>
+
+    <!-- Action Ability Bar -->
+    <div id="ability-bar" class="action-ability-bar" style="display: none; bottom: 84px;">
+      <button class="ability-btn cyan" onmousedown="triggerSpinDash(true)" onmouseup="triggerSpinDash(false)">
+        🌀 [HOLD S] Charge Spin Dash
+      </button>
+      <button class="ability-btn gold" onclick="triggerHomingAttack()">
+        🎯 [SPACE TWICE] Homing Attack
+      </button>
+    </div>
+
+    <!-- 5-Angle Camera Bar -->
+    <div class="camera-control-bar" style="bottom: 20px; right: 20px;">
+      <button class="hud-btn active" id="cam-back" onclick="setCameraView('back')">🎥 CHASE</button>
+      <button class="hud-btn" id="cam-front" onclick="setCameraView('front')">📸 FRONT</button>
+      <button class="hud-btn" id="cam-left" onclick="setCameraView('left')">📐 LEFT</button>
+      <button class="hud-btn" id="cam-right" onclick="setCameraView('right')">📐 RIGHT</button>
+      <button class="hud-btn" id="cam-top" onclick="setCameraView('top')">🚁 TOP</button>
+    </div>
+
+    <!-- Modals -->
+    <div id="custom-modal" class="custom-arcade-modal" style="display: none;" onclick="if(event.target===this)closeCustomModal()">
+      <div class="modal-card-glow" id="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
