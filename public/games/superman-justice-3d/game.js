@@ -656,20 +656,79 @@ function setupKeyListeners() {
   window.addEventListener('keydown', (e) => {
     keys[e.key] = true;
     if (e.key === ' ' && isPlaying) triggerSonicFlight();
-    if (e.key === 'f' || e.key === 'F') triggerHeatVision();
-    if (e.key === 'r' || e.key === 'R') triggerFreezeBreath();
-    if (e.key === 'e' || e.key === 'E') triggerSuperPunch();
-    if (e.key === 'q' || e.key === 'Q') triggerShield();
+    if (e.key === 'f' || e.key === 'F' || e.key === 'q' || e.key === 'Q') triggerHeatVision();
+    if (e.key === 'r' || e.key === 'R' || e.key === 'e' || e.key === 'E') triggerFreezeBreath();
     if (e.key === 's' || e.key === 'S') diveToGround();
     if (e.key === 'w' || e.key === 'W') { targetAltitude = 120; }
     if (e.key === 'a' || e.key === 'A' || e.key === 'ArrowLeft') targetX = Math.max(-16, targetX - 4.0);
     if (e.key === 'd' || e.key === 'D' || e.key === 'ArrowRight') targetX = Math.min(16, targetX + 4.0);
   });
+
   window.addEventListener('keyup', (e) => { keys[e.key] = false; });
+
+  // Native Mobile Touch Drag Flight Steering & Gestures
+  let touchStartX = 0, touchStartY = 0, lastTouchX = 0, lastTouchY = 0;
+  window.addEventListener('touchstart', (e) => {
+    if (!isPlaying || e.touches.length === 0) return;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    lastTouchX = touchStartX;
+    lastTouchY = touchStartY;
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (e) => {
+    if (!isPlaying || e.touches.length === 0) return;
+    const currentX = e.touches[0].clientX;
+    const currentY = e.touches[0].clientY;
+    const dx = currentX - lastTouchX;
+    const dy = currentY - lastTouchY;
+    const sens = (window.innerWidth < 650) ? 0.08 : 0.05;
+    targetX = Math.max(-16, Math.min(16, targetX + dx * sens));
+    targetAltitude = Math.max(15, Math.min(130, targetAltitude - dy * 0.4));
+    lastTouchX = currentX;
+    lastTouchY = currentY;
+  }, { passive: true });
+
+  window.addEventListener('touchend', (e) => {
+    if (!isPlaying) return;
+    const touch = e.changedTouches[0];
+    if (!touch) return;
+    const dy = touch.clientY - touchStartY;
+    const dx = touch.clientX - touchStartX;
+    if (dy < -45 && Math.abs(dy) > Math.abs(dx)) {
+      triggerSonicFlight(); // Swipe up = Mach 3 Boost
+    } else if (Math.abs(dx) < 15 && Math.abs(dy) < 15) {
+      triggerHeatVision(); // Tap = Heat Vision
+    }
+  }, { passive: true });
+
+  // Hook into Universal Touch Controller
+  if (window.arcadeTouchController) {
+    window.arcadeTouchController.callbacks.steer = (dx, dy) => {
+      const factor = (window.innerWidth < 650) ? 0.08 : 0.05;
+      targetX = Math.max(-16, Math.min(16, targetX + dx * factor));
+      targetAltitude = Math.max(15, Math.min(130, targetAltitude - dy * 0.4));
+    };
+    window.arcadeTouchController.callbacks.jump = () => {
+      if (isPlaying) triggerSonicFlight();
+    };
+    window.arcadeTouchController.callbacks.swing = () => {
+      if (isPlaying) diveToGround();
+    };
+    window.arcadeTouchController.callbacks.action1 = () => {
+      if (isPlaying) triggerHeatVision();
+    };
+    window.arcadeTouchController.createMobileActionCluster({
+      primary: { icon: '🔥', color: '#f43f5e', action: () => triggerHeatVision() },
+      secondary: { icon: '❄️', color: '#38bdf8', action: () => triggerFreezeBreath() }
+    });
+  }
+
   window.addEventListener('resize', onWindowResize);
+  window.addEventListener('orientationchange', onWindowResize);
 }
 
-/* ─── ANIMATION LOOP ─── */
+/* ── ANIMATION LOOP ── */
 function animate() {
   requestAnimationFrame(animate);
   const delta = Math.min(clock.getDelta(), 0.05);
@@ -684,67 +743,48 @@ function animate() {
       if (chunk.position.z > CHUNK_SIZE) chunk.position.z -= TOTAL_CHUNKS * CHUNK_SIZE;
     });
 
-    // Altitude Interpolation (Dive vs Soar)
-    flightAltitude += (targetAltitude - flightAltitude) * Math.min(1.0, 4.0 * delta);
-    supermanX += (targetX - supermanX) * Math.min(1.0, 8.0 * delta);
-
-    supermanGroup.position.set(supermanX, flightAltitude > 0 ? 4 : -7.5, 0);
-    supermanGroup.rotation.z = (targetX - supermanX) * -0.06;
-
-    // Billow cape
-    if (capeMesh) capeMesh.rotation.x = Math.PI / 2 + Math.sin(clock.getElapsedTime() * 12) * 0.15;
-
-    // Update active villains
-    activeVillains.forEach(boss => {
-      boss.position.z += forwardStep * 0.65;
-      if (boss.position.z > 20) boss.position.z = -120 - Math.random() * 30;
-
-      if (boss.position.distanceTo(supermanGroup.position) < 4.5) {
-        damageActiveBoss(20);
-        boss.position.z = -100;
+    // Stream Debris
+    debrisMeshes.forEach(d => {
+      d.position.z += forwardStep * 0.75;
+      if (d.position.z > 30) {
+        d.position.z = -220 - Math.random() * 80;
+        d.position.x = (Math.random() - 0.5) * 32;
+        d.position.y = 20 + Math.random() * 45;
       }
     });
 
-    // Update thieves on ground
-    activeThieves.forEach(thief => {
-      thief.position.z += forwardStep * 0.5;
-      if (thief.position.z > 20) thief.position.z = -140 - Math.random() * 30;
+    // Smooth Flying Physics
+    supermanGroup.position.x += (targetX - supermanGroup.position.x) * Math.min(1.0, 8.0 * delta);
+    supermanGroup.position.y += (targetAltitude - supermanGroup.position.y) * Math.min(1.0, 6.0 * delta);
+
+    // Roll banking in turns
+    const rollAngle = -(targetX - supermanGroup.position.x) * 0.08;
+    supermanGroup.rotation.z += (rollAngle - supermanGroup.rotation.z) * Math.min(1.0, 10.0 * delta);
+
+    // Update active villains
+    activeVillains.forEach(v => {
+      v.position.z += forwardStep * 0.6;
+      if (v.position.z > 25) {
+        v.position.z = -180 - Math.random() * 60;
+        v.position.x = (Math.random() - 0.5) * 30;
+      }
     });
 
-    // Radar
-    updateMetropolisRadar();
+    // Animate Cape flutter
+    if (capeMesh) {
+      const t = clock.getElapsedTime() * 15;
+      capeMesh.rotation.x = Math.PI / 4 + Math.sin(t) * 0.15;
+      capeMesh.rotation.y = Math.cos(t * 0.8) * 0.08;
+    }
   }
 
   updateCamera(delta);
   renderer.render(scene, camera);
 }
 
-function updateMetropolisRadar() {
-  const blips = document.getElementById('radar-blips');
-  if (!blips) return;
-  blips.innerHTML = '';
-
-  activeVillains.forEach(b => {
-    const relZ = b.position.z - supermanGroup.position.z;
-    if (relZ < 0 && relZ > -90) {
-      const blipX = 68 + (b.position.x / 18.0) * 45;
-      const blipY = 112 + (relZ / 90) * 85;
-      const blip = document.createElement('div');
-      blip.style.position = 'absolute';
-      blip.style.left = `${blipX}px`;
-      blip.style.top = `${blipY}px`;
-      blip.style.width = '8px';
-      blip.style.height = '8px';
-      blip.style.borderRadius = '50%';
-      blip.style.background = '#ef4444';
-      blip.style.transform = 'translate(-50%, -50%)';
-      blips.appendChild(blip);
-    }
-  });
-}
-
 function updateCamera(delta) {
   let tx, ty, tz;
+  const isMobile = window.innerWidth < 650;
   if (cameraView === 'front') {
     tx = supermanGroup.position.x;
     ty = supermanGroup.position.y + 0.5;
@@ -758,44 +798,39 @@ function updateCamera(delta) {
     camera.position.set(tx, ty, tz);
     camera.lookAt(supermanGroup.position.x, supermanGroup.position.y, -15);
   } else {
-    // Smooth chase positioned so Superman is elevated into the upper-middle clear sky, 100% unobscured by buttons or tabs
-    tx = supermanGroup.position.x * 0.45;
-    ty = supermanGroup.position.y + 1.8;
-    tz = supermanGroup.position.z + 14.5;
+    // Elevate Superman high and clear into the sky with zero obstructions
+    tx = supermanGroup.position.x * 0.4;
+    ty = supermanGroup.position.y + (isMobile ? 3.0 : 2.2);
+    tz = supermanGroup.position.z + (isMobile ? 16.5 : 14.5);
     camera.position.x += (tx - camera.position.x) * Math.min(1.0, 10.0 * delta);
     camera.position.y += (ty - camera.position.y) * Math.min(1.0, 10.0 * delta);
     camera.position.z += (tz - camera.position.z) * Math.min(1.0, 10.0 * delta);
-    camera.lookAt(supermanGroup.position.x * 0.4, supermanGroup.position.y - 0.4, -20);
+    camera.lookAt(supermanGroup.position.x * 0.4, supermanGroup.position.y - 0.2, -20);
   }
 }
 
-function setCameraView(view) {
-  cameraView = view;
-  document.querySelectorAll('.camera-control-bar .hud-btn').forEach(b => b.classList.remove('active'));
-  const btn = document.getElementById(`cam-${view}`);
-  if (btn) btn.classList.add('active');
-}
-
 function showDialogue(speaker, msg, avatar = '🦸‍♂️') {
-  const dlg = document.getElementById('dialogue-box');
+  const dlg = document.getElementById('dialogue');
   if (!dlg) return;
-  document.getElementById('dialogue-speaker').textContent = speaker;
-  document.getElementById('dialogue-text').textContent = msg;
-  document.getElementById('dialogue-avatar').textContent = avatar;
+  const nameEl = document.getElementById('dlg-name');
+  const textEl = document.getElementById('dlg-text');
+  const avEl = document.getElementById('dlg-avatar');
+  if (nameEl) nameEl.textContent = speaker;
+  if (textEl) textEl.textContent = msg;
+  if (avEl) avEl.textContent = avatar;
   dlg.style.display = 'flex';
-  setTimeout(() => { dlg.style.display = 'none'; }, 4500);
+  setTimeout(() => { dlg.style.display = 'none'; }, 3000);
 }
 
 function startGame() {
   document.getElementById('main-menu').style.display = 'none';
-  document.getElementById('in-game-hud').style.display = 'flex';
-  document.getElementById('metropolis-radar').style.display = 'block';
-  document.getElementById('speedo-cluster').style.display = 'flex';
-  document.getElementById('ability-bar').style.display = 'flex';
+  const hudStrip = document.getElementById('hud-strip');
+  if (hudStrip) hudStrip.style.display = 'flex';
 
   isPlaying = true;
   bossHealth = 100;
-  showDialogue('Superman', '"Metropolis patrol active. Use [F] for Heat Vision, [R] Freeze Breath, [E] Punch, [S] Dive to Ground!"', '🦸‍♂️');
+  loadStage(1);
+  showDialogue('Superman', 'Stage 1: Protect Metropolis from Lex Luthor drone waves!', '🦸‍♂️');
 }
 
 function exitToHub() {
@@ -803,9 +838,16 @@ function exitToHub() {
 }
 
 function onWindowResize() {
-  camera.aspect = window.innerWidth / window.innerHeight;
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  camera.aspect = w / h;
+  if (w < 650) {
+    camera.fov = 75;
+  } else {
+    camera.fov = 60;
+  }
   camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(w, h);
 }
 
 window.addEventListener('DOMContentLoaded', initEngine);

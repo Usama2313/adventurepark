@@ -131,20 +131,56 @@ class AdventureParkApp {
   getGameCatalog() {
     return [
       {
+        id: "game_spiderman_swing",
+        title: "Spider-Verse: Manhattan Horizon 3D 🕷️",
+        category: "action",
+        zone: "action",
+        cost: 15,
+        isBonusOnly: false,
+        icon: "🕷️",
+        banner: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&auto=format&fit=crop&q=60",
+        desc: "30-stage Manhattan web-slinging adventure! Red & Black Suit modes, high-speed wall climbing, police backup & Green Goblin grand finale!",
+        url: "games/spiderman-web-city-3d/index.html"
+      },
+      {
+        id: "game_superman_metropolis",
+        title: "Titan of Metropolis: Flight of Steel 3D 🦸‍♂️",
+        category: "action",
+        zone: "action",
+        cost: 15,
+        isBonusOnly: false,
+        icon: "🦸‍♂️",
+        banner: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&auto=format&fit=crop&q=60",
+        desc: "Open-world flight simulation! Mach 3 sonic speed, Heat Vision beam attacks, Arctic Freeze Breath & 30 Lex Luthor invasion stages.",
+        url: "games/superman-justice-3d/index.html"
+      },
+      {
+        id: "game_batman_arkham",
+        title: "Shadow Knight: Gotham Noir 3D 🦇",
+        category: "action",
+        zone: "action",
+        cost: 15,
+        isBonusOnly: false,
+        icon: "🦇",
+        banner: "https://images.unsplash.com/photo-1508974239320-0a029497e820?w=600&auto=format&fit=crop&q=60",
+        desc: "Dark tactical stealth-action in Gotham! Bat-Cape gliding, gargoyle grapple hooks, smoke pellet traps & Arkham rogues gallery.",
+        url: "games/batman-arkham-3d/index.html"
+      },
+      {
         id: "game_shinchan_run",
-        title: "Shin-chan: The Great Kasukabe Run! 🏃‍♂️💨",
+        title: "Kasukabe Rampage: Mega Chocobi Rush 3D 🏃‍♂️💨",
         category: "family",
         zone: "family",
         cost: 10,
         isBonusOnly: false,
         icon: "👦",
         banner: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=60",
-        desc: "3D Kasukabe endless runner! Misae's Bicycle Rollout, Hiroshi's Smelly Shoe blast, Shiro's Cookie Magnet & Ultimate Butt-Dash!",
+        desc: "Endless Kasukabe dash! Misae's Bicycle Rollout, Hiroshi's Smelly Shoe blast, Shiro's Cookie Magnet & Ultimate Butt-Dash speed boost.",
         url: "games/shinchan-helper-3d/index.html"
       },
       {
         id: "game_doraemon_quest",
-        title: "Doraemon: Cosmic Gadget Quest 🌌",
+        title: "Cosmic Gadget Odyssey: Chrono Warp 3D 🌌",
         category: "family",
         zone: "family",
         cost: 10,
@@ -155,44 +191,8 @@ class AdventureParkApp {
         url: "games/doraemon-sky-ocean-3d/index.html"
       },
       {
-        id: "game_superman_metropolis",
-        title: "Superman: Protector of Metropolis 🦸‍♂️",
-        category: "action",
-        zone: "action",
-        cost: 15,
-        isBonusOnly: false,
-        icon: "🦸‍♂️",
-        banner: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&auto=format&fit=crop&q=60",
-        desc: "Open-world flight simulation! Launch into orbit at Mach 3, melt falling space debris with Heat Vision & extinguish fires with Freeze Breath.",
-        url: "games/superman-justice-3d/index.html"
-      },
-      {
-        id: "game_batman_arkham",
-        title: "Batman: Arkham Shadows 🦇",
-        category: "action",
-        zone: "action",
-        cost: 15,
-        isBonusOnly: false,
-        icon: "🦇",
-        banner: "https://images.unsplash.com/photo-1508974239320-0a029497e820?w=600&auto=format&fit=crop&q=60",
-        desc: "Dark tactical stealth-action in Gotham! Glide with Bat-Cape, zip up to gargoyles with Bat-Grapple & throw blinding Smoke Pellets.",
-        url: "games/batman-arkham-3d/index.html"
-      },
-      {
-        id: "game_spiderman_swing",
-        title: "Spider-Man: Web Defender 3D 🕷️",
-        category: "action",
-        zone: "action",
-        cost: 15,
-        isBonusOnly: false,
-        icon: "🕷️",
-        banner: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&auto=format&fit=crop&q=60",
-        desc: "Red & Black Suit modes! Wall-climb with fingers, run over cars & subway trains, rescue Mary Jane, net thieves with police, and battle all 30+ villains!",
-        url: "games/spiderman-web-city-3d/index.html"
-      },
-      {
         id: "game_barbie_bratz",
-        title: "Barbie, Bratz & Princess 3D 💖",
+        title: "Glamour Royalty: Fashion Runway Dreams 3D 💖",
         category: "family",
         zone: "family",
         cost: 15,
@@ -204,7 +204,7 @@ class AdventureParkApp {
       },
       {
         id: "game_nfs_drift",
-        title: "Need for Speed: Neon Drift 🏎️💨",
+        title: "Apex Velocity: Neon Cyber Drift 3D 🏎️💨",
         category: "speed",
         zone: "speed",
         cost: 15,
@@ -216,7 +216,7 @@ class AdventureParkApp {
       },
       {
         id: "game_sonic_dash",
-        title: "Sonic Sega Dash: Generations 🦔⚡",
+        title: "Turbo Hedgehog: Mach Velocity Dash 3D 🦔⚡",
         category: "speed",
         zone: "speed",
         cost: 10,
@@ -228,7 +228,7 @@ class AdventureParkApp {
       },
       {
         id: "game_helicopter_rescue",
-        title: "Helicopter: Emergency Response 3D 🚁",
+        title: "Air Rescue Alpha: Apex Medevac 3D 🚁",
         category: "speed",
         zone: "speed",
         cost: 15,
@@ -240,7 +240,7 @@ class AdventureParkApp {
       },
       {
         id: "game_airplane_flight",
-        title: "Global Airplane Flight Simulator ✈️",
+        title: "Sky Horizon: Global Jetliner Ace 3D ✈️",
         category: "speed",
         zone: "speed",
         cost: 15,
@@ -252,7 +252,7 @@ class AdventureParkApp {
       },
       {
         id: "game_thief_capture",
-        title: "Thief Capture: District Patrol 👮‍♂️🚓",
+        title: "Hot Pursuit: Interceptor City Patrol 3D 👮‍♂️🚓",
         category: "action",
         zone: "defense",
         cost: 15,
@@ -264,7 +264,7 @@ class AdventureParkApp {
       },
       {
         id: "game_sweet_blast",
-        title: "Sweet Blast: Jelly Paradise 🍬🍰",
+        title: "Sugar Avalanche: Candy Kingdom Galaxy 3D 🍬🍰",
         category: "sweet",
         zone: "sweet",
         cost: 10,
@@ -276,7 +276,7 @@ class AdventureParkApp {
       },
       {
         id: "game_ninja_shadow",
-        title: "Ninja Shadow Blade 3D 🥷",
+        title: "Shadow Blade: Shinobi Katana Reign 3D 🥷",
         category: "action",
         zone: "action",
         cost: 15,
@@ -288,7 +288,7 @@ class AdventureParkApp {
       },
       {
         id: "game_army_zombies",
-        title: "Project IGI: Zombie Commando 3D 🧟",
+        title: "Project Biohazard: Special Forces Outbreak 3D 🧟",
         category: "action",
         zone: "action",
         cost: 15,
@@ -297,6 +297,42 @@ class AdventureParkApp {
         banner: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&auto=format&fit=crop&q=60",
         desc: "Project IGI stealth commando & zombie outbreak shooter! Assault rifle headshots, alarm towers, zombie waves & 30 stages.",
         url: "games/army-zombies-3d/index.html"
+      },
+      {
+        id: "game_saiyan_ki",
+        title: "Dragon Ki: Astral Awakening 3D ⚡",
+        category: "action",
+        zone: "action",
+        cost: 15,
+        isBonusOnly: false,
+        icon: "⚡",
+        banner: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=60",
+        desc: "Charge Ki aura, fire Kamehameha energy beams, teleport behind galactic foes and ascend to Super Saiyan God across 30 cosmic stages!",
+        url: "games/super-saiyan-ki-3d/index.html"
+      },
+      {
+        id: "game_kiteretsu_quest",
+        title: "Chrono Inventors: Korosuke Robo Quest 3D 🤖",
+        category: "family",
+        zone: "family",
+        cost: 10,
+        isBonusOnly: false,
+        icon: "🤖",
+        banner: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=60",
+        desc: "Assemble historic time-travel gadgets with Korosuke! Katana strikes, Edo period exploration, clockwork contraptions & 30 stages.",
+        url: "games/kiteretsu-korosuke-3d/index.html"
+      },
+      {
+        id: "game_bomberman_rescue",
+        title: "Nitro Blaster: Cyber Blast Arena 3D 💣",
+        category: "action",
+        zone: "action",
+        cost: 15,
+        isBonusOnly: false,
+        icon: "💣",
+        banner: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=60",
+        desc: "Classic arcade bomb-dropping tactical action! Place plasma bombs, blast maze walls, rescue trapped robotic allies & defeat Cyber Bosses.",
+        url: "games/bomberman-rescue-3d/index.html"
       }
     ];
   }

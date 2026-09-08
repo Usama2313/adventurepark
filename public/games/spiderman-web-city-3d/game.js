@@ -908,7 +908,64 @@ function setupKeyListeners() {
   window.addEventListener('mouseup', (e) => {
     if (isPlaying && e.button === 0) triggerWebSwing(false);
   });
+
+  // Native Touch Drag Steering & Gestures for Mobile
+  let touchStartX = 0, touchStartY = 0, lastTouchX = 0;
+  window.addEventListener('touchstart', (e) => {
+    if (!isPlaying || e.touches.length === 0) return;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    lastTouchX = touchStartX;
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (e) => {
+    if (!isPlaying || e.touches.length === 0) return;
+    const currentX = e.touches[0].clientX;
+    const dx = currentX - lastTouchX;
+    const sensitivity = (window.innerWidth < 650) ? 0.08 : 0.05;
+    targetX = Math.max(-16, Math.min(16, targetX + dx * sensitivity));
+    lastTouchX = currentX;
+  }, { passive: true });
+
+  window.addEventListener('touchend', (e) => {
+    if (!isPlaying) return;
+    const touch = e.changedTouches[0];
+    if (!touch) return;
+    const dy = touch.clientY - touchStartY;
+    const dx = touch.clientX - touchStartX;
+    if (dy < -40 && Math.abs(dy) > Math.abs(dx)) {
+      triggerWebZip(); // Swipe up = Zip
+    } else if (Math.abs(dx) < 15 && Math.abs(dy) < 15) {
+      shootWebNet(); // Tap = Web Net
+    }
+  }, { passive: true });
+
+  // Hook into Universal Touch Controller for Action Buttons
+  if (window.arcadeTouchController) {
+    window.arcadeTouchController.callbacks.steer = (dx, dy) => {
+      const factor = (window.innerWidth < 650) ? 0.08 : 0.05;
+      targetX = Math.max(-16, Math.min(16, targetX + dx * factor));
+    };
+    window.arcadeTouchController.callbacks.jump = () => {
+      if (isPlaying) triggerWebZip();
+    };
+    window.arcadeTouchController.callbacks.swing = () => {
+      if (isPlaying) {
+        triggerWebSwing(true);
+        setTimeout(() => triggerWebSwing(false), 500);
+      }
+    };
+    window.arcadeTouchController.callbacks.action1 = () => {
+      if (isPlaying) shootWebNet();
+    };
+    window.arcadeTouchController.createMobileActionCluster({
+      primary: { icon: '🕸️', color: '#10b981', action: () => shootWebNet() },
+      secondary: { icon: '⚡', color: '#38bdf8', action: () => triggerWebZip() }
+    });
+  }
+
   window.addEventListener('resize', onWindowResize);
+  window.addEventListener('orientationchange', onWindowResize);
 }
 
 /* ─── PROCEDURAL AUDIO SYNTHESIZER ─── */
@@ -1256,6 +1313,7 @@ function updateSpideyRadar() {
 
 function updateCamera(delta) {
   let tx, ty, tz;
+  const isMobile = window.innerWidth < 650;
   if (cameraView === 'front') {
     tx = spideyGroup.position.x;
     ty = spideyGroup.position.y + 0.6;
@@ -1269,14 +1327,14 @@ function updateCamera(delta) {
     camera.position.set(tx, ty, tz);
     camera.lookAt(spideyGroup.position.x, spideyGroup.position.y, -15);
   } else {
-    // Chase camera smoothly framed behind Spider-Man
-    tx = spideyGroup.position.x * 0.45;
-    ty = spideyGroup.position.y + 3.2;
-    tz = spideyGroup.position.z + 9.5;
+    // Cinematic Third-Person behind Spider-Man with generous clearance so hero is never blocked
+    tx = spideyGroup.position.x * 0.4;
+    ty = spideyGroup.position.y + (isMobile ? 4.2 : 3.6);
+    tz = spideyGroup.position.z + (isMobile ? 11.5 : 9.8);
     camera.position.x += (tx - camera.position.x) * Math.min(1.0, 10.0 * delta);
     camera.position.y += (ty - camera.position.y) * Math.min(1.0, 10.0 * delta);
     camera.position.z += (tz - camera.position.z) * Math.min(1.0, 10.0 * delta);
-    camera.lookAt(spideyGroup.position.x * 0.5, spideyGroup.position.y + 0.5, -20);
+    camera.lookAt(spideyGroup.position.x * 0.4, spideyGroup.position.y + 1.2, -20);
   }
 }
 
@@ -1292,12 +1350,12 @@ function showDialogue(speaker, msg, avatar = '🕷️') {
   if (!dlg) return;
   const nameEl = document.getElementById('dlg-name');
   const textEl = document.getElementById('dlg-text');
-  const avatEl = document.getElementById('dlg-avatar');
+  const avEl = document.getElementById('dlg-avatar');
   if (nameEl) nameEl.textContent = speaker;
   if (textEl) textEl.textContent = msg;
-  if (avatEl) avatEl.textContent = avatar;
+  if (avEl) avEl.textContent = avatar;
   dlg.style.display = 'flex';
-  setTimeout(() => { dlg.style.display = 'none'; }, 4000);
+  setTimeout(() => { dlg.style.display = 'none'; }, 3000);
 }
 
 function startGame() {
@@ -1310,7 +1368,7 @@ function startGame() {
   isPlaying = true;
   bossHealth = 100;
   loadStage(1);
-  showDialogue('Spider-Man', '"30 stages await! Q=Swing, E=Net Thief, W=Climb, C=Suit, M=Save MJ!"', '🕷️');
+  showDialogue('Spider-Man', 'Stage 1: Protect New York! Net all syndicate thieves!', '🕷️');
 }
 
 function exitToHub() {
