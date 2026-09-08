@@ -989,4 +989,8 @@ server.on('error', (err) => {
   }
 });
 
-startListening(PORT);
+if (require.main === module) {
+  startListening(PORT);
+}
+
+module.exports = server;
