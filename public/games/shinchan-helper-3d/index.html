@@ -623,8 +623,8 @@
       </div>
     </div>
 
-    <!-- FAMILY & ACTION KAMEN ABILITY TACTICAL BAR (PC & MOBILE) -->
-    <div id="ability-bar" style="display:flex; flex-wrap:wrap; gap:8px;">
+    <!-- FAMILY & ACTION KAMEN ABILITY TACTICAL BAR (Hidden to keep Shinchan 100% visible - accessible via CONTROLS guide) -->
+    <div id="ability-bar" style="display:none !important;">
       <button class="abtn abtn-dash" id="btn-action-beam" onclick="triggerActionKamenBeam()" style="background:linear-gradient(135deg, #10b981, #06b6d4); color:#fff; border:1px solid #10b981;" title="PC: K | Tap">
         <span style="font-size:1.2rem;">⚡</span>
         <span>[PC: K | TAP] ACTION KAMEN BEAM</span>
@@ -655,8 +655,8 @@
       <button class="cbtn" onclick="setCamera('side')" id="cam-side">📐 SIDE</button>
     </div>
 
-    <!-- MOBILE TOUCH CONTROLS -->
-    <div id="touch-controls">
+    <!-- MOBILE TOUCH CONTROLS (Managed universally by common-touch-controls) -->
+    <div id="touch-controls" style="display:none !important;">
       <div class="touch-row"><button class="tbtn" onclick="doAction('jump')">⬆️</button></div>
       <div class="touch-row">
         <button class="tbtn" onclick="doAction('left')">⬅️</button>
@@ -676,6 +676,7 @@
   </div>
 </div>
 
+<script src="../common-touch-controls.js"></script>
 <script src="game.js"></script>
 </body>
 </html>

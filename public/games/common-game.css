@@ -601,17 +601,15 @@ body, html {
   100% { transform: translate(-50%, 0) scale(1); opacity: 1; }
 }
 
-/* Ability Buttons Bar */
+/* Ability Buttons Bar - Hidden by default to keep player 100% visible; accessible via Controls Guide */
 .action-ability-bar {
+  display: none !important;
   position: absolute;
-  bottom: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 12px;
+  bottom: 20px;
+  right: 20px;
+  gap: 8px;
   z-index: 150;
   flex-wrap: wrap;
-  justify-content: center;
 }
 
 .ability-btn {
