@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GLOBAL AIRPLANE FLIGHT SIMULATOR ✈️ | Real-World Glass Cockpit</title>
+  <title>GLOBAL AIRPLANE FLIGHT SIMULATOR âœˆï¸ | Real-World Glass Cockpit</title>
   <link rel="stylesheet" href="../common-game.css">
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700;900&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -18,14 +18,14 @@
 
     <!-- Main Menu Overlay -->
     <div id="main-menu" class="game-main-menu">
-      <div style="font-size: 3.5rem; margin-bottom: 8px; animation: agentFloat 2.5s infinite ease-in-out;">✈️ 🛫 🛬 🌍 ☁️</div>
+      <div style="font-size: 3.5rem; margin-bottom: 8px; animation: agentFloat 2.5s infinite ease-in-out;">âœˆï¸ ðŸ›« ðŸ›¬ ðŸŒ â˜ï¸</div>
       <h1 class="menu-title-glow">GLOBAL AIRPLANE FLIGHT SIMULATOR</h1>
       <p class="menu-subtitle">Commercial Jetliner Glass Cockpit Avionics & ATC Speech!</p>
       
       <div class="menu-options-grid" style="max-width: 500px;">
-        <button class="real-btn real-btn-primary" onclick="startGame()">🛫 CLEARANCE FOR TAKEOFF (RUNWAY 04L)</button>
-        <button class="real-btn real-btn-secondary" onclick="window.speakCartoonLine('atc')">🗣️ TOWER ATC VOICE</button>
-        <button class="real-btn real-btn-danger" onclick="exitToHub()">✕ EXIT TO ADVENTURE PARK</button>
+        <button class="real-btn real-btn-primary" onclick="startGame()">ðŸ›« CLEARANCE FOR TAKEOFF (RUNWAY 04L)</button>
+        <button class="real-btn real-btn-secondary" onclick="window.speakCartoonLine('atc')">ðŸ—£ï¸ TOWER ATC VOICE</button>
+        <button class="real-btn real-btn-danger" onclick="exitToHub()">âœ• EXIT TO ADVENTURE PARK</button>
       </div>
 
       <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 14px; font-family: 'Chakra Petch', sans-serif;">
@@ -37,10 +37,10 @@
     <div id="in-game-hud" class="game-hud-top" style="display: none;">
       <!-- Flight Plan Signboard -->
       <div class="real-signboard blue">
-        <span style="font-size: 1.6rem;">✈️</span>
+        <span style="font-size: 1.6rem;">âœˆï¸</span>
         <div>
-          <div class="real-sign-text">FLIGHT PA-702 · HANEDA (RJTT) ➔ SFO</div>
-          <div class="real-sign-sub">TRANS-PACIFIC CORRIDOR · IFR FLIGHT PLAN</div>
+          <div class="real-sign-text">FLIGHT PA-702 Â· HANEDA (RJTT) âž” SFO</div>
+          <div class="real-sign-sub">TRANS-PACIFIC CORRIDOR Â· IFR FLIGHT PLAN</div>
         </div>
         <div class="real-sign-dist" id="hud-flight-alt" style="background:#fff;color:#0284c7;">10,000 FT</div>
       </div>
@@ -49,12 +49,12 @@
       <div class="real-telemetry-cluster">
         <div class="real-telem-box">
           <span class="real-telem-label">CROSSING GATES</span>
-          <span class="real-telem-val cyan" id="hud-crossings-count">0 / 8 CLEARED 🎯</span>
+          <span class="real-telem-val cyan" id="hud-crossings-count">0 / 8 CLEARED ðŸŽ¯</span>
         </div>
         <div class="real-telem-div"></div>
         <div class="real-telem-box">
           <span class="real-telem-label">AIR HURDLES</span>
-          <span class="real-telem-val gold" id="hud-hurdles-status">0 AVOIDED ⚠️</span>
+          <span class="real-telem-val gold" id="hud-hurdles-status">0 AVOIDED âš ï¸</span>
         </div>
         <div class="real-telem-div"></div>
         <div class="real-telem-box">
@@ -64,16 +64,16 @@
         <div class="real-telem-div"></div>
         <div class="real-telem-box">
           <span class="real-telem-label">LANDING GEAR</span>
-          <span class="real-telem-val gold" id="hud-gear">DOWN & LOCKED 🛞</span>
+          <span class="real-telem-val gold" id="hud-gear">DOWN & LOCKED ðŸ›ž</span>
         </div>
       </div>
 
       <!-- Top Right Action Buttons: Play Again & Exit -->
       <div style="display:flex; gap:8px;">
         <button class="hud-btn btn-primary" id="top-play-again-btn" style="background:#10b981; border-color:#059669; color:#fff; font-weight:800; font-size:0.85rem; padding:8px 16px; box-shadow:0 0 14px rgba(16,185,129,0.6);" onclick="restartFlightGame()">
-          🔄 PLAY AGAIN
+          ðŸ”„ PLAY AGAIN
         </button>
-        <button class="hud-btn btn-pink" onclick="exitToHub()">✕ EXIT</button>
+        <button class="hud-btn btn-pink" onclick="exitToHub()">âœ• EXIT</button>
       </div>
     </div>
 
@@ -99,20 +99,20 @@
       </div>
       <div class="real-speedo-info">
         <span class="real-speedo-num" id="hud-airspeed-num">280</span>
-        <span class="real-speedo-unit">KNOTS · IAS</span>
+        <span class="real-speedo-unit">KNOTS Â· IAS</span>
         <span class="real-speedo-gear" id="hud-nav-mode">CLIMB THRUST</span>
       </div>
     </div>
 
     <!-- Hazard Flasher -->
     <div class="real-hazard-flasher" id="hazard-flasher">
-      <span style="font-size: 1.3rem;">⚠️</span>
+      <span style="font-size: 1.3rem;">âš ï¸</span>
       <span id="hazard-text">ALERT: CROSSWIND SHEAR ON GLIDESLOPE!</span>
     </div>
 
     <!-- ATC Radio Dialogue Box -->
     <div id="dialogue-box" class="dialogue-overlay-box" style="display: none; top: 90px;">
-      <div class="dialogue-avatar" id="dialogue-avatar">🗼</div>
+      <div class="dialogue-avatar" id="dialogue-avatar">ðŸ—¼</div>
       <div style="flex-grow: 1;">
         <div class="dialogue-speaker" id="dialogue-speaker">Tokyo Tower ATC (118.1 MHz)</div>
         <div class="dialogue-text" id="dialogue-text">"Flight 702 heavy, radar contact. Climb and maintain flight level 120, heading 180."</div>
@@ -122,52 +122,52 @@
     <!-- Action Ability Bar (Placed Cleanly at Bottom Without Obscuring Cockpit) -->
     <div id="ability-bar" class="action-ability-bar" style="display: none; bottom: 20px; left: 50%; transform: translateX(-50%); flex-wrap:wrap; gap:8px; z-index:45; background: rgba(15,23,42,0.75); backdrop-filter: blur(12px); padding: 8px 14px; border-radius: 16px; border: 1px solid rgba(0,240,255,0.3);">
       <button class="ability-btn gold" onmousedown="triggerPitch(1)" onmouseup="triggerPitch(0)" ontouchstart="triggerPitch(1)" ontouchend="triggerPitch(0)" title="PC: S / Down | Tap">
-        🛫 [PC: S | TAP] Pull Pitch (Climb)
+        ðŸ›« [PC: S | TAP] Pull Pitch (Climb)
       </button>
       <button class="ability-btn cyan" onclick="toggleLandingGear()" title="PC: G | Tap">
-        🛞 [PC: G | TAP] Toggle Gear
+        ðŸ›ž [PC: G | TAP] Toggle Gear
       </button>
       <button class="ability-btn emerald" onclick="toggleFlaps()" title="PC: F | Tap">
-        📐 [PC: F | TAP] Flaps 20°
+        ðŸ“ [PC: F | TAP] Flaps 20Â°
       </button>
       <button class="ability-btn purple" onclick="triggerBoost()" title="PC: Space | Tap">
-        🚀 [PC: SPACE | TAP] Max Thrust
+        ðŸš€ [PC: SPACE | TAP] Max Thrust
       </button>
     </div>
 
     <!-- Mobile Flight Touch Pad -->
     <div id="mobile-pad" style="position:absolute; bottom:20px; left:20px; z-index:50; display:flex; flex-direction:column; gap:6px;">
       <div style="display:flex; justify-content:center;">
-        <button class="hud-btn" style="width:44px; height:44px; font-size:1.2rem; border-radius:50%; background:rgba(15,23,42,0.85); border:2px solid #00f0ff;" onmousedown="triggerPitch(-1)" onmouseup="triggerPitch(0)" ontouchstart="triggerPitch(-1)" ontouchend="triggerPitch(0)">⬆️</button>
+        <button class="hud-btn" style="width:44px; height:44px; font-size:1.2rem; border-radius:50%; background:rgba(15,23,42,0.85); border:2px solid #00f0ff;" onmousedown="triggerPitch(-1)" onmouseup="triggerPitch(0)" ontouchstart="triggerPitch(-1)" ontouchend="triggerPitch(0)">â¬†ï¸</button>
       </div>
       <div style="display:flex; gap:6px;">
-        <button class="hud-btn" style="width:44px; height:44px; font-size:1.2rem; border-radius:50%; background:rgba(15,23,42,0.85); border:2px solid #00f0ff;" onclick="targetBank = Math.max(-1.0, targetBank - 0.4)">⬅️</button>
-        <button class="hud-btn" style="width:44px; height:44px; font-size:1.2rem; border-radius:50%; background:rgba(15,23,42,0.85); border:2px solid #00f0ff;" onmousedown="triggerPitch(1)" onmouseup="triggerPitch(0)" ontouchstart="triggerPitch(1)" ontouchend="triggerPitch(0)">⬇️</button>
-        <button class="hud-btn" style="width:44px; height:44px; font-size:1.2rem; border-radius:50%; background:rgba(15,23,42,0.85); border:2px solid #00f0ff;" onclick="targetBank = Math.min(1.0, targetBank + 0.4)">➡️</button>
+        <button class="hud-btn" style="width:44px; height:44px; font-size:1.2rem; border-radius:50%; background:rgba(15,23,42,0.85); border:2px solid #00f0ff;" onclick="targetBank = Math.max(-1.0, targetBank - 0.4)">â¬…ï¸</button>
+        <button class="hud-btn" style="width:44px; height:44px; font-size:1.2rem; border-radius:50%; background:rgba(15,23,42,0.85); border:2px solid #00f0ff;" onmousedown="triggerPitch(1)" onmouseup="triggerPitch(0)" ontouchstart="triggerPitch(1)" ontouchend="triggerPitch(0)">â¬‡ï¸</button>
+        <button class="hud-btn" style="width:44px; height:44px; font-size:1.2rem; border-radius:50%; background:rgba(15,23,42,0.85); border:2px solid #00f0ff;" onclick="targetBank = Math.min(1.0, targetBank + 0.4)">âž¡ï¸</button>
       </div>
     </div>
 
     <!-- 5-Angle Camera Bar -->
     <div class="camera-control-bar" style="bottom: 84px; right: 20px;">
-      <button class="hud-btn active" id="cam-back" onclick="setCameraView('back')">🎥 CHASE</button>
-      <button class="hud-btn" id="cam-front" onclick="setCameraView('front')">📸 COCKPIT</button>
-      <button class="hud-btn" id="cam-left" onclick="setCameraView('left')">📐 LEFT WING</button>
-      <button class="hud-btn" id="cam-right" onclick="setCameraView('right')">📐 RIGHT WING</button>
-      <button class="hud-btn" id="cam-top" onclick="setCameraView('top')">🚁 TOP</button>
+      <button class="hud-btn active" id="cam-back" onclick="setCameraView('back')">ðŸŽ¥ CHASE</button>
+      <button class="hud-btn" id="cam-front" onclick="setCameraView('front')">ðŸ“¸ COCKPIT</button>
+      <button class="hud-btn" id="cam-left" onclick="setCameraView('left')">ðŸ“ LEFT WING</button>
+      <button class="hud-btn" id="cam-right" onclick="setCameraView('right')">ðŸ“ RIGHT WING</button>
+      <button class="hud-btn" id="cam-top" onclick="setCameraView('top')">ðŸš TOP</button>
     </div>
 
     <!-- End-Game / Flight Complete Modal with Big Play Again Button -->
     <div id="endgame-modal" style="display:none; position:absolute; inset:0; z-index:999; background:rgba(10,15,29,0.92); backdrop-filter:blur(16px); align-items:center; justify-content:center;">
       <div style="background:linear-gradient(180deg, #1e293b, #0f172a); border:2px solid #00f0ff; border-radius:24px; padding:36px; max-width:540px; width:90%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.8), 0 0 30px rgba(0,240,255,0.4);">
-        <div style="font-size:3.5rem; margin-bottom:12px;">🏆 ✈️ 🛫</div>
+        <div style="font-size:3.5rem; margin-bottom:12px;">ðŸ† âœˆï¸ ðŸ›«</div>
         <h2 id="endgame-title" style="font-family:'Orbitron',sans-serif; font-size:1.8rem; color:#ffd60a; margin-bottom:8px;">FLIGHT MISSION SUCCESS!</h2>
         <p id="endgame-subtitle" style="font-size:0.95rem; color:#cbd5e1; margin-bottom:24px;">Cleared all airway crossings, hurdle towers, and landed smoothly!</p>
         <div style="display:flex; flex-direction:column; gap:12px;">
           <button class="real-btn real-btn-primary" style="background:#10b981; border:none; padding:16px; font-size:1.2rem; font-weight:900; color:#fff; cursor:pointer; border-radius:14px; box-shadow:0 0 20px rgba(16,185,129,0.6);" onclick="restartFlightGame()">
-            🔄 PLAY AGAIN
+            ðŸ”„ PLAY AGAIN
           </button>
           <button class="real-btn real-btn-danger" style="padding:12px; cursor:pointer; border-radius:14px;" onclick="exitToHub()">
-            ✕ EXIT TO PARK
+            âœ• EXIT TO PARK
           </button>
         </div>
       </div>
@@ -183,3 +183,4 @@
   <script src="game.js"></script>
 </body>
 </html>
+

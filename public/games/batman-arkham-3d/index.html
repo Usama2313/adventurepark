@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -19,29 +19,29 @@
     <!-- Always-Visible Permanent Top Bar with PLAY AGAIN -->
     <div id="permanent-top-bar" style="position: absolute; top: 12px; right: 20px; z-index: 1000; display: flex; gap: 8px;">
       <button class="hud-btn btn-primary" id="permanent-play-again-btn" style="background:#10b981; border:2px solid #059669; color:#fff; font-weight:900; font-size:0.95rem; padding:10px 20px; border-radius:12px; box-shadow:0 0 16px rgba(16,185,129,0.7); cursor:pointer;" onclick="restartBatmanGame()">
-        🔄 PLAY AGAIN
+        ðŸ”„ PLAY AGAIN
       </button>
       <button class="hud-btn btn-pink" style="padding:10px 16px; border-radius:12px; cursor:pointer;" onclick="exitToHub()">
-        ✕ EXIT
+        âœ• EXIT
       </button>
     </div>
 
     <!-- Main Menu Overlay -->
     <div id="main-menu" class="game-main-menu">
-      <div style="font-size: 3.5rem; margin-bottom: 8px; animation: agentFloat 2.5s infinite ease-in-out;">🦇 🌑 ⚡ 🏙️ 🕵️‍♂️</div>
+      <div style="font-size: 3.5rem; margin-bottom: 8px; animation: agentFloat 2.5s infinite ease-in-out;">ðŸ¦‡ ðŸŒ‘ âš¡ ðŸ™ï¸ ðŸ•µï¸â€â™‚ï¸</div>
       <h1 class="menu-title-glow">BATMAN: ARKHAM SHADOWS</h1>
       <p class="menu-subtitle">Batcomputer Tactical Telemetry, Detective Mode Sonar, Joker Thugs & Justice League Crossover!</p>
       
       <div class="menu-options-grid" style="max-width: 520px;">
-        <button class="real-btn real-btn-primary" onclick="startGame()">🦇 ENTER GOTHAM NIGHT RUN</button>
-        <button class="real-btn real-btn-secondary" onclick="window.speakCartoonLine('batman')">🗣️ BATMAN REAL VOICE</button>
-        <button class="real-btn real-btn-secondary" onclick="window.speakCartoonLine('superman')">🦸‍♂️ CALL SUPERMAN (JUSTICE LEAGUE)</button>
-        <button class="real-btn real-btn-secondary" onclick="window.speakCartoonLine('spiderman')">🕷️ SPIDER-MAN TEAM-UP</button>
-        <button class="real-btn real-btn-danger" onclick="exitToHub()">✕ EXIT TO ADVENTURE PARK</button>
+        <button class="real-btn real-btn-primary" onclick="startGame()">ðŸ¦‡ ENTER GOTHAM NIGHT RUN</button>
+        <button class="real-btn real-btn-secondary" onclick="window.speakCartoonLine('batman')">ðŸ—£ï¸ BATMAN REAL VOICE</button>
+        <button class="real-btn real-btn-secondary" onclick="window.speakCartoonLine('superman')">ðŸ¦¸â€â™‚ï¸ CALL SUPERMAN (JUSTICE LEAGUE)</button>
+        <button class="real-btn real-btn-secondary" onclick="window.speakCartoonLine('spiderman')">ðŸ•·ï¸ SPIDER-MAN TEAM-UP</button>
+        <button class="real-btn real-btn-danger" onclick="exitToHub()">âœ• EXIT TO ADVENTURE PARK</button>
       </div>
 
       <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 14px; font-family: 'Chakra Petch', sans-serif;">
-        Controls: <strong>A / D or ⬅️ ➡️</strong> Move | <strong>W / ⬆️</strong> Jump Gargoyle | <strong>[SHIFT]</strong> Bat-Cape Glide | <strong>[E]</strong> Grapple Hook | <strong>[F]</strong> Smoke Pellet
+        Controls: <strong>A / D or â¬…ï¸ âž¡ï¸</strong> Move | <strong>W / â¬†ï¸</strong> Jump Gargoyle | <strong>[SHIFT]</strong> Bat-Cape Glide | <strong>[E]</strong> Grapple Hook | <strong>[F]</strong> Smoke Pellet
       </div>
     </div>
 
@@ -49,10 +49,10 @@
     <div id="in-game-hud" class="game-hud-top" style="display: none;">
       <!-- District Signboard -->
       <div class="real-signboard dark">
-        <span style="font-size: 1.6rem;">🦇</span>
+        <span style="font-size: 1.6rem;">ðŸ¦‡</span>
         <div>
-          <div class="real-sign-text">GOTHAM CITY · BOWERY DISTRICT</div>
-          <div class="real-sign-sub">BATCOMPUTER SAT-LINK ACTIVE · GRID 7G</div>
+          <div class="real-sign-text">GOTHAM CITY Â· BOWERY DISTRICT</div>
+          <div class="real-sign-sub">BATCOMPUTER SAT-LINK ACTIVE Â· GRID 7G</div>
         </div>
         <div class="real-sign-dist" id="hud-threat-count" style="background:#00f0ff;color:#000;">4 THREATS</div>
       </div>
@@ -71,23 +71,23 @@
         <div class="real-telem-div"></div>
         <div class="real-telem-box">
           <span class="real-telem-label">DETECTIVE MODE</span>
-          <span class="real-telem-val emerald" id="hud-stealth">ACTIVE SONAR 🦇</span>
+          <span class="real-telem-val emerald" id="hud-stealth">ACTIVE SONAR ðŸ¦‡</span>
         </div>
       </div>
 
       <!-- Top Right Action Buttons: Play Again & Exit -->
       <div style="display:flex; gap:8px;">
         <button class="hud-btn btn-primary" id="top-play-again-btn" style="background:#10b981; border-color:#059669; color:#fff; font-weight:800; font-size:0.85rem; padding:8px 16px; box-shadow:0 0 14px rgba(16,185,129,0.6);" onclick="restartBatmanGame()">
-          🔄 PLAY AGAIN
+          ðŸ”„ PLAY AGAIN
         </button>
-        <button class="hud-btn btn-pink" onclick="exitToHub()">✕ EXIT</button>
+        <button class="hud-btn btn-pink" onclick="exitToHub()">âœ• EXIT</button>
       </div>
     </div>
 
     <!-- Active Boss / Villain Health Bar (Top Center Under Telemetry) -->
     <div id="boss-hud-bar" style="display:none; position:absolute; top:78px; left:50%; transform:translateX(-50%); width:460px; max-width:90%; background:rgba(15,23,42,0.85); backdrop-filter:blur(10px); border:1px solid rgba(0,240,255,0.4); border-radius:12px; padding:8px 14px; z-index:40; box-shadow:0 8px 32px rgba(0,0,0,0.5);">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-        <span id="boss-title" style="font-family:'Orbitron',sans-serif; font-size:0.85rem; font-weight:700; color:#ffd60a;">⚔️ THE JOKER (BOSS)</span>
+        <span id="boss-title" style="font-family:'Orbitron',sans-serif; font-size:0.85rem; font-weight:700; color:#ffd60a;">âš”ï¸ THE JOKER (BOSS)</span>
         <span id="boss-hp-text" style="font-family:'Chakra Petch',sans-serif; font-size:0.8rem; color:#f43f5e; font-weight:700;">100% HP</span>
       </div>
       <div style="width:100%; height:8px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
@@ -117,20 +117,20 @@
       </div>
       <div class="real-speedo-info">
         <span class="real-speedo-num" id="hud-glide-speed">45</span>
-        <span class="real-speedo-unit">MPH · GLIDE VELOCITY</span>
+        <span class="real-speedo-unit">MPH Â· GLIDE VELOCITY</span>
         <span class="real-speedo-gear" id="hud-glide-mode">ROOFTOP PATROL</span>
       </div>
     </div>
 
     <!-- Hazard Flasher -->
     <div class="real-hazard-flasher" id="hazard-flasher">
-      <span style="font-size: 1.3rem;">🚨</span>
+      <span style="font-size: 1.3rem;">ðŸš¨</span>
       <span id="hazard-text">ALERT: ARMED THREAT DETECTED!</span>
     </div>
 
     <!-- Dialogue Box -->
     <div id="dialogue-box" class="dialogue-overlay-box" style="display: none; top: 120px;">
-      <div class="dialogue-avatar" id="dialogue-avatar">🦇</div>
+      <div class="dialogue-avatar" id="dialogue-avatar">ðŸ¦‡</div>
       <div style="flex-grow: 1;">
         <div class="dialogue-speaker" id="dialogue-speaker">Batman</div>
         <div class="dialogue-text" id="dialogue-text">"Gotham City will not fall to chaos."</div>
@@ -140,56 +140,56 @@
     <!-- Action Ability Bar (Placed Cleanly at Bottom Without Obscuring Hero) -->
     <div id="ability-bar" class="action-ability-bar" style="display: none; bottom: 20px; left: 50%; transform: translateX(-50%); flex-wrap:wrap; gap:8px; z-index:45; background: rgba(15,23,42,0.75); backdrop-filter: blur(12px); padding: 8px 14px; border-radius: 16px; border: 1px solid rgba(0,240,255,0.3);">
       <button class="ability-btn cyan" onclick="triggerBatarang()" title="PC: Q | Mobile: Tap">
-        🦇 [PC: Q | TAP] Batarang Throw
+        ðŸ¦‡ [PC: Q | TAP] Batarang Throw
       </button>
       <button class="ability-btn gold" onclick="triggerBatGrapple()" title="PC: E | Mobile: Tap">
-        🎯 [PC: E | TAP] Grapple Hook Zip
+        ðŸŽ¯ [PC: E | TAP] Grapple Hook Zip
       </button>
       <button class="ability-btn pink" onclick="triggerSmokeBomb()" title="PC: F | Mobile: Tap">
-        💨 [PC: F | TAP] Smoke Pellet Takedown
+        ðŸ’¨ [PC: F | TAP] Smoke Pellet Takedown
       </button>
       <button class="ability-btn emerald" onclick="triggerExplosiveGel()" style="border-color:#10b981; color:#10b981;" title="PC: R | Mobile: Tap">
-        💥 [PC: R | TAP] Explosive Gel Detonation
+        ðŸ’¥ [PC: R | TAP] Explosive Gel Detonation
       </button>
       <button class="ability-btn purple" onclick="triggerBatClaw()" style="border-color:#a855f7; color:#c084fc;" title="PC: C | Mobile: Tap">
-        ⚡ [PC: C | TAP] Bat-Claw Pull (GCPD Assist)
+        âš¡ [PC: C | TAP] Bat-Claw Pull (GCPD Assist)
       </button>
       <button class="ability-btn gold" onclick="triggerBatGlide(true)" title="PC: Shift | Mobile: Tap">
-        🦇 [PC: SHIFT | TAP] Cape Glide
+        ðŸ¦‡ [PC: SHIFT | TAP] Cape Glide
       </button>
     </div>
 
     <!-- Mobile Touch D-Pad for Direction Controls (Left, Right, Jump) -->
     <div id="mobile-pad" style="position:absolute; bottom:20px; left:20px; z-index:50; display:flex; gap:6px;">
-      <button class="hud-btn" style="width:46px; height:46px; font-size:1.3rem; border-radius:50%; background:rgba(15,23,42,0.85); border:2px solid #00f0ff;" onclick="targetX = Math.max(-16, targetX - 4.0)">⬅️</button>
-      <button class="hud-btn" style="width:46px; height:46px; font-size:1.3rem; border-radius:50%; background:rgba(15,23,42,0.85); border:2px solid #00f0ff;" onclick="batmanVelY = 0.28">⬆️</button>
-      <button class="hud-btn" style="width:46px; height:46px; font-size:1.3rem; border-radius:50%; background:rgba(15,23,42,0.85); border:2px solid #00f0ff;" onclick="targetX = Math.min(16, targetX + 4.0)">➡️</button>
+      <button class="hud-btn" style="width:46px; height:46px; font-size:1.3rem; border-radius:50%; background:rgba(15,23,42,0.85); border:2px solid #00f0ff;" onclick="targetX = Math.max(-16, targetX - 4.0)">â¬…ï¸</button>
+      <button class="hud-btn" style="width:46px; height:46px; font-size:1.3rem; border-radius:50%; background:rgba(15,23,42,0.85); border:2px solid #00f0ff;" onclick="batmanVelY = 0.28">â¬†ï¸</button>
+      <button class="hud-btn" style="width:46px; height:46px; font-size:1.3rem; border-radius:50%; background:rgba(15,23,42,0.85); border:2px solid #00f0ff;" onclick="targetX = Math.min(16, targetX + 4.0)">âž¡ï¸</button>
     </div>
 
     <!-- 5-Angle Camera Bar -->
     <div class="camera-control-bar" style="bottom: 84px; right: 20px;">
-      <button class="hud-btn active" id="cam-back" onclick="setCameraView('back')">🎥 CHASE</button>
-      <button class="hud-btn" id="cam-front" onclick="setCameraView('front')">📸 FRONT</button>
-      <button class="hud-btn" id="cam-left" onclick="setCameraView('left')">📐 LEFT</button>
-      <button class="hud-btn" id="cam-right" onclick="setCameraView('right')">📐 RIGHT</button>
-      <button class="hud-btn" id="cam-top" onclick="setCameraView('top')">🚁 TOP</button>
+      <button class="hud-btn active" id="cam-back" onclick="setCameraView('back')">ðŸŽ¥ CHASE</button>
+      <button class="hud-btn" id="cam-front" onclick="setCameraView('front')">ðŸ“¸ FRONT</button>
+      <button class="hud-btn" id="cam-left" onclick="setCameraView('left')">ðŸ“ LEFT</button>
+      <button class="hud-btn" id="cam-right" onclick="setCameraView('right')">ðŸ“ RIGHT</button>
+      <button class="hud-btn" id="cam-top" onclick="setCameraView('top')">ðŸš TOP</button>
     </div>
 
     <!-- End-Game / Stage Victory Modal with Big Play Again Button -->
     <div id="endgame-modal" style="display:none; position:absolute; inset:0; z-index:999; background:rgba(10,15,29,0.92); backdrop-filter:blur(16px); align-items:center; justify-content:center;">
       <div style="background:linear-gradient(180deg, #1e293b, #0f172a); border:2px solid #00f0ff; border-radius:24px; padding:36px; max-width:540px; width:90%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.8), 0 0 30px rgba(0,240,255,0.4);">
-        <div style="font-size:3.5rem; margin-bottom:12px;">🏆 🦇 🌑</div>
+        <div style="font-size:3.5rem; margin-bottom:12px;">ðŸ† ðŸ¦‡ ðŸŒ‘</div>
         <h2 id="endgame-title" style="font-family:'Orbitron',sans-serif; font-size:1.8rem; color:#ffd60a; margin-bottom:8px;">GOTHAM SECURED!</h2>
         <p id="endgame-subtitle" style="font-size:0.95rem; color:#cbd5e1; margin-bottom:24px;">Batman and the GCPD defeated Arkham's rogues!</p>
         <div style="display:flex; flex-direction:column; gap:12px;">
           <button class="real-btn real-btn-primary" style="background:#10b981; border:none; padding:16px; font-size:1.2rem; font-weight:900; color:#fff; cursor:pointer; border-radius:14px; box-shadow:0 0 20px rgba(16,185,129,0.6);" onclick="restartBatmanGame()">
-            🔄 PLAY AGAIN
+            ðŸ”„ PLAY AGAIN
           </button>
           <button class="real-btn real-btn-secondary" id="next-stage-btn" style="padding:14px; font-size:1rem; cursor:pointer; border-radius:14px;" onclick="loadNextStage()">
-            ⏩ ADVANCE TO NEXT STAGE
+            â© ADVANCE TO NEXT STAGE
           </button>
           <button class="real-btn real-btn-danger" style="padding:12px; cursor:pointer; border-radius:14px;" onclick="exitToHub()">
-            ✕ EXIT TO PARK
+            âœ• EXIT TO PARK
           </button>
         </div>
       </div>
@@ -205,3 +205,4 @@
   <script src="game.js"></script>
 </body>
 </html>
+

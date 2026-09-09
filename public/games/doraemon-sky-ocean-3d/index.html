@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DORAEMON: COSMIC GADGET QUEST 🌌 | Real 4D Pocket & 30 Stages</title>
+  <title>DORAEMON: COSMIC GADGET QUEST ðŸŒŒ | Real 4D Pocket & 30 Stages</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
@@ -22,37 +22,37 @@
     <!-- Always-Visible Permanent Top Bar with PLAY AGAIN -->
     <div id="permanent-top-bar" style="position: absolute; top: 12px; right: 20px; z-index: 1000; display: flex; gap: 8px;">
       <button class="hud-btn btn-primary" style="background:#10b981; border:2px solid #059669; color:#fff; font-weight:900; font-size:0.95rem; padding:10px 20px; border-radius:12px; box-shadow:0 0 16px rgba(16,185,129,0.7); cursor:pointer;" onclick="restartDoraemonGame()">
-        🔄 PLAY AGAIN
+        ðŸ”„ PLAY AGAIN
       </button>
       <button class="hud-btn btn-pink" style="padding:10px 16px; border-radius:12px; cursor:pointer;" onclick="exitToHub()">
-        ✕ EXIT
+        âœ• EXIT
       </button>
     </div>
 
     <!-- Mobile Touch D-Pad (PC: Arrow Keys / WASD | Mobile: Tap) -->
     <div id="mobile-pad" style="position:absolute; bottom:20px; left:20px; z-index:50; display:flex; flex-direction:column; gap:6px;">
       <div style="display:flex; justify-content:center; gap:6px;">
-        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(0,153,255,0.3); border:2px solid #0099ff;" onclick="if(typeof keys!=='undefined')keys.up=true;setTimeout(()=>{if(typeof keys!=='undefined')keys.up=false},300)">⬆️</button>
+        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(0,153,255,0.3); border:2px solid #0099ff;" onclick="if(typeof keys!=='undefined')keys.up=true;setTimeout(()=>{if(typeof keys!=='undefined')keys.up=false},300)">â¬†ï¸</button>
       </div>
       <div style="display:flex; gap:6px;">
-        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(0,153,255,0.3); border:2px solid #0099ff;" onclick="if(typeof keys!=='undefined')keys.left=true;setTimeout(()=>{if(typeof keys!=='undefined')keys.left=false},300)">⬅️</button>
-        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(239,68,68,0.5); border:2px solid #ef4444;" onclick="typeof useGadget!=='undefined'?useGadget():void(0)">🌀</button>
-        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(0,153,255,0.3); border:2px solid #0099ff;" onclick="if(typeof keys!=='undefined')keys.right=true;setTimeout(()=>{if(typeof keys!=='undefined')keys.right=false},300)">➡️</button>
+        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(0,153,255,0.3); border:2px solid #0099ff;" onclick="if(typeof keys!=='undefined')keys.left=true;setTimeout(()=>{if(typeof keys!=='undefined')keys.left=false},300)">â¬…ï¸</button>
+        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(239,68,68,0.5); border:2px solid #ef4444;" onclick="typeof useGadget!=='undefined'?useGadget():void(0)">ðŸŒ€</button>
+        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(0,153,255,0.3); border:2px solid #0099ff;" onclick="if(typeof keys!=='undefined')keys.right=true;setTimeout(()=>{if(typeof keys!=='undefined')keys.right=false},300)">âž¡ï¸</button>
       </div>
     </div>
 
     <!-- Hazard Alert Flasher -->
     <div class="real-hazard-flasher" id="hazard-flasher">
-      ⚠️ ALERT: GIAN'S LOUDSPEAKER CONCERT AHEAD — USE AIR CANNON! ⚠️
+      âš ï¸ ALERT: GIAN'S LOUDSPEAKER CONCERT AHEAD â€” USE AIR CANNON! âš ï¸
     </div>
 
     <!-- Real-World Telemetry Header -->
     <div class="real-telemetry-cluster">
       <div class="real-badge">
-        <span class="real-badge-icon">🐱</span>
+        <span class="real-badge-icon">ðŸ±</span>
         <div class="real-badge-info">
           <div class="real-badge-title">DORAEMON: COSMIC GADGET QUEST</div>
-          <div class="real-badge-sub">4D POCKET GADGETS • 30 STAGES</div>
+          <div class="real-badge-sub">4D POCKET GADGETS â€¢ 30 STAGES</div>
         </div>
       </div>
 
@@ -62,18 +62,18 @@
       </div>
 
       <div class="real-stat-pill">
-        <span class="real-stat-label">DORAYAKI 🥞</span>
+        <span class="real-stat-label">DORAYAKI ðŸ¥ž</span>
         <span class="real-stat-value" id="hud-dorayaki" style="color: #f59e0b;">0</span>
       </div>
 
       <div class="real-stat-pill">
         <span class="real-stat-label">ACTIVE 4D GADGET</span>
-        <span class="real-stat-value" id="hud-active-gadget" style="color: #10b981;">AIR CANNON 💨</span>
+        <span class="real-stat-value" id="hud-active-gadget" style="color: #10b981;">AIR CANNON ðŸ’¨</span>
       </div>
 
       <div class="real-stat-pill">
         <span class="real-stat-label">TEAM COMPANIONS</span>
-        <span class="real-stat-value" id="hud-team" style="color: #38bdf8;">NOBITA • SHIZUKA • GIAN • SUNEO</span>
+        <span class="real-stat-value" id="hud-team" style="color: #38bdf8;">NOBITA â€¢ SHIZUKA â€¢ GIAN â€¢ SUNEO</span>
       </div>
 
       <div class="real-stat-pill">
@@ -83,16 +83,16 @@
 
       <div style="display:flex; gap:8px;">
         <button class="hud-btn btn-primary" id="top-play-again-btn" style="background:#10b981; border-color:#059669; color:#fff; font-weight:800; font-size:0.85rem; padding:8px 16px; box-shadow:0 0 14px rgba(16,185,129,0.6);" onclick="restartDoraemonGame()">
-          🔄 PLAY AGAIN
+          ðŸ”„ PLAY AGAIN
         </button>
-        <button class="real-btn-exit" onclick="exitToHub()">✕ EXIT QUEST</button>
+        <button class="real-btn-exit" onclick="exitToHub()">âœ• EXIT QUEST</button>
       </div>
     </div>
 
     <!-- Active Boss / Villain Health Bar -->
     <div id="boss-hud-bar" style="display:none; position:absolute; top:78px; left:50%; transform:translateX(-50%); width:460px; max-width:90%; background:rgba(15,23,42,0.88); backdrop-filter:blur(10px); border:1px solid rgba(0,240,255,0.4); border-radius:12px; padding:8px 14px; z-index:40; box-shadow:0 8px 32px rgba(0,0,0,0.5);">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-        <span id="boss-title" style="font-family:'Orbitron',sans-serif; font-size:0.85rem; font-weight:700; color:#ffd60a;">⚔️ DEMON LORD DEMAON (BOSS)</span>
+        <span id="boss-title" style="font-family:'Orbitron',sans-serif; font-size:0.85rem; font-weight:700; color:#ffd60a;">âš”ï¸ DEMON LORD DEMAON (BOSS)</span>
         <span id="boss-hp-text" style="font-family:'Inter',sans-serif; font-size:0.8rem; color:#f43f5e; font-weight:700;">100% HP</span>
       </div>
       <div style="width:100%; height:8px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
@@ -126,41 +126,41 @@
 
     <!-- 4D POCKET GADGET TOOLBAR (ALL 35 ICONIC GADGETS WITH MOBILE & PC KEYS) -->
     <div id="gadget-toolbar" style="position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 1000; background: rgba(15, 23, 42, 0.94); border: 2px solid #00f0ff; border-radius: 18px; padding: 10px 16px; backdrop-filter: blur(16px); box-shadow: 0 10px 30px rgba(0,0,0,0.6); max-width: 95%; overflow-x: auto;">
-      <button class="hud-btn active" id="gbtn-cannon" onclick="selectGadget('cannon')" title="PC: 1 / Space | Tap">💨 [1] Air Cannon</button>
-      <button class="hud-btn" id="gbtn-door" onclick="selectGadget('door')" title="PC: 2 | Tap">🚪 [2] Anywhere Door</button>
-      <button class="hud-btn" id="gbtn-takecopter" onclick="selectGadget('takecopter')" title="PC: 3 | Tap">🚁 [3] Take-Copter</button>
-      <button class="hud-btn" id="gbtn-timemachine" onclick="selectGadget('timemachine')" title="PC: 4 | Tap">⏳ [4] Time Machine</button>
-      <button class="hud-btn" id="gbtn-smalllight" onclick="selectGadget('smalllight')" title="PC: 5 | Tap">🔦 [5] Small Light</button>
-      <button class="hud-btn" id="gbtn-biglight" onclick="selectGadget('biglight')" title="PC: 6 | Tap">🔍 [6] Big Light</button>
-      <button class="hud-btn" id="gbtn-sword" onclick="selectGadget('sword')" title="PC: 7 | Tap">⚡ [7] Denkomaru Sword</button>
-      <button class="hud-btn" id="gbtn-bread" onclick="selectGadget('bread')" title="PC: 8 | Tap">🍞 [8] Memory Bread</button>
-      <button class="hud-btn" id="gbtn-gummy" onclick="selectGadget('gummy')" title="PC: 9 | Tap">🍬 [9] Translation Gummy</button>
-      <button class="hud-btn" id="gbtn-cloth" onclick="selectGadget('cloth')" title="PC: 0 | Tap">🧣 [0] Time Cloth</button>
-      <button class="hud-btn" id="gbtn-booth" onclick="selectGadget('booth')">☎️ What-If Phone</button>
-      <button class="hud-btn" id="gbtn-pocket" onclick="selectGadget('pocket')">🎒 4D Pocket</button>
-      <button class="hud-btn" id="gbtn-cape" onclick="selectGadget('cape')">🧥 Invisibility Cape</button>
-      <button class="hud-btn" id="gbtn-pencil" onclick="selectGadget('pencil')">✏️ Computer Pencil</button>
-      <button class="hud-btn" id="gbtn-camera" onclick="selectGadget('camera')">📷 Dress-Up Camera</button>
-      <button class="hud-btn" id="gbtn-switch" onclick="selectGadget('switch')">🔘 Dictator Switch</button>
-      <button class="hud-btn" id="gbtn-loop" onclick="selectGadget('loop')">⭕ Pass Loop</button>
-      <button class="hud-btn" id="gbtn-tablecloth" onclick="selectGadget('tablecloth')">🍽️ Gourmet Cloth</button>
-      <button class="hud-btn" id="gbtn-timetv" onclick="selectGadget('timetv')">📺 Time TV</button>
-      <button class="hud-btn" id="gbtn-bag" onclick="selectGadget('bag')">👛 Obtaining Bag</button>
-      <button class="hud-btn" id="gbtn-speaker" onclick="selectGadget('speaker')">📢 Lie Speaker</button>
-      <button class="hud-btn" id="gbtn-glove" onclick="selectGadget('glove')">🥊 Super Gloves</button>
-      <button class="hud-btn" id="gbtn-orchestra" onclick="selectGadget('orchestra')">🎻 Mood Orchestra</button>
-      <button class="hud-btn" id="gbtn-clock" onclick="selectGadget('clock')">⏱️ Speed Clock</button>
-      <button class="hud-btn" id="gbtn-beak" onclick="selectGadget('beak')">🦜 Truth Beak</button>
-      <button class="hud-btn" id="gbtn-card" onclick="selectGadget('card')">🃏 Devil Card</button>
-      <button class="hud-btn" id="gbtn-tunnel" onclick="selectGadget('tunnel')">🚇 Gulliver Tunnel</button>
-      <button class="hud-btn" id="gbtn-sub" onclick="selectGadget('sub')">🚢 Deep Submarine</button>
-      <button class="hud-btn" id="gbtn-taro" onclick="selectGadget('taro')">🎎 Honest Taro</button>
-      <button class="hud-btn" id="gbtn-cracker" onclick="selectGadget('cracker')">🍪 Animal Crackers</button>
-      <button class="hud-btn" id="gbtn-arrow" onclick="selectGadget('arrow')">🏹 Arrow of Love</button>
-      <button class="hud-btn" id="gbtn-gorgon" onclick="selectGadget('gorgon')">🐍 Gorgon's Head</button>
-      <button class="hud-btn" id="gbtn-waterroom" onclick="selectGadget('waterroom')">💧 Solid Water Room</button>
-      <button class="hud-btn" id="gbtn-weather" onclick="selectGadget('weather')">⛈️ Weather Box</button>
-      <button class="hud-btn" id="gbtn-powder" onclick="selectGadget('powder')">✨ Adaptation Powder</button>
+      <button class="hud-btn active" id="gbtn-cannon" onclick="selectGadget('cannon')" title="PC: 1 / Space | Tap">ðŸ’¨ [1] Air Cannon</button>
+      <button class="hud-btn" id="gbtn-door" onclick="selectGadget('door')" title="PC: 2 | Tap">ðŸšª [2] Anywhere Door</button>
+      <button class="hud-btn" id="gbtn-takecopter" onclick="selectGadget('takecopter')" title="PC: 3 | Tap">ðŸš [3] Take-Copter</button>
+      <button class="hud-btn" id="gbtn-timemachine" onclick="selectGadget('timemachine')" title="PC: 4 | Tap">â³ [4] Time Machine</button>
+      <button class="hud-btn" id="gbtn-smalllight" onclick="selectGadget('smalllight')" title="PC: 5 | Tap">ðŸ”¦ [5] Small Light</button>
+      <button class="hud-btn" id="gbtn-biglight" onclick="selectGadget('biglight')" title="PC: 6 | Tap">ðŸ” [6] Big Light</button>
+      <button class="hud-btn" id="gbtn-sword" onclick="selectGadget('sword')" title="PC: 7 | Tap">âš¡ [7] Denkomaru Sword</button>
+      <button class="hud-btn" id="gbtn-bread" onclick="selectGadget('bread')" title="PC: 8 | Tap">ðŸž [8] Memory Bread</button>
+      <button class="hud-btn" id="gbtn-gummy" onclick="selectGadget('gummy')" title="PC: 9 | Tap">ðŸ¬ [9] Translation Gummy</button>
+      <button class="hud-btn" id="gbtn-cloth" onclick="selectGadget('cloth')" title="PC: 0 | Tap">ðŸ§£ [0] Time Cloth</button>
+      <button class="hud-btn" id="gbtn-booth" onclick="selectGadget('booth')">â˜Žï¸ What-If Phone</button>
+      <button class="hud-btn" id="gbtn-pocket" onclick="selectGadget('pocket')">ðŸŽ’ 4D Pocket</button>
+      <button class="hud-btn" id="gbtn-cape" onclick="selectGadget('cape')">ðŸ§¥ Invisibility Cape</button>
+      <button class="hud-btn" id="gbtn-pencil" onclick="selectGadget('pencil')">âœï¸ Computer Pencil</button>
+      <button class="hud-btn" id="gbtn-camera" onclick="selectGadget('camera')">ðŸ“· Dress-Up Camera</button>
+      <button class="hud-btn" id="gbtn-switch" onclick="selectGadget('switch')">ðŸ”˜ Dictator Switch</button>
+      <button class="hud-btn" id="gbtn-loop" onclick="selectGadget('loop')">â­• Pass Loop</button>
+      <button class="hud-btn" id="gbtn-tablecloth" onclick="selectGadget('tablecloth')">ðŸ½ï¸ Gourmet Cloth</button>
+      <button class="hud-btn" id="gbtn-timetv" onclick="selectGadget('timetv')">ðŸ“º Time TV</button>
+      <button class="hud-btn" id="gbtn-bag" onclick="selectGadget('bag')">ðŸ‘› Obtaining Bag</button>
+      <button class="hud-btn" id="gbtn-speaker" onclick="selectGadget('speaker')">ðŸ“¢ Lie Speaker</button>
+      <button class="hud-btn" id="gbtn-glove" onclick="selectGadget('glove')">ðŸ¥Š Super Gloves</button>
+      <button class="hud-btn" id="gbtn-orchestra" onclick="selectGadget('orchestra')">ðŸŽ» Mood Orchestra</button>
+      <button class="hud-btn" id="gbtn-clock" onclick="selectGadget('clock')">â±ï¸ Speed Clock</button>
+      <button class="hud-btn" id="gbtn-beak" onclick="selectGadget('beak')">ðŸ¦œ Truth Beak</button>
+      <button class="hud-btn" id="gbtn-card" onclick="selectGadget('card')">ðŸƒ Devil Card</button>
+      <button class="hud-btn" id="gbtn-tunnel" onclick="selectGadget('tunnel')">ðŸš‡ Gulliver Tunnel</button>
+      <button class="hud-btn" id="gbtn-sub" onclick="selectGadget('sub')">ðŸš¢ Deep Submarine</button>
+      <button class="hud-btn" id="gbtn-taro" onclick="selectGadget('taro')">ðŸŽŽ Honest Taro</button>
+      <button class="hud-btn" id="gbtn-cracker" onclick="selectGadget('cracker')">ðŸª Animal Crackers</button>
+      <button class="hud-btn" id="gbtn-arrow" onclick="selectGadget('arrow')">ðŸ¹ Arrow of Love</button>
+      <button class="hud-btn" id="gbtn-gorgon" onclick="selectGadget('gorgon')">ðŸ Gorgon's Head</button>
+      <button class="hud-btn" id="gbtn-waterroom" onclick="selectGadget('waterroom')">ðŸ’§ Solid Water Room</button>
+      <button class="hud-btn" id="gbtn-weather" onclick="selectGadget('weather')">â›ˆï¸ Weather Box</button>
+      <button class="hud-btn" id="gbtn-powder" onclick="selectGadget('powder')">âœ¨ Adaptation Powder</button>
     </div>
 
     <!-- 30 Stages Level Selector & Voice Controls -->
@@ -177,42 +177,42 @@
         <option value="25">STAGE 25: Galaxy Train Station</option>
         <option value="30">STAGE 30: 22nd Century Tokyo Finale</option>
       </select>
-      <button class="hud-btn" style="background: rgba(255, 190, 11, 0.3);" onclick="window.speakCartoonLine('shinchan')">🗣️ DORAEMON VOICE</button>
-      <button class="hud-btn" style="background: rgba(236, 72, 153, 0.3);" onclick="window.playCartoonThemeSong('doraemon')">🎵 DORAEMON THEME SONG</button>
+      <button class="hud-btn" style="background: rgba(255, 190, 11, 0.3);" onclick="window.speakCartoonLine('shinchan')">ðŸ—£ï¸ DORAEMON VOICE</button>
+      <button class="hud-btn" style="background: rgba(236, 72, 153, 0.3);" onclick="window.playCartoonThemeSong('doraemon')">ðŸŽµ DORAEMON THEME SONG</button>
     </div>
 
     <!-- Camera Control Bar -->
     <div class="camera-control-bar">
-      <button class="hud-btn active" id="cam-back" onclick="setCameraView('back')">🎥 CHASE</button>
-      <button class="hud-btn" id="cam-front" onclick="setCameraView('front')">📸 FRONT</button>
-      <button class="hud-btn" id="cam-left" onclick="setCameraView('left')">📐 LEFT</button>
-      <button class="hud-btn" id="cam-right" onclick="setCameraView('right')">📐 RIGHT</button>
-      <button class="hud-btn" id="cam-top" onclick="setCameraView('top')">🚁 TOP</button>
+      <button class="hud-btn active" id="cam-back" onclick="setCameraView('back')">ðŸŽ¥ CHASE</button>
+      <button class="hud-btn" id="cam-front" onclick="setCameraView('front')">ðŸ“¸ FRONT</button>
+      <button class="hud-btn" id="cam-left" onclick="setCameraView('left')">ðŸ“ LEFT</button>
+      <button class="hud-btn" id="cam-right" onclick="setCameraView('right')">ðŸ“ RIGHT</button>
+      <button class="hud-btn" id="cam-top" onclick="setCameraView('top')">ðŸš TOP</button>
     </div>
 
     <!-- Touch Mobile Controls -->
     <div class="touch-controls">
-      <button class="touch-btn" id="touch-left" title="Steer Left">⬅️</button>
-      <button class="touch-btn" id="touch-right" title="Steer Right">➡️</button>
-      <button class="touch-btn" id="touch-jump" style="background: rgba(0, 240, 255, 0.4);" title="Take-Copter Lift">🚁</button>
-      <button class="touch-btn" id="touch-gadget" style="background: rgba(236, 72, 153, 0.4);" title="Activate 4D Gadget">✨</button>
+      <button class="touch-btn" id="touch-left" title="Steer Left">â¬…ï¸</button>
+      <button class="touch-btn" id="touch-right" title="Steer Right">âž¡ï¸</button>
+      <button class="touch-btn" id="touch-jump" style="background: rgba(0, 240, 255, 0.4);" title="Take-Copter Lift">ðŸš</button>
+      <button class="touch-btn" id="touch-gadget" style="background: rgba(236, 72, 153, 0.4);" title="Activate 4D Gadget">âœ¨</button>
     </div>
 
     <!-- End-Game / Stage Victory Modal with Big Play Again Button -->
     <div id="endgame-modal" style="display:none; position:absolute; inset:0; z-index:999; background:rgba(10,15,29,0.92); backdrop-filter:blur(16px); align-items:center; justify-content:center;">
       <div style="background:linear-gradient(180deg, #1e293b, #0f172a); border:2px solid #00f0ff; border-radius:24px; padding:36px; max-width:540px; width:90%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.8), 0 0 30px rgba(0,240,255,0.4);">
-        <div style="font-size:3.5rem; margin-bottom:12px;">🏆 🐱 ⏳ 🚁</div>
+        <div style="font-size:3.5rem; margin-bottom:12px;">ðŸ† ðŸ± â³ ðŸš</div>
         <h2 id="endgame-title" style="font-family:'Orbitron',sans-serif; font-size:1.8rem; color:#ffd60a; margin-bottom:8px;">QUEST COMPLETED!</h2>
         <p id="endgame-subtitle" style="font-size:0.95rem; color:#cbd5e1; margin-bottom:24px;">Doraemon, Nobita, Shizuka, Gian, and Suneo defeated all 13 Movie Villains!</p>
         <div style="display:flex; flex-direction:column; gap:12px;">
           <button class="real-btn real-btn-primary" style="background:#10b981; border:none; padding:16px; font-size:1.2rem; font-weight:900; color:#fff; cursor:pointer; border-radius:14px; box-shadow:0 0 20px rgba(16,185,129,0.6);" onclick="restartDoraemonGame()">
-            🔄 PLAY AGAIN
+            ðŸ”„ PLAY AGAIN
           </button>
           <button class="real-btn real-btn-secondary" id="next-stage-btn" style="padding:14px; font-size:1rem; cursor:pointer; border-radius:14px;" onclick="loadNextStage()">
-            ⏩ ADVANCE TO NEXT STAGE
+            â© ADVANCE TO NEXT STAGE
           </button>
           <button class="real-btn real-btn-danger" style="padding:12px; cursor:pointer; border-radius:14px;" onclick="exitToHub()">
-            ✕ EXIT TO PARK
+            âœ• EXIT TO PARK
           </button>
         </div>
       </div>
@@ -223,3 +223,4 @@
   <script src="game.js"></script>
 </body>
 </html>
+

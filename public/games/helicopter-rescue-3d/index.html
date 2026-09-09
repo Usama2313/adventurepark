@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HELICOPTER: EMERGENCY RESPONSE 3D 🚁 | Real-World Rescue Cockpit</title>
+  <title>HELICOPTER: EMERGENCY RESPONSE 3D ðŸš | Real-World Rescue Cockpit</title>
   <link rel="stylesheet" href="../common-game.css">
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700;900&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -39,14 +39,14 @@
 
     <!-- Main Menu Overlay -->
     <div id="main-menu" class="game-main-menu">
-      <div style="font-size: 3.5rem; margin-bottom: 8px; animation: agentFloat 2.5s infinite ease-in-out;">🚁 🚨 ⛰️ 🪢 🏥</div>
+      <div style="font-size: 3.5rem; margin-bottom: 8px; animation: agentFloat 2.5s infinite ease-in-out;">ðŸš ðŸš¨ â›°ï¸ ðŸª¢ ðŸ¥</div>
       <h1 class="menu-title-glow">HELICOPTER: EMERGENCY RESPONSE 3D</h1>
       <p class="menu-subtitle">Alpine Mountain Flight Telemetry & Rescue Radio Voice!</p>
       
       <div class="menu-options-grid" style="max-width: 500px;">
-        <button class="real-btn real-btn-primary" onclick="startGame()">🚁 SCRAMBLE RESCUE CHOPPER</button>
-        <button class="real-btn real-btn-secondary" onclick="window.speakCartoonLine('chopper')">🗣️ RESCUE PILOT VOICE</button>
-        <button class="real-btn real-btn-danger" onclick="exitToHub()">✕ EXIT TO ADVENTURE PARK</button>
+        <button class="real-btn real-btn-primary" onclick="startGame()">ðŸš SCRAMBLE RESCUE CHOPPER</button>
+        <button class="real-btn real-btn-secondary" onclick="window.speakCartoonLine('chopper')">ðŸ—£ï¸ RESCUE PILOT VOICE</button>
+        <button class="real-btn real-btn-danger" onclick="exitToHub()">âœ• EXIT TO ADVENTURE PARK</button>
       </div>
 
       <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 14px; font-family: 'Chakra Petch', sans-serif;">
@@ -58,9 +58,9 @@
     <div id="in-game-hud" class="game-hud-top" style="display: none;">
       <!-- Flight Sector Signboard -->
       <div class="real-signboard dark">
-        <span style="font-size: 1.6rem;">⛰️</span>
+        <span style="font-size: 1.6rem;">â›°ï¸</span>
         <div>
-          <div class="real-sign-text">ALPINE SECTOR 04 · MT. CASCADE</div>
+          <div class="real-sign-text">ALPINE SECTOR 04 Â· MT. CASCADE</div>
           <div class="real-sign-sub">SEARCH & RESCUE MEDEVAC DISPATCH</div>
         </div>
         <div class="real-sign-dist" id="hud-altitude" style="background:#00f59b;color:#000;">1,200 FT</div>
@@ -85,7 +85,7 @@
       </div>
 
       <!-- Exit Button -->
-      <button class="hud-btn btn-pink" onclick="exitToHub()">✕ EXIT</button>
+      <button class="hud-btn btn-pink" onclick="exitToHub()">âœ• EXIT</button>
     </div>
 
     <!-- Distress Beacon Radar (Top Right) -->
@@ -110,20 +110,20 @@
       </div>
       <div class="real-speedo-info">
         <span class="real-speedo-num" id="hud-air-speed">95</span>
-        <span class="real-speedo-unit">KNOTS · AIRSPEED</span>
+        <span class="real-speedo-unit">KNOTS Â· AIRSPEED</span>
         <span class="real-speedo-gear" id="hud-flight-mode">FORWARD CRUISE</span>
       </div>
     </div>
 
     <!-- Hazard Flasher -->
     <div class="real-hazard-flasher" id="hazard-flasher">
-      <span style="font-size: 1.3rem;">🚨</span>
+      <span style="font-size: 1.3rem;">ðŸš¨</span>
       <span id="hazard-text">ALERT: SEVERE DOWNDRAFT / CLIFF RIDGE AHEAD!</span>
     </div>
 
     <!-- Dialogue Box -->
     <div id="dialogue-box" class="dialogue-overlay-box" style="display: none; top: 90px;">
-      <div class="dialogue-avatar" id="dialogue-avatar">👨‍✈️</div>
+      <div class="dialogue-avatar" id="dialogue-avatar">ðŸ‘¨â€âœˆï¸</div>
       <div style="flex-grow: 1;">
         <div class="dialogue-speaker" id="dialogue-speaker">Rescue Pilot (Air-Band 121.5 MHz)</div>
         <div class="dialogue-text" id="dialogue-text">"Visual on distress smoke flare! Establishing hover profile over the ravine."</div>
@@ -133,23 +133,23 @@
     <!-- Action Ability Bar -->
     <div id="ability-bar" class="action-ability-bar" style="display: none; bottom: 84px;">
       <button class="ability-btn gold" onclick="adjustCollective(1)">
-        ⬆️ [W] Climb Collective
+        â¬†ï¸ [W] Climb Collective
       </button>
       <button class="ability-btn cyan" onclick="adjustCollective(-1)">
-        ⬇️ [S] Descend Pitch
+        â¬‡ï¸ [S] Descend Pitch
       </button>
       <button class="ability-btn emerald" onclick="triggerRescueWinch()">
-        🪢 [E] Deploy Rescue Winch
+        ðŸª¢ [E] Deploy Rescue Winch
       </button>
     </div>
 
     <!-- 5-Angle Camera Bar -->
     <div class="camera-control-bar" style="bottom: 20px; right: 20px;">
-      <button class="hud-btn active" id="cam-back" onclick="setCameraView('back')">🎥 CHASE</button>
-      <button class="hud-btn" id="cam-front" onclick="setCameraView('front')">📸 COCKPIT</button>
-      <button class="hud-btn" id="cam-left" onclick="setCameraView('left')">📐 LEFT</button>
-      <button class="hud-btn" id="cam-right" onclick="setCameraView('right')">📐 RIGHT</button>
-      <button class="hud-btn" id="cam-top" onclick="setCameraView('top')">🚁 TOP</button>
+      <button class="hud-btn active" id="cam-back" onclick="setCameraView('back')">ðŸŽ¥ CHASE</button>
+      <button class="hud-btn" id="cam-front" onclick="setCameraView('front')">ðŸ“¸ COCKPIT</button>
+      <button class="hud-btn" id="cam-left" onclick="setCameraView('left')">ðŸ“ LEFT</button>
+      <button class="hud-btn" id="cam-right" onclick="setCameraView('right')">ðŸ“ RIGHT</button>
+      <button class="hud-btn" id="cam-top" onclick="setCameraView('top')">ðŸš TOP</button>
     </div>
 
     <!-- Modals -->
@@ -162,3 +162,4 @@
   <script src="game.js"></script>
 </body>
 </html>
+

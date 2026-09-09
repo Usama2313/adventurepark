@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SWEET BLAST: JELLY PARADISE 🍬🍰 | Real-World Confectionery Cockpit</title>
+  <title>SWEET BLAST: JELLY PARADISE ðŸ¬ðŸ° | Real-World Confectionery Cockpit</title>
   <link rel="stylesheet" href="../common-game.css">
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700;900&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -39,14 +39,14 @@
 
     <!-- Main Menu Overlay -->
     <div id="main-menu" class="game-main-menu">
-      <div style="font-size: 3.5rem; margin-bottom: 8px; animation: agentFloat 2s infinite ease-in-out;">🍬 🍰 🍩 🍭 🍫</div>
+      <div style="font-size: 3.5rem; margin-bottom: 8px; animation: agentFloat 2s infinite ease-in-out;">ðŸ¬ ðŸ° ðŸ© ðŸ­ ðŸ«</div>
       <h1 class="menu-title-glow">SWEET BLAST: JELLY PARADISE</h1>
       <p class="menu-subtitle">Confectionery Telemetry, Sugar Rush Gauges & Sweet Combo Voice!</p>
       
       <div class="menu-options-grid" style="max-width: 500px;">
-        <button class="real-btn real-btn-primary" onclick="startGame()">🍰 ENTER JELLY LEVEL 01</button>
-        <button class="real-btn real-btn-secondary" onclick="window.speakCartoonLine('candy')">🗣️ CANDY CHEF VOICE</button>
-        <button class="real-btn real-btn-danger" onclick="exitToHub()">✕ EXIT TO ADVENTURE PARK</button>
+        <button class="real-btn real-btn-primary" onclick="startGame()">ðŸ° ENTER JELLY LEVEL 01</button>
+        <button class="real-btn real-btn-secondary" onclick="window.speakCartoonLine('candy')">ðŸ—£ï¸ CANDY CHEF VOICE</button>
+        <button class="real-btn real-btn-danger" onclick="exitToHub()">âœ• EXIT TO ADVENTURE PARK</button>
       </div>
 
       <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 14px; font-family: 'Chakra Petch', sans-serif;">
@@ -58,10 +58,10 @@
     <div id="in-game-hud" class="game-hud-top" style="display: none;">
       <!-- Bakery Signboard -->
       <div class="real-signboard" style="background:linear-gradient(180deg,#db2777 0%,#9d174d 100%);">
-        <span style="font-size: 1.6rem;">🍰</span>
+        <span style="font-size: 1.6rem;">ðŸ°</span>
         <div>
-          <div class="real-sign-text">PATISSERIE ROYALE · LEVEL 12</div>
-          <div class="real-sign-sub">JELLY PARADISE · 3D MATCH GRID</div>
+          <div class="real-sign-text">PATISSERIE ROYALE Â· LEVEL 12</div>
+          <div class="real-sign-sub">JELLY PARADISE Â· 3D MATCH GRID</div>
         </div>
         <div class="real-sign-dist" id="hud-moves" style="background:#fff;color:#be185d;">15 MOVES</div>
       </div>
@@ -75,17 +75,17 @@
         <div class="real-telem-div"></div>
         <div class="real-telem-box">
           <span class="real-telem-label">RECIPE GOALS</span>
-          <span class="real-telem-val cyan" id="hud-recipe">🍰 x10 / 🍩 x15</span>
+          <span class="real-telem-val cyan" id="hud-recipe">ðŸ° x10 / ðŸ© x15</span>
         </div>
         <div class="real-telem-div"></div>
         <div class="real-telem-box">
           <span class="real-telem-label">SUGAR RUSH</span>
-          <span class="real-telem-val emerald" id="hud-rush-status">READY 🍭</span>
+          <span class="real-telem-val emerald" id="hud-rush-status">READY ðŸ­</span>
         </div>
       </div>
 
       <!-- Exit Button -->
-      <button class="hud-btn btn-pink" onclick="exitToHub()">✕ EXIT</button>
+      <button class="hud-btn btn-pink" onclick="exitToHub()">âœ• EXIT</button>
     </div>
 
     <!-- Confectionery Radar (Top Right) -->
@@ -117,13 +117,13 @@
 
     <!-- Hazard Flasher -->
     <div class="real-hazard-flasher" id="hazard-flasher">
-      <span style="font-size: 1.3rem;">🍫</span>
+      <span style="font-size: 1.3rem;">ðŸ«</span>
       <span id="hazard-text">ALERT: CHOCOLATE BLOCKER EXPANDING ON GRID!</span>
     </div>
 
     <!-- Dialogue Box -->
     <div id="dialogue-box" class="dialogue-overlay-box" style="display: none; top: 90px;">
-      <div class="dialogue-avatar" id="dialogue-avatar">👩‍🍳</div>
+      <div class="dialogue-avatar" id="dialogue-avatar">ðŸ‘©â€ðŸ³</div>
       <div style="flex-grow: 1;">
         <div class="dialogue-speaker" id="dialogue-speaker">Master Baker Lily</div>
         <div class="dialogue-text" id="dialogue-text">"Sweet combo! Match 4 cakes in a row to forge a Striped Jelly line-clear!"</div>
@@ -132,9 +132,9 @@
 
     <!-- 5-Angle Camera Bar -->
     <div class="camera-control-bar" style="bottom: 20px; right: 20px;">
-      <button class="hud-btn active" id="cam-front" onclick="setCameraView('front')">📐 FRONT GRID</button>
-      <button class="hud-btn" id="cam-back" onclick="setCameraView('back')">🎥 3D TILT</button>
-      <button class="hud-btn" id="cam-top" onclick="setCameraView('top')">🚁 TOP-DOWN</button>
+      <button class="hud-btn active" id="cam-front" onclick="setCameraView('front')">ðŸ“ FRONT GRID</button>
+      <button class="hud-btn" id="cam-back" onclick="setCameraView('back')">ðŸŽ¥ 3D TILT</button>
+      <button class="hud-btn" id="cam-top" onclick="setCameraView('top')">ðŸš TOP-DOWN</button>
     </div>
 
     <!-- Modals -->
@@ -147,3 +147,4 @@
   <script src="game.js"></script>
 </body>
 </html>
+

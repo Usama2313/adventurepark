@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -42,7 +42,7 @@
     }
     .speed-streaks.active { opacity: 1; }
 
-    /* ─── REAL-WORLD MAIN MENU ─── */
+    /* â”€â”€â”€ REAL-WORLD MAIN MENU â”€â”€â”€ */
     #main-menu {
       position: absolute; inset: 0; z-index: 600;
       background: radial-gradient(circle at top, rgba(28, 40, 65, 0.95), rgba(7, 10, 20, 0.98)),
@@ -137,7 +137,7 @@
       border-radius: 5px; padding: 2px 7px; color: #fff; font-weight: 700;
     }
 
-    /* ─── REAL-WORLD AUTOMOTIVE / RUNNER TELEMETRY HUD ─── */
+    /* â”€â”€â”€ REAL-WORLD AUTOMOTIVE / RUNNER TELEMETRY HUD â”€â”€â”€ */
     #game-hud {
       position: absolute; inset: 0; pointer-events: none; z-index: 100;
       display: none; flex-direction: column; justify-content: space-between; padding: 16px 20px;
@@ -221,7 +221,7 @@
     }
     .btn-exit-hud:hover { background: rgba(239, 68, 68, 0.4); color: #fff; transform: scale(1.03); }
 
-    /* ─── REAL-WORLD KASUKABE MINI-GPS RADAR & HAZARD SCANNER ─── */
+    /* â”€â”€â”€ REAL-WORLD KASUKABE MINI-GPS RADAR & HAZARD SCANNER â”€â”€â”€ */
     .radar-deck {
       position: absolute; top: 88px; right: 20px;
       width: 140px; height: 140px; border-radius: 50%;
@@ -457,52 +457,52 @@
     </defs>
   </svg>
 
-  <!-- ─── REAL-WORLD MAIN MENU ─── -->
+  <!-- â”€â”€â”€ REAL-WORLD MAIN MENU â”€â”€â”€ -->
   <div id="main-menu">
     <div class="menu-card">
-      <div class="hero-badge">⚡ KASUKABE CITY METROPOLITAN RUN 3D</div>
-      <h1 class="hero-title">SHIN-CHAN: THE GREAT<br>KASUKABE RUN! 🏃‍♂️💨</h1>
+      <div class="hero-badge">âš¡ KASUKABE CITY METROPOLITAN RUN 3D</div>
+      <h1 class="hero-title">SHIN-CHAN: THE GREAT<br>KASUKABE RUN! ðŸƒâ€â™‚ï¸ðŸ’¨</h1>
       <p class="hero-subtitle">Sprint through authentic Kasukabe suburban streets! Evade Angry Misae, Kazama's cram school hurdles, Sensei's exam blitz, Principal Enchou, and fierce dogs while collecting Chocobi cookies for high-tier arcade prizes!</p>
       
       <!-- REAL-WORLD HAZARDS & VILLAINS ROSTER -->
       <div class="hazard-showcase">
         <div class="hazard-item">
-          <div class="hazard-ico">👩‍🦰🍳</div>
+          <div class="hazard-ico">ðŸ‘©â€ðŸ¦°ðŸ³</div>
           <span class="hazard-name">ANGRY MISAE</span>
           <span class="hazard-type">VILLAIN</span>
         </div>
         <div class="hazard-item">
-          <div class="hazard-ico">🧒📚</div>
+          <div class="hazard-ico">ðŸ§’ðŸ“š</div>
           <span class="hazard-name">TORU KAZAMA</span>
           <span class="hazard-type">VILLAIN</span>
         </div>
         <div class="hazard-item">
-          <div class="hazard-ico">👔🕶️</div>
+          <div class="hazard-ico">ðŸ‘”ðŸ•¶ï¸</div>
           <span class="hazard-name">ENCHOU SENSEI</span>
           <span class="hazard-type">VILLAIN</span>
         </div>
         <div class="hazard-item">
-          <div class="hazard-ico">🐕💢</div>
+          <div class="hazard-ico">ðŸ•ðŸ’¢</div>
           <span class="hazard-name">SHIBA DOG</span>
           <span class="hazard-type">VILLAIN</span>
         </div>
         <div class="hazard-item">
-          <div class="hazard-ico">🚧⚠️</div>
+          <div class="hazard-ico">ðŸš§âš ï¸</div>
           <span class="hazard-name">ROADWORKS</span>
           <span class="hazard-type hurdle">HURDLE (JUMP)</span>
         </div>
         <div class="hazard-item">
-          <div class="hazard-ico">🏮🎋</div>
+          <div class="hazard-ico">ðŸ®ðŸŽ‹</div>
           <span class="hazard-name">AWNING CABLE</span>
           <span class="hazard-type hurdle">HURDLE (SLIDE)</span>
         </div>
         <div class="hazard-item">
-          <div class="hazard-ico">🗑️🛢️</div>
+          <div class="hazard-ico">ðŸ—‘ï¸ðŸ›¢ï¸</div>
           <span class="hazard-name">TRASH BARRICADE</span>
           <span class="hazard-type hurdle">HURDLE (DODGE)</span>
         </div>
         <div class="hazard-item">
-          <div class="hazard-ico">🍜💥</div>
+          <div class="hazard-ico">ðŸœðŸ’¥</div>
           <span class="hazard-name">RAMEN OIL SLICK</span>
           <span class="hazard-type hurdle">HAZARD (SLIP)</span>
         </div>
@@ -510,32 +510,32 @@
 
       <!-- MENU ACTIONS -->
       <div class="menu-actions">
-        <button class="btn-real btn-real-primary" onclick="startGame()">🏃 START RUNNING NOW!</button>
-        <button class="btn-real btn-real-secondary" onclick="openModal('roster')">👨‍👩‍👦 FAMILY ROSTER & ABILITIES</button>
-        <button class="btn-real btn-real-secondary" onclick="openModal('prizes')">🏆 PRIZE VAULT & REWARDS</button>
-        <button class="btn-real btn-real-secondary" onclick="document.getElementById('hidden-controls').classList.toggle('active')">⌨️ SHOW CONTROLS</button>
-        <button class="btn-real btn-real-danger" onclick="window.location.href='../../index.html'">✕ EXIT TO ADVENTURE PARK</button>
+        <button class="btn-real btn-real-primary" onclick="startGame()">ðŸƒ START RUNNING NOW!</button>
+        <button class="btn-real btn-real-secondary" onclick="openModal('roster')">ðŸ‘¨â€ðŸ‘©â€ðŸ‘¦ FAMILY ROSTER & ABILITIES</button>
+        <button class="btn-real btn-real-secondary" onclick="openModal('prizes')">ðŸ† PRIZE VAULT & REWARDS</button>
+        <button class="btn-real btn-real-secondary" onclick="document.getElementById('hidden-controls').classList.toggle('active')">âŒ¨ï¸ SHOW CONTROLS</button>
+        <button class="btn-real btn-real-danger" onclick="window.location.href='../../index.html'">âœ• EXIT TO ADVENTURE PARK</button>
       </div>
 
       <div class="control-deck" id="hidden-controls" style="display:none;">
-        <div><span class="key-badge">⬅️ ➡️</span> or <span class="key-badge">A / D</span> Change Lane</div>
-        <div><span class="key-badge">⬆️ / W</span> Jump Hurdle</div>
-        <div><span class="key-badge">⬇️ / S</span> Slide Under</div>
+        <div><span class="key-badge">â¬…ï¸ âž¡ï¸</span> or <span class="key-badge">A / D</span> Change Lane</div>
+        <div><span class="key-badge">â¬†ï¸ / W</span> Jump Hurdle</div>
+        <div><span class="key-badge">â¬‡ï¸ / S</span> Slide Under</div>
         <div><span class="key-badge">M</span> Mom's Bike</div>
         <div><span class="key-badge">D</span> Dad's Sock</div>
-        <div><span class="key-badge">SPACE</span> Butt-Dash ⚡</div>
+        <div><span class="key-badge">SPACE</span> Butt-Dash âš¡</div>
       </div>
     </div>
   </div>
 
-  <!-- ─── REAL-WORLD AUTOMOTIVE / RUNNER HUD ─── -->
+  <!-- â”€â”€â”€ REAL-WORLD AUTOMOTIVE / RUNNER HUD â”€â”€â”€ -->
   <div id="game-hud">
     <div class="hud-top-bar">
       <!-- REAL-WORLD HIGHWAY / STREET SIGN -->
       <div class="road-signboard">
-        <div style="font-size:1.6rem;">🛣️</div>
+        <div style="font-size:1.6rem;">ðŸ›£ï¸</div>
         <div>
-          <div class="sign-kanji">春日部市 本町通り</div>
+          <div class="sign-kanji">æ˜¥æ—¥éƒ¨å¸‚ æœ¬ç”ºé€šã‚Š</div>
           <div class="sign-sub">KASUKABE CENTRAL DIST.</div>
         </div>
         <div class="sign-dist" id="hud-distance">0.0 KM</div>
@@ -549,7 +549,7 @@
         </div>
         <div class="telem-divider"></div>
         <div class="telem-box">
-          <span class="telem-label">CHOCOBI 🍪</span>
+          <span class="telem-label">CHOCOBI ðŸª</span>
           <span class="telem-value cookies" id="hud-chocobi">x0</span>
         </div>
         <div class="telem-divider"></div>
@@ -567,15 +567,15 @@
               <path class="gauge-circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
               <path class="gauge-circle-fill" id="anger-circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
             </svg>
-            <span class="gauge-icon" id="gauge-icon">😡</span>
+            <span class="gauge-icon" id="gauge-icon">ðŸ˜¡</span>
           </div>
           <div class="gauge-info">
             <span class="gauge-title">MOM'S ANGER</span>
             <span class="gauge-status" id="hud-anger">0% (CALM)</span>
           </div>
         </div>
-        <button class="btn-exit-hud" id="top-play-again-btn" style="background:#10b981; border-color:#059669; color:#fff; font-weight:800; padding:8px 14px; box-shadow:0 0 14px rgba(16,185,129,0.6);" onclick="restartShinChanGame()">🔄 PLAY AGAIN</button>
-        <button class="btn-exit-hud" onclick="window.location.href='../../index.html'">✕ EXIT</button>
+        <button class="btn-exit-hud" id="top-play-again-btn" style="background:#10b981; border-color:#059669; color:#fff; font-weight:800; padding:8px 14px; box-shadow:0 0 14px rgba(16,185,129,0.6);" onclick="restartShinChanGame()">ðŸ”„ PLAY AGAIN</button>
+        <button class="btn-exit-hud" onclick="window.location.href='../../index.html'">âœ• EXIT</button>
       </div>
     </div>
 
@@ -608,17 +608,17 @@
 
     <!-- HAZARD / VILLAIN ALERT STROBE -->
     <div id="hazard-flasher">
-      <span style="font-size:1.3rem;">⚠️</span>
+      <span style="font-size:1.3rem;">âš ï¸</span>
       <span id="hazard-text">ALERT: MISAE INCOMING IN 30M!</span>
     </div>
 
     <!-- RADIO COMMUNICATOR DIALOGUE BOX -->
     <div id="dialogue-box">
-      <div class="dlg-ava" id="dlg-ava">👦</div>
+      <div class="dlg-ava" id="dlg-ava">ðŸ‘¦</div>
       <div class="dlg-content">
         <div class="dlg-header">
           <div class="dlg-name" id="dlg-name">Shin-chan</div>
-          <div class="dlg-freq">CH 108.5 MHz · KASUKABE VHF</div>
+          <div class="dlg-freq">CH 108.5 MHz Â· KASUKABE VHF</div>
         </div>
         <div class="dlg-msg" id="dlg-msg">Let's go! Time for Chocobi cookies!</div>
       </div>
@@ -627,48 +627,48 @@
     <!-- FAMILY & ACTION KAMEN ABILITY TACTICAL BAR (Hidden to keep Shinchan 100% visible - accessible via CONTROLS guide) -->
     <div id="ability-bar" style="display:none !important;">
       <button class="abtn abtn-dash" id="btn-action-beam" onclick="triggerActionKamenBeam()" style="background:linear-gradient(135deg, #10b981, #06b6d4); color:#fff; border:1px solid #10b981;" title="PC: K | Tap">
-        <span style="font-size:1.2rem;">⚡</span>
+        <span style="font-size:1.2rem;">âš¡</span>
         <span>[PC: K | TAP] ACTION KAMEN BEAM</span>
       </button>
       <button class="abtn abtn-dash" id="btn-buriburi" onclick="triggerBuriBuriZaimon()" style="background:linear-gradient(135deg, #f43f5e, #fb923c); color:#fff; border:1px solid #f43f5e;" title="PC: B | Tap">
-        <span style="font-size:1.2rem;">🐷</span>
+        <span style="font-size:1.2rem;">ðŸ·</span>
         <span>[PC: B | TAP] BURI BURI ZAIMON</span>
       </button>
       <button class="abtn abtn-mom" id="btn-mom" onclick="triggerCallMom()" title="PC: M | Tap">
-        <span style="font-size:1.2rem;">🚲</span>
+        <span style="font-size:1.2rem;">ðŸš²</span>
         <span>[PC: M | TAP] CALL MOM</span>
       </button>
       <button class="abtn abtn-dad" id="btn-dad" onclick="triggerCallDad()" title="PC: D | Tap">
-        <span style="font-size:1.2rem;">👞</span>
+        <span style="font-size:1.2rem;">ðŸ‘ž</span>
         <span>[PC: D | TAP] CALL DAD</span>
       </button>
       <button class="abtn abtn-dash" id="btn-dash" onclick="triggerButtDash()" title="PC: Space | Tap">
-        <span style="font-size:1.2rem;">⚡</span>
+        <span style="font-size:1.2rem;">âš¡</span>
         <span>[PC: SPACE | TAP] BUTT-DASH</span>
       </button>
     </div>
 
     <!-- CAMERA ANGLES -->
     <div id="camera-bar">
-      <button class="cbtn active" onclick="setCamera('chase')" id="cam-chase">🎥 CHASE</button>
-      <button class="cbtn" onclick="setCamera('front')" id="cam-front">📸 FRONT</button>
-      <button class="cbtn" onclick="setCamera('top')" id="cam-top">🚁 TOP</button>
-      <button class="cbtn" onclick="setCamera('side')" id="cam-side">📐 SIDE</button>
+      <button class="cbtn active" onclick="setCamera('chase')" id="cam-chase">ðŸŽ¥ CHASE</button>
+      <button class="cbtn" onclick="setCamera('front')" id="cam-front">ðŸ“¸ FRONT</button>
+      <button class="cbtn" onclick="setCamera('top')" id="cam-top">ðŸš TOP</button>
+      <button class="cbtn" onclick="setCamera('side')" id="cam-side">ðŸ“ SIDE</button>
     </div>
 
     <!-- MOBILE TOUCH CONTROLS (Managed universally by common-touch-controls) -->
     <div id="touch-controls" style="display:none !important;">
-      <div class="touch-row"><button class="tbtn" onclick="doAction('jump')">⬆️</button></div>
+      <div class="touch-row"><button class="tbtn" onclick="doAction('jump')">â¬†ï¸</button></div>
       <div class="touch-row">
-        <button class="tbtn" onclick="doAction('left')">⬅️</button>
-        <button class="tbtn" style="background:rgba(255,0,127,0.3)" onclick="doAction('slide')">🍑</button>
-        <button class="tbtn" onclick="doAction('right')">➡️</button>
+        <button class="tbtn" onclick="doAction('left')">â¬…ï¸</button>
+        <button class="tbtn" style="background:rgba(255,0,127,0.3)" onclick="doAction('slide')">ðŸ‘</button>
+        <button class="tbtn" onclick="doAction('right')">âž¡ï¸</button>
       </div>
     </div>
 
     <div id="combo-display"></div>
     <div id="level-indicator"></div>
-    <div id="prize-toast"><span style="font-size:1.5rem;">🏆</span><span id="prize-text">Prize Unlocked!</span></div>
+    <div id="prize-toast"><span style="font-size:1.5rem;">ðŸ†</span><span id="prize-text">Prize Unlocked!</span></div>
   </div>
 
   <!-- MODAL (ROSTER, PRIZES, GAME OVER) -->
@@ -681,3 +681,4 @@
 <script src="game.js"></script>
 </body>
 </html>
+

@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PROJECT IGI & ARMY ZOMBIE APOKALYYPSE 3D 🧟 | Tactical Commando & 30 Stages</title>
+  <title>PROJECT IGI & ARMY ZOMBIE APOKALYYPSE 3D ðŸ§Ÿ | Tactical Commando & 30 Stages</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
@@ -22,37 +22,37 @@
     <!-- Always-Visible Permanent Top Bar with PLAY AGAIN -->
     <div id="permanent-top-bar" style="position: absolute; top: 12px; right: 20px; z-index: 1000; display: flex; gap: 8px;">
       <button class="hud-btn btn-primary" style="background:#10b981; border:2px solid #059669; color:#fff; font-weight:900; font-size:0.95rem; padding:10px 20px; border-radius:12px; box-shadow:0 0 16px rgba(16,185,129,0.7); cursor:pointer;" onclick="restartGame()">
-        🔄 PLAY AGAIN
+        ðŸ”„ PLAY AGAIN
       </button>
       <button class="hud-btn btn-pink" style="padding:10px 16px; border-radius:12px; cursor:pointer;" onclick="exitToHub()">
-        ✕ EXIT
+        âœ• EXIT
       </button>
     </div>
 
     <!-- Mobile Touch D-Pad -->
     <div id="mobile-pad" style="position:absolute; bottom:20px; left:20px; z-index:50; display:flex; flex-direction:column; gap:6px;">
       <div style="display:flex; justify-content:center; gap:6px;">
-        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(239,68,68,0.25); border:2px solid #ef4444;" onclick="triggerJump()">⬆️</button>
+        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(239,68,68,0.25); border:2px solid #ef4444;" onclick="triggerJump()">â¬†ï¸</button>
       </div>
       <div style="display:flex; gap:6px;">
-        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(239,68,68,0.25); border:2px solid #ef4444;" onclick="targetX = Math.max(-16, (typeof targetX!=='undefined'?targetX:0) - 4.0)">⬅️</button>
-        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(239,68,68,0.5); border:2px solid #ef4444;" onclick="triggerShoot ? triggerShoot() : void(0)">🔫</button>
-        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(239,68,68,0.25); border:2px solid #ef4444;" onclick="targetX = Math.min(16, (typeof targetX!=='undefined'?targetX:0) + 4.0)">➡️</button>
+        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(239,68,68,0.25); border:2px solid #ef4444;" onclick="targetX = Math.max(-16, (typeof targetX!=='undefined'?targetX:0) - 4.0)">â¬…ï¸</button>
+        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(239,68,68,0.5); border:2px solid #ef4444;" onclick="triggerShoot ? triggerShoot() : void(0)">ðŸ”«</button>
+        <button class="hud-btn" style="width:48px; height:48px; font-size:1.3rem; border-radius:50%; background:rgba(239,68,68,0.25); border:2px solid #ef4444;" onclick="targetX = Math.min(16, (typeof targetX!=='undefined'?targetX:0) + 4.0)">âž¡ï¸</button>
       </div>
     </div>
 
     <!-- Hazard Alert Flasher -->
     <div class="real-hazard-flasher" id="hazard-flasher">
-      ⚠️ DANGER: ZOMBIE HORDE & ENEMY SOLDIERS IN COMBAT ZONE ⚠️
+      âš ï¸ DANGER: ZOMBIE HORDE & ENEMY SOLDIERS IN COMBAT ZONE âš ï¸
     </div>
 
     <!-- Real-World Telemetry Header -->
     <div class="real-telemetry-cluster">
       <div class="real-badge">
-        <span class="real-badge-icon">🧟</span>
+        <span class="real-badge-icon">ðŸ§Ÿ</span>
         <div class="real-badge-info">
           <div class="real-badge-title">PROJECT IGI: ZOMBIE COMMANDO 3D</div>
-          <div class="real-badge-sub">TACTICAL RIFLE • HEADSHOTS • 30 STAGES</div>
+          <div class="real-badge-sub">TACTICAL RIFLE â€¢ HEADSHOTS â€¢ 30 STAGES</div>
         </div>
       </div>
 
@@ -62,7 +62,7 @@
       </div>
 
       <div class="real-stat-pill">
-        <span class="real-stat-label">AMMO MAGS 🔫</span>
+        <span class="real-stat-label">AMMO MAGS ðŸ”«</span>
         <span class="real-stat-value" id="hud-ammo" style="color: #00f0ff;">30 / 120</span>
       </div>
 
@@ -76,7 +76,7 @@
         <span class="real-stat-value" id="hud-score" style="color: #f59e0b;">0</span>
       </div>
 
-      <button class="real-btn-exit" onclick="exitToHub()">✕ EXIT MISSION</button>
+      <button class="real-btn-exit" onclick="exitToHub()">âœ• EXIT MISSION</button>
     </div>
 
     <!-- Ammo / Speedometer Dial -->
@@ -113,25 +113,25 @@
         <option value="20">STAGE 20: Underground Mutant Silo</option>
         <option value="30">STAGE 30: Final Command Bunker</option>
       </select>
-      <button class="hud-btn" style="background: rgba(239, 68, 68, 0.3);" onclick="window.speakCartoonLine('police')">🗣️ COMMANDO VOICE</button>
-      <button class="hud-btn" style="background: rgba(16, 185, 129, 0.3);" onclick="window.playCartoonThemeSong('zombie_igi')">🎵 IGI THEME MUSIC</button>
+      <button class="hud-btn" style="background: rgba(239, 68, 68, 0.3);" onclick="window.speakCartoonLine('police')">ðŸ—£ï¸ COMMANDO VOICE</button>
+      <button class="hud-btn" style="background: rgba(16, 185, 129, 0.3);" onclick="window.playCartoonThemeSong('zombie_igi')">ðŸŽµ IGI THEME MUSIC</button>
     </div>
 
     <!-- Camera Control Bar -->
     <div class="camera-control-bar">
-      <button class="hud-btn active" id="cam-back" onclick="setCameraView('back')">🎥 CHASE</button>
-      <button class="hud-btn" id="cam-front" onclick="setCameraView('front')">📸 FPS SCOPE</button>
-      <button class="hud-btn" id="cam-left" onclick="setCameraView('left')">📐 LEFT</button>
-      <button class="hud-btn" id="cam-right" onclick="setCameraView('right')">📐 RIGHT</button>
-      <button class="hud-btn" id="cam-top" onclick="setCameraView('top')">🚁 TOP</button>
+      <button class="hud-btn active" id="cam-back" onclick="setCameraView('back')">ðŸŽ¥ CHASE</button>
+      <button class="hud-btn" id="cam-front" onclick="setCameraView('front')">ðŸ“¸ FPS SCOPE</button>
+      <button class="hud-btn" id="cam-left" onclick="setCameraView('left')">ðŸ“ LEFT</button>
+      <button class="hud-btn" id="cam-right" onclick="setCameraView('right')">ðŸ“ RIGHT</button>
+      <button class="hud-btn" id="cam-top" onclick="setCameraView('top')">ðŸš TOP</button>
     </div>
 
     <!-- Touch Mobile Controls -->
     <div class="touch-controls">
-      <button class="touch-btn" id="touch-left">⬅️</button>
-      <button class="touch-btn" id="touch-right">➡️</button>
-      <button class="touch-btn" id="touch-jump" style="background: rgba(239, 68, 68, 0.4);">🦘</button>
-      <button class="touch-btn" id="touch-fire" style="background: rgba(0, 240, 255, 0.4);">🔫</button>
+      <button class="touch-btn" id="touch-left">â¬…ï¸</button>
+      <button class="touch-btn" id="touch-right">âž¡ï¸</button>
+      <button class="touch-btn" id="touch-jump" style="background: rgba(239, 68, 68, 0.4);">ðŸ¦˜</button>
+      <button class="touch-btn" id="touch-fire" style="background: rgba(0, 240, 255, 0.4);">ðŸ”«</button>
     </div>
   </div>
 
@@ -139,3 +139,4 @@
   <script src="game.js"></script>
 </body>
 </html>
+

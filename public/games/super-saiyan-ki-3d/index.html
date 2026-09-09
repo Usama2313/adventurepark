@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SUPER SAIYAN KI FIGHTER ⚡ | Real-World Scouter Telemetry</title>
+  <title>SUPER SAIYAN KI FIGHTER âš¡ | Real-World Scouter Telemetry</title>
   <link rel="stylesheet" href="../common-game.css">
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700;900&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -39,18 +39,18 @@
 
     <!-- Main Menu Overlay -->
     <div id="main-menu" class="game-main-menu">
-      <div style="font-size: 3.5rem; margin-bottom: 8px; animation: agentFloat 2s infinite ease-in-out;">⚡ 💥 🐉 🔮 🌌</div>
+      <div style="font-size: 3.5rem; margin-bottom: 8px; animation: agentFloat 2s infinite ease-in-out;">âš¡ ðŸ’¥ ðŸ‰ ðŸ”® ðŸŒŒ</div>
       <h1 class="menu-title-glow">SUPER SAIYAN KI FIGHTER</h1>
       <p class="menu-subtitle">Saiyan Scouter HUD Telemetry & Anime Fighter Voice!</p>
       
       <div class="menu-options-grid" style="max-width: 500px;">
-        <button class="real-btn real-btn-primary" onclick="startGame()">⚡ COMMENCE NAMEK ARENA COMBAT</button>
-        <button class="real-btn real-btn-secondary" onclick="window.speakCartoonLine('universal')">🗣️ ANNOUNCER / KI FIGHTER VOICE</button>
-        <button class="real-btn real-btn-danger" onclick="exitToHub()">✕ EXIT TO ADVENTURE PARK</button>
+        <button class="real-btn real-btn-primary" onclick="startGame()">âš¡ COMMENCE NAMEK ARENA COMBAT</button>
+        <button class="real-btn real-btn-secondary" onclick="window.speakCartoonLine('universal')">ðŸ—£ï¸ ANNOUNCER / KI FIGHTER VOICE</button>
+        <button class="real-btn real-btn-danger" onclick="exitToHub()">âœ• EXIT TO ADVENTURE PARK</button>
       </div>
 
       <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 14px; font-family: 'Chakra Petch', sans-serif;">
-        Controls: <strong>A / D or ⬅️ ➡️</strong> Strafe | <strong>[SPACE]</strong> Fire Ki Blast | <strong>[E]</strong> Charge Super Saiyan Aura | <strong>[F]</strong> Instant Transmission
+        Controls: <strong>A / D or â¬…ï¸ âž¡ï¸</strong> Strafe | <strong>[SPACE]</strong> Fire Ki Blast | <strong>[E]</strong> Charge Super Saiyan Aura | <strong>[F]</strong> Instant Transmission
       </div>
     </div>
 
@@ -58,9 +58,9 @@
     <div id="in-game-hud" class="game-hud-top" style="display: none;">
       <!-- Battlefield Signboard -->
       <div class="real-signboard dark" style="border-color:#22c55e;">
-        <span style="font-size: 1.6rem;">🐉</span>
+        <span style="font-size: 1.6rem;">ðŸ‰</span>
         <div>
-          <div class="real-sign-text">PLANET NAMEK · CRATER ARENA</div>
+          <div class="real-sign-text">PLANET NAMEK Â· CRATER ARENA</div>
           <div class="real-sign-sub">SCOUTER COMBAT MATRIX ACTIVE</div>
         </div>
         <div class="real-sign-dist" id="hud-power-level" style="background:#22c55e;color:#000;">1,250,000</div>
@@ -80,12 +80,12 @@
         <div class="real-telem-div"></div>
         <div class="real-telem-box">
           <span class="real-telem-label">DRAGON BALLS</span>
-          <span class="real-telem-val gold" id="hud-dragonballs">⭐ x7 LOCATED</span>
+          <span class="real-telem-val gold" id="hud-dragonballs">â­ x7 LOCATED</span>
         </div>
       </div>
 
       <!-- Exit Button -->
-      <button class="hud-btn btn-pink" onclick="exitToHub()">✕ EXIT</button>
+      <button class="hud-btn btn-pink" onclick="exitToHub()">âœ• EXIT</button>
     </div>
 
     <!-- Scouter Radar (Top Right) -->
@@ -110,20 +110,20 @@
       </div>
       <div class="real-speedo-info">
         <span class="real-speedo-num" id="hud-ki-num" style="color:#22c55e;">9,001</span>
-        <span class="real-speedo-unit">OVER 9000! · KI WATTS</span>
-        <span class="real-speedo-gear" id="hud-form-mode">SUPER SAIYAN 1 ⚡</span>
+        <span class="real-speedo-unit">OVER 9000! Â· KI WATTS</span>
+        <span class="real-speedo-gear" id="hud-form-mode">SUPER SAIYAN 1 âš¡</span>
       </div>
     </div>
 
     <!-- Hazard Flasher -->
     <div class="real-hazard-flasher" id="hazard-flasher">
-      <span style="font-size: 1.3rem;">⚠️</span>
+      <span style="font-size: 1.3rem;">âš ï¸</span>
       <span id="hazard-text">SCOUTER WARNING: HIGH KI SIGNATURE DETECTED!</span>
     </div>
 
     <!-- Dialogue Box -->
     <div id="dialogue-box" class="dialogue-overlay-box" style="display: none; top: 90px;">
-      <div class="dialogue-avatar" id="dialogue-avatar">⚡</div>
+      <div class="dialogue-avatar" id="dialogue-avatar">âš¡</div>
       <div style="flex-grow: 1;">
         <div class="dialogue-speaker" id="dialogue-speaker">Goku (Telepathy)</div>
         <div class="dialogue-text" id="dialogue-text">"I will not let you destroy this planet! Taste the full power of a Super Saiyan!"</div>
@@ -133,23 +133,23 @@
     <!-- Action Ability Bar -->
     <div id="ability-bar" class="action-ability-bar" style="display: none; bottom: 84px;">
       <button class="ability-btn gold" onclick="triggerKiBlast()">
-        ⚡ [SPACE] Kamehameha Blast
+        âš¡ [SPACE] Kamehameha Blast
       </button>
       <button class="ability-btn cyan" onclick="triggerAuraCharge()">
-        🔥 [E] Power Up Ki Aura
+        ðŸ”¥ [E] Power Up Ki Aura
       </button>
       <button class="ability-btn pink" onclick="triggerInstantTransmission()">
-        🌀 [F] Instant Transmission
+        ðŸŒ€ [F] Instant Transmission
       </button>
     </div>
 
     <!-- 5-Angle Camera Bar -->
     <div class="camera-control-bar" style="bottom: 20px; right: 20px;">
-      <button class="hud-btn active" id="cam-back" onclick="setCameraView('back')">🎥 OVER-SHOULDER</button>
-      <button class="hud-btn" id="cam-front" onclick="setCameraView('front')">📸 FRONT COMBAT</button>
-      <button class="hud-btn" id="cam-left" onclick="setCameraView('left')">📐 LEFT ARENA</button>
-      <button class="hud-btn" id="cam-right" onclick="setCameraView('right')">📐 RIGHT ARENA</button>
-      <button class="hud-btn" id="cam-top" onclick="setCameraView('top')">🚁 TOP ARENA</button>
+      <button class="hud-btn active" id="cam-back" onclick="setCameraView('back')">ðŸŽ¥ OVER-SHOULDER</button>
+      <button class="hud-btn" id="cam-front" onclick="setCameraView('front')">ðŸ“¸ FRONT COMBAT</button>
+      <button class="hud-btn" id="cam-left" onclick="setCameraView('left')">ðŸ“ LEFT ARENA</button>
+      <button class="hud-btn" id="cam-right" onclick="setCameraView('right')">ðŸ“ RIGHT ARENA</button>
+      <button class="hud-btn" id="cam-top" onclick="setCameraView('top')">ðŸš TOP ARENA</button>
     </div>
 
     <!-- Modals -->
@@ -162,3 +162,4 @@
   <script src="game.js"></script>
 </body>
 </html>
+

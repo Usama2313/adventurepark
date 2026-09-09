@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SONIC SEGA DASH: GENERATIONS 🦔⚡ | Real-World Sonic Cockpit</title>
+  <title>SONIC SEGA DASH: GENERATIONS ðŸ¦”âš¡ | Real-World Sonic Cockpit</title>
   <link rel="stylesheet" href="../common-game.css">
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700;900&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -39,18 +39,18 @@
 
     <!-- Main Menu Overlay -->
     <div id="main-menu" class="game-main-menu">
-      <div style="font-size: 3.5rem; margin-bottom: 8px; animation: agentFloat 2s infinite ease-in-out;">🦔 ⚡ 🪙 💎 🌀</div>
+      <div style="font-size: 3.5rem; margin-bottom: 8px; animation: agentFloat 2s infinite ease-in-out;">ðŸ¦” âš¡ ðŸª™ ðŸ’Ž ðŸŒ€</div>
       <h1 class="menu-title-glow">SONIC SEGA DASH: GENERATIONS</h1>
       <p class="menu-subtitle">Supersonic Running Telemetry, Badnik Motobugs & Real Sonic Voice!</p>
       
       <div class="menu-options-grid" style="max-width: 500px;">
-        <button class="real-btn real-btn-primary" onclick="startGame()">🌀 ENTER GREEN HILL ZONE ACT 1</button>
-        <button class="real-btn real-btn-secondary" onclick="window.speakCartoonLine('sonic')">🗣️ SONIC REAL VOICE</button>
-        <button class="real-btn real-btn-danger" onclick="exitToHub()">✕ EXIT TO ADVENTURE PARK</button>
+        <button class="real-btn real-btn-primary" onclick="startGame()">ðŸŒ€ ENTER GREEN HILL ZONE ACT 1</button>
+        <button class="real-btn real-btn-secondary" onclick="window.speakCartoonLine('sonic')">ðŸ—£ï¸ SONIC REAL VOICE</button>
+        <button class="real-btn real-btn-danger" onclick="exitToHub()">âœ• EXIT TO ADVENTURE PARK</button>
       </div>
 
       <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 14px; font-family: 'Chakra Petch', sans-serif;">
-        Controls: <strong>A / D or ⬅️ ➡️</strong> Lane Steer | <strong>W / ⬆️</strong> Jump | <strong>[HOLD S / ⬇️]</strong> Charge Spin Dash | <strong>[SPACE]</strong> Homing Attack
+        Controls: <strong>A / D or â¬…ï¸ âž¡ï¸</strong> Lane Steer | <strong>W / â¬†ï¸</strong> Jump | <strong>[HOLD S / â¬‡ï¸]</strong> Charge Spin Dash | <strong>[SPACE]</strong> Homing Attack
       </div>
     </div>
 
@@ -58,9 +58,9 @@
     <div id="in-game-hud" class="game-hud-top" style="display: none;">
       <!-- Zone Signboard -->
       <div class="real-signboard blue">
-        <span style="font-size: 1.6rem;">🌴</span>
+        <span style="font-size: 1.6rem;">ðŸŒ´</span>
         <div>
-          <div class="real-sign-text">GREEN HILL ZONE · ACT 1</div>
+          <div class="real-sign-text">GREEN HILL ZONE Â· ACT 1</div>
           <div class="real-sign-sub">SOUTH ISLAND HIGH-SPEED LOOP</div>
         </div>
         <div class="real-sign-dist" id="hud-distance" style="background:#fff;color:#0284c7;">0.0 KM</div>
@@ -70,7 +70,7 @@
       <div class="real-telemetry-cluster">
         <div class="real-telem-box">
           <span class="real-telem-label">GOLDEN RINGS</span>
-          <span class="real-telem-val gold" id="hud-rings">🪙 x0</span>
+          <span class="real-telem-val gold" id="hud-rings">ðŸª™ x0</span>
         </div>
         <div class="real-telem-div"></div>
         <div class="real-telem-box">
@@ -80,12 +80,12 @@
         <div class="real-telem-div"></div>
         <div class="real-telem-box">
           <span class="real-telem-label">SPIN CHARGE</span>
-          <span class="real-telem-val emerald" id="hud-spin-status">READY ⚡</span>
+          <span class="real-telem-val emerald" id="hud-spin-status">READY âš¡</span>
         </div>
       </div>
 
       <!-- Exit Button -->
-      <button class="hud-btn btn-pink" onclick="exitToHub()">✕ EXIT</button>
+      <button class="hud-btn btn-pink" onclick="exitToHub()">âœ• EXIT</button>
     </div>
 
     <!-- Green Hill Radar (Top Right) -->
@@ -110,20 +110,20 @@
       </div>
       <div class="real-speedo-info">
         <span class="real-speedo-num" id="hud-sonic-speed">180</span>
-        <span class="real-speedo-unit">MPH · SONIC VELOCITY</span>
+        <span class="real-speedo-unit">MPH Â· SONIC VELOCITY</span>
         <span class="real-speedo-gear" id="hud-sonic-gear">MACH RUN</span>
       </div>
     </div>
 
     <!-- Hazard Flasher -->
     <div class="real-hazard-flasher" id="hazard-flasher">
-      <span style="font-size: 1.3rem;">⚠️</span>
+      <span style="font-size: 1.3rem;">âš ï¸</span>
       <span id="hazard-text">ALERT: EGGMOBILE BADNIK BARRICADE!</span>
     </div>
 
     <!-- Dialogue Box -->
     <div id="dialogue-box" class="dialogue-overlay-box" style="display: none; top: 90px;">
-      <div class="dialogue-avatar" id="dialogue-avatar">🦔</div>
+      <div class="dialogue-avatar" id="dialogue-avatar">ðŸ¦”</div>
       <div style="flex-grow: 1;">
         <div class="dialogue-speaker" id="dialogue-speaker">Sonic the Hedgehog</div>
         <div class="dialogue-text" id="dialogue-text">"You're too slow! Time to rev up the Spin Dash and blast through Dr. Eggman's Badniks!"</div>
@@ -133,20 +133,20 @@
     <!-- Action Ability Bar -->
     <div id="ability-bar" class="action-ability-bar" style="display: none; bottom: 84px;">
       <button class="ability-btn cyan" onmousedown="triggerSpinDash(true)" onmouseup="triggerSpinDash(false)">
-        🌀 [HOLD S] Charge Spin Dash
+        ðŸŒ€ [HOLD S] Charge Spin Dash
       </button>
       <button class="ability-btn gold" onclick="triggerHomingAttack()">
-        🎯 [SPACE TWICE] Homing Attack
+        ðŸŽ¯ [SPACE TWICE] Homing Attack
       </button>
     </div>
 
     <!-- 5-Angle Camera Bar -->
     <div class="camera-control-bar" style="bottom: 20px; right: 20px;">
-      <button class="hud-btn active" id="cam-back" onclick="setCameraView('back')">🎥 CHASE</button>
-      <button class="hud-btn" id="cam-front" onclick="setCameraView('front')">📸 FRONT</button>
-      <button class="hud-btn" id="cam-left" onclick="setCameraView('left')">📐 LEFT</button>
-      <button class="hud-btn" id="cam-right" onclick="setCameraView('right')">📐 RIGHT</button>
-      <button class="hud-btn" id="cam-top" onclick="setCameraView('top')">🚁 TOP</button>
+      <button class="hud-btn active" id="cam-back" onclick="setCameraView('back')">ðŸŽ¥ CHASE</button>
+      <button class="hud-btn" id="cam-front" onclick="setCameraView('front')">ðŸ“¸ FRONT</button>
+      <button class="hud-btn" id="cam-left" onclick="setCameraView('left')">ðŸ“ LEFT</button>
+      <button class="hud-btn" id="cam-right" onclick="setCameraView('right')">ðŸ“ RIGHT</button>
+      <button class="hud-btn" id="cam-top" onclick="setCameraView('top')">ðŸš TOP</button>
     </div>
 
     <!-- Modals -->
@@ -159,3 +159,4 @@
   <script src="game.js"></script>
 </body>
 </html>
+
