@@ -1329,8 +1329,8 @@ function updateCamera(delta) {
   } else {
     // Cinematic Third-Person behind Spider-Man with generous clearance so hero is never blocked
     tx = spideyGroup.position.x * 0.4;
-    ty = spideyGroup.position.y + (isMobile ? 4.2 : 3.6);
-    tz = spideyGroup.position.z + (isMobile ? 11.5 : 9.8);
+    ty = spideyGroup.position.y + (isMobile ? 2.5 : 3.6);
+    tz = spideyGroup.position.z + (isMobile ? 6.5 : 9.8);
     camera.position.x += (tx - camera.position.x) * Math.min(1.0, 10.0 * delta);
     camera.position.y += (ty - camera.position.y) * Math.min(1.0, 10.0 * delta);
     camera.position.z += (tz - camera.position.z) * Math.min(1.0, 10.0 * delta);

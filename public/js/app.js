@@ -32,6 +32,10 @@ class AdventureParkApp {
     await this.fetchPrizes();
     this.render();
 
+    if (!this.currentUser) {
+      setTimeout(() => this.openAuthModal(), 500);
+    }
+
     // Auto-refresh balances every 10 seconds
     setInterval(() => this.syncProfile(), 10000);
   }
@@ -42,20 +46,7 @@ class AdventureParkApp {
       if (saved) {
         this.currentUser = JSON.parse(saved);
       } else {
-        // Default Demo Adventurer
-        this.currentUser = {
-          id: "usr_demo123",
-          name: "Syed Usama Tanveer (Adventurer)",
-          phone: "+923211808390",
-          cardId: "PK-ADV-8899",
-          cashCredits: 180,
-          bonusCredits: 60,
-          tickets: 420,
-          vipTier: "VIP Gold Master",
-          hasFreePass: false,
-          history: []
-        };
-        this.saveLocalUser();
+        this.currentUser = null;
       }
     } catch (e) {
       console.error(e);
@@ -379,27 +370,15 @@ class AdventureParkApp {
       return;
     } catch (e) {
       // Offline simulation fallback
-      if (this.currentUser.hasFreePass) {
-        // Free
-      } else if (game.isBonusOnly) {
-        if (this.currentUser.bonusCredits < game.cost) {
-          alert(`⚠️ Insufficient Bonus Credits! ${game.title} requires ${game.cost} Bonus Credits. Recharge a package to unlock bonus games.`);
-          this.openTopupModal('pkg_family');
-          return;
-        }
-        this.currentUser.bonusCredits -= game.cost;
-      } else {
-        if (this.currentUser.cashCredits >= game.cost) {
-          this.currentUser.cashCredits -= game.cost;
-        } else if (this.currentUser.bonusCredits >= game.cost) {
-          this.currentUser.bonusCredits -= game.cost;
-        } else {
-          alert(`⚠️ Card balance low! ${game.title} requires ${game.cost} credits. Please recharge your card.`);
-          this.openTopupModal('pkg_starter');
-          return;
+      if (!this.currentUser.isPaid && !this.currentUser.hasFreePass) {
+        const trialStart = new Date(this.currentUser.trialStartedAt || this.currentUser.createdAt || Date.now()).getTime();
+        const elapsed = Math.floor((Date.now() - trialStart) / 1000);
+        if (elapsed > 180) {
+           alert(`⚠️ Your 3-minute free trial has ended.\n\nPlease pay Rs. 100 for Lifetime Access to ALL 17 Games!`);
+           this.openTopupModal();
+           return;
         }
       }
-
       this.saveLocalUser();
       this.updateHeaderStats();
       this.launchGameModal(game);
@@ -537,22 +516,7 @@ class AdventureParkApp {
             </div>
           </div>
 
-          <!-- Navigation Tabs -->
-          <nav style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <button class="${this.activeTab === 'park' ? 'btn-neon' : 'btn-glass'}" onclick="window.parkApp.setActiveTab('park')">
-              🏰 PARK ZONES
-            </button>
-            <button class="${this.activeTab === 'card' ? 'btn-neon' : 'btn-glass'}" onclick="window.parkApp.setActiveTab('card')">
-              💳 SMART NFC CARD
-            </button>
-            <button class="${this.activeTab === 'store' ? 'btn-neon' : 'btn-glass'}" onclick="window.parkApp.setActiveTab('store')">
-              🎁 PRIZE STORE
-            </button>
-            <button class="${this.activeTab === 'admin' ? 'btn-pink' : 'btn-glass'}" onclick="window.parkApp.setActiveTab('admin')">
-              🛡️ ADMIN PORTAL
-            </button>
-          </nav>
-
+          <!-- Navigation Tabs Removed -->
           <!-- User Quick Stats & Audio Controls -->
           <div style="display: flex; align-items: center; gap: 12px;">
             <button class="btn-glass" style="padding: 8px 12px; font-size: 0.85rem;" onclick="window.parkApp.toggleAudio()" title="Toggle Sound">
@@ -603,16 +567,19 @@ class AdventureParkApp {
       return `<button class="btn-neon" onclick="window.parkApp.openAuthModal()">LOGIN / REGISTER CARD</button>`;
     }
 
+    const isLifetime = this.currentUser.isPaid || this.currentUser.hasFreePass;
+    const statusText = isLifetime ? '🌟 LIFETIME ACCESS' : '⏳ FREE TRIAL ACTIVE';
+    const statusColor = isLifetime ? 'var(--neon-gold)' : 'var(--neon-cyan)';
+
     return `
-      <div class="ticket-vault-badge" title="Won Arcade Tickets">
-        🎟️ <span>${this.currentUser.tickets || 0}</span>
+      <div style="background: rgba(0, 240, 255, 0.12); border: 1px solid rgba(0, 240, 255, 0.4); padding: 6px 12px; border-radius: var(--radius-full); font-size: 0.85rem; color: ${statusColor}; font-family: var(--font-display); cursor: pointer;" onclick="window.parkApp.openTopupModal()">
+        ${statusText}
       </div>
-      <div style="background: rgba(0, 240, 255, 0.12); border: 1px solid rgba(0, 240, 255, 0.4); padding: 6px 12px; border-radius: var(--radius-full); font-size: 0.85rem; color: var(--neon-cyan); font-family: var(--font-display); cursor: pointer;" onclick="window.parkApp.openTopupModal()">
-        💵 ${this.currentUser.cashCredits || 0} | 🌟 ${this.currentUser.bonusCredits || 0} B
-      </div>
+      ${!isLifetime ? `
       <button class="btn-neon" style="padding: 6px 14px; font-size: 0.8rem;" onclick="window.parkApp.openTopupModal()">
-        + RECHARGE
+        BUY LIFETIME ACCESS (RS 100)
       </button>
+      ` : ''}
     `;
   }
 
@@ -683,21 +650,6 @@ class AdventureParkApp {
             </button>
           </div>
         </div>
-      </div>
-
-      <!-- Zone Selector Navigation Filters -->
-      <div style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 14px; margin-bottom: 24px;">
-        ${[
-          { id: 'all', label: '🌟 ALL 11 GAMES' },
-          { id: 'family', label: '👦 FAMILY & CARTOONS' },
-          { id: 'action', label: '🦸‍♂️ SUPERHEROES & DEFENSE' },
-          { id: 'speed', label: '🏎️ SPEED, SEGA & AVIATION' },
-          { id: 'sweet', label: '🍬 SWEET BLAST & PUZZLES' }
-        ].map(z => `
-          <button class="${this.activeZone === z.id ? 'btn-neon' : 'btn-glass'}" style="white-space: nowrap; font-size: 0.85rem; padding: 10px 18px;" onclick="window.parkApp.setZone('${z.id}')">
-            ${z.label}
-          </button>
-        `).join('')}
       </div>
 
       <!-- Games Grid -->
@@ -788,10 +740,13 @@ class AdventureParkApp {
             <!-- Balance Readout -->
             <div style="display: flex; justify-content: space-between; align-items: flex-end; background: rgba(0,0,0,0.35); padding: 10px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);">
               <div>
-                <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">Cash Balance</div>
-                <div style="font-family: var(--font-display); font-size: 1.15rem; color: var(--neon-cyan); font-weight: 700;">
-                  ${user.cashCredits} CREDITS
+                <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">Account Status</div>
+                <div style="font-family: var(--font-display); font-size: 1.15rem; color: ${user.isPaid || user.hasFreePass ? 'var(--neon-gold)' : 'var(--neon-cyan)'}; font-weight: 700;">
+                  ${user.isPaid || user.hasFreePass ? 'LIFETIME ACCESS' : 'FREE TRIAL'}
                 </div>
+              </div>
+            </div>
+          </div>
               </div>
               <div>
                 <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">Bonus Balance</div>
@@ -1352,19 +1307,6 @@ class AdventureParkApp {
             </div>
           </div>
 
-          <!-- Select Package Options -->
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-bottom: 24px;">
-            ${this.packages.map(pkg => `
-              <div class="glass-panel" id="pkg-card-${pkg.id}" style="padding: 16px; cursor: pointer; border-color: ${pkg.id === selectedPkgId ? 'var(--neon-cyan)' : 'var(--border-glass)'}; background: ${pkg.id === selectedPkgId ? 'rgba(0, 240, 255, 0.12)' : 'var(--bg-card)'};" onclick="window.parkApp.selectTopupPackage('${pkg.id}')">
-                <span class="neon-badge badge-cyan" style="font-size: 0.65rem; margin-bottom: 6px;">${pkg.badge}</span>
-                <div style="font-family: var(--font-display); font-size: 0.95rem; color: #ffffff; font-weight: 700;">${pkg.name}</div>
-                <div style="font-family: var(--font-display); font-size: 1.25rem; color: var(--neon-gold); font-weight: 900; margin: 6px 0;">PKR ${pkg.pricePKR}</div>
-                <div style="font-size: 0.78rem; color: var(--neon-cyan);">💵 +${pkg.cashCredits} Cash Credits</div>
-                <div style="font-size: 0.78rem; color: var(--neon-pink);">🌟 +${pkg.bonusCredits} Bonus Credits</div>
-              </div>
-            `).join('')}
-          </div>
-
           <!-- Submit Proof Form -->
           <form onsubmit="window.parkApp.submitPaymentProof(event)" style="display: flex; flex-direction: column; gap: 14px;">
             <input type="hidden" id="topup-pkg-id" value="${selectedPkgId}">
@@ -1409,7 +1351,7 @@ class AdventureParkApp {
 
   async submitPaymentProof(e) {
     e.preventDefault();
-    const pkgId = document.getElementById('topup-pkg-id').value;
+    const pkgId = 'pkg_all_access_100';
     const sender = document.getElementById('topup-sender').value;
     const txnId = document.getElementById('topup-txnid').value;
     const screenshot = document.getElementById('topup-screenshot').value;

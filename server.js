@@ -303,38 +303,49 @@ const server = http.createServer(async (req, res) => {
   if (pathname === '/api/auth/register' && req.method === 'POST') {
     const body = await getRequestBody(req);
     const { name, email, phone, pin } = body;
-    if (!name || !phone) {
-      return sendJSON(res, 400, { error: "Name and phone number are required" });
+    if (!name || (!phone && !email)) {
+      return sendJSON(res, 400, { error: "Name and phone number (or email) are required" });
     }
 
+    const cleanEmail = email ? email.trim().toLowerCase() : `${(phone || '').replace(/\D/g, '')}@park.com`;
+    const cleanPhone = phone ? phone.trim() : '+923000000000';
+
     const db = loadDB();
-    const existing = db.users.find(u => u.phone === phone);
+    const existing = db.users.find(u => (u.phone && u.phone === cleanPhone) || (u.email && u.email.toLowerCase() === cleanEmail));
     if (existing) {
+      if (!existing.trialStartedAt) {
+        existing.trialStartedAt = new Date().toISOString();
+        saveDB(db);
+      }
       return sendJSON(res, 200, { message: "Account already exists, logged in successfully", user: existing });
     }
 
+    const now = new Date().toISOString();
     const newUser = {
       id: "usr_" + Date.now(),
       name: name.trim(),
-      email: email ? email.trim() : `${phone.replace(/\D/g, '')}@park.com`,
-      phone: phone.trim(),
+      email: cleanEmail,
+      phone: cleanPhone,
       cardId: generateCardId(),
       pin: pin || "1234",
-      cashCredits: 50, // Welcome 50 credits
-      bonusCredits: 30, // Welcome 30 bonus credits
+      cashCredits: 100,
+      bonusCredits: 50,
       tickets: 50,
-      vipTier: "Standard Explorer",
+      isPaid: false,
+      trialStartedAt: now,
+      paidAt: null,
+      paymentStatus: "TRIAL",
+      vipTier: "All-Access Explorer",
       hasFreePass: false,
-      createdAt: new Date().toISOString(),
+      createdAt: now,
       history: [
-        { id: "h_" + Date.now(), type: "WELCOME", desc: "Welcome Bonus Credits", amount: 30, timestamp: new Date().toISOString() },
-        { id: "h_" + (Date.now() + 1), type: "WELCOME", desc: "Welcome Cash Gift", amount: 50, timestamp: new Date().toISOString() }
+        { id: "h_" + Date.now(), type: "TRIAL_STARTED", desc: "3-Minute Free Trial Started", amount: 0, timestamp: now }
       ]
     };
 
     db.users.push(newUser);
     saveDB(db);
-    return sendJSON(res, 201, { message: "Park NFC Smart Card created successfully!", user: newUser });
+    return sendJSON(res, 201, { message: "Park NFC Smart Card created! 3-Minute Free Trial started!", user: newUser });
   }
 
   // POST /api/auth/login
@@ -343,13 +354,20 @@ const server = http.createServer(async (req, res) => {
     const { phoneOrCard, pin } = body;
     const db = loadDB();
 
+    const cleanKey = (phoneOrCard || '').trim().toLowerCase();
     const user = db.users.find(u => 
-      (u.phone === phoneOrCard || u.cardId.toLowerCase() === (phoneOrCard || '').toLowerCase() || u.email === phoneOrCard) &&
-      (!pin || u.pin === pin || pin === "master123")
+      (u.phone && u.phone.toLowerCase() === cleanKey) || 
+      (u.cardId && u.cardId.toLowerCase() === cleanKey) || 
+      (u.email && u.email.toLowerCase() === cleanKey)
     );
 
     if (!user) {
-      return sendJSON(res, 404, { error: "User or Card not found. Please register to get your Smart Card." });
+      return sendJSON(res, 404, { error: "User or Card not found. Please register to start your 3-Minute Free Trial!" });
+    }
+
+    if (!user.trialStartedAt) {
+      user.trialStartedAt = new Date().toISOString();
+      saveDB(db);
     }
 
     return sendJSON(res, 200, { message: "Welcome back to 3D Adventure Park!", user });
@@ -369,20 +387,35 @@ const server = http.createServer(async (req, res) => {
 
   // GET /api/packages
   if (pathname === '/api/packages' && req.method === 'GET') {
-    const db = loadDB();
     return sendJSON(res, 200, { 
-      packages: db.packages,
+      packages: [
+        {
+          id: "pkg_all_access_100",
+          name: "All-Access Lifetime Pass",
+          pricePKR: 100,
+          badge: "One-Time 100 Rupees • All 17 Games Unlocked",
+          color: "from-amber-400 to-orange-500",
+          features: [
+            "Full Lifetime Access to ALL 17 3D Games",
+            "All 30 Stages Unlocked per Game (510+ Levels Total)",
+            "Zero Microtransactions or Recurring Fees",
+            "Instant WhatsApp & Admin Email Activation"
+          ]
+        }
+      ],
       paymentAccounts: {
+        pricePKR: 100,
         jazzCash: {
-          number: "+923211808390",
+          number: "03211808390",
+          internationalNumber: "+923211808390",
           title: "SYED Usama Tanveer"
         },
         bankIBAN: {
           iban: "PK49ABPA0010083355410015",
           title: "SYED Usama Tanveer",
-          bank: "Allied Bank Limited / Standard Islamic Bank"
+          bank: "Bank Alfalah / Allied Bank"
         },
-        whatsAppNumbers: ["+97332377688", "+923211808390"]
+        whatsAppNumbers: ["+923211808390", "+97332377688"]
       }
     });
   }
@@ -774,62 +807,41 @@ const server = http.createServer(async (req, res) => {
   // POST /api/games/tap-play
   if (pathname === '/api/games/tap-play' && req.method === 'POST') {
     const body = await getRequestBody(req);
-    const { cardId, gameId, gameName, cost, isBonusOnly } = body;
+    const { cardId, gameId, gameName } = body;
 
     const db = loadDB();
     const user = db.users.find(u => u.cardId === cardId);
-    if (!user) return sendJSON(res, 404, { error: "Card not found. Please swipe a valid card." });
+    if (!user) return sendJSON(res, 404, { error: "Card not found. Please login first." });
 
-    // If user has active Free Pass, game is 100% Free!
-    if (user.hasFreePass) {
+    // Check lifetime access
+    if (user.isPaid || user.hasFreePass) {
       return sendJSON(res, 200, {
         success: true,
-        isFreePass: true,
-        message: `🌟 FREE PASS UNLOCKED! Welcome to ${gameName}. Enjoy playing!`,
+        isLifetime: true,
+        message: `🌟 LIFETIME ALL-ACCESS ACTIVE! Welcome to ${gameName || 'the game'}.`,
         user
       });
     }
 
-    const gameCost = Number(cost) || 10;
+    // Check 3-minute free trial
+    const trialStart = new Date(user.trialStartedAt || user.createdAt).getTime();
+    const elapsedSeconds = Math.floor((Date.now() - trialStart) / 1000);
+    const remainingSeconds = Math.max(0, 180 - elapsedSeconds);
 
-    if (isBonusOnly) {
-      // Bonus game requires Bonus Credits
-      if ((user.bonusCredits || 0) < gameCost) {
-        return sendJSON(res, 402, {
-          error: `Insufficient Bonus Credits! This exclusive bonus game requires ${gameCost} Bonus Credits. Top-up a package to get bonus credits!`,
-          required: gameCost,
-          currentBonus: user.bonusCredits || 0
-        });
-      }
-      user.bonusCredits -= gameCost;
-    } else {
-      // Regular Cash game (can use cash or bonus if available)
-      if ((user.cashCredits || 0) >= gameCost) {
-        user.cashCredits -= gameCost;
-      } else if ((user.bonusCredits || 0) >= gameCost) {
-        user.bonusCredits -= gameCost;
-      } else {
-        return sendJSON(res, 402, {
-          error: `Card balance low! ${gameName} requires ${gameCost} credits. Please recharge your card via JazzCash or Bank transfer.`,
-          required: gameCost,
-          currentCash: user.cashCredits || 0,
-          currentBonus: user.bonusCredits || 0
-        });
-      }
+    if (remainingSeconds > 0) {
+      return sendJSON(res, 200, {
+        success: true,
+        trialRemainingSeconds: remainingSeconds,
+        message: `Free Trial Active (${remainingSeconds}s remaining)!`,
+        user
+      });
     }
 
-    user.history.unshift({
-      id: "h_" + Date.now(),
-      type: "GAME_PLAY",
-      desc: `Played ${gameName || gameId} (-${gameCost} credits)`,
-      amount: -gameCost,
-      timestamp: new Date().toISOString()
-    });
-
-    saveDB(db);
-    return sendJSON(res, 200, {
-      success: true,
-      message: `Card tapped! ${gameCost} credits deducted. Have fun in ${gameName}!`,
+    // 3-minute trial expired -> Require Rs. 100 payment popup
+    return sendJSON(res, 402, {
+      error: "Your 3-minute free trial has ended. Please pay Rs. 100 via JazzCash or Bank for Lifetime Access to ALL 17 Games!",
+      requiresPayment: true,
+      pricePKR: 100,
       user
     });
   }
