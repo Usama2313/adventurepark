@@ -1,4 +1,4 @@
-/**
+﻿/**
  * NEED FOR SPEED: NEON DRIFT 🏎️💨
  * Real-World Automotive Street Racing Engine with Modular Highway Streaming,
  * Analog Speedometer, GPS Circuit Radar, Police Interceptors & Spike Hurdles.
@@ -610,3 +610,4 @@ function onWindowResize() {
 }
 
 window.addEventListener('DOMContentLoaded', initEngine);
+

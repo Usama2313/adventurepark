@@ -1,4 +1,4 @@
-/**
+﻿/**
  * PROJECT IGI & ARMY ZOMBIE APOKALYYPSE 3D - TACTICAL COMMANDO EDITION
  * Rifle shooting, zombie headshots, IGI enemy soldiers & 30 stages
  */
@@ -55,6 +55,9 @@ function initGame() {
   if (window.playCartoonThemeSong) {
     window.playCartoonThemeSong('zombie_igi');
   }
+
+  // Apply Stage 1 UI theme
+  if (window.StageUI) window.StageUI.apply(1, 'army-zombies-3d', false);
 
   animate();
 }
@@ -217,6 +220,7 @@ function setupControls() {
 function select30Stage(val) {
   currentStage = parseInt(val);
   document.getElementById('hud-stage-num').innerText = `LEVEL ${currentStage} / 30`;
+  if (window.StageUI && typeof currentStage !== 'undefined') window.StageUI.apply(currentStage, 'army-zombies-3d');
   if (window.gameAIAgent) window.gameAIAgent.onStageChange(`Level ${currentStage}`);
 }
 
@@ -353,3 +357,4 @@ function onWindowResize() {
 }
 
 window.addEventListener('DOMContentLoaded', initGame);
+

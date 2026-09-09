@@ -1,4 +1,4 @@
-/**
+﻿/**
  * SPIDER-MAN: NEW YORK SWING & CRIME DEFENDER 3D 🕷️
  * Full Superhero Experience:
  * - Red Suit (Classic Agility) & Black Suit (Symbiote Rage & Tendril Strike)
@@ -1382,3 +1382,4 @@ function onWindowResize() {
 }
 
 window.addEventListener('DOMContentLoaded', initEngine);
+

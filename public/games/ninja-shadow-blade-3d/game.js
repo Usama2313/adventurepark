@@ -1,4 +1,4 @@
-/**
+﻿/**
  * NINJA SHADOW BLADE 3D - SHINOBI STEALTH EDITION
  * Katana sword slashes, Shuriken star throws, Samurai warlord bosses & 30 stages
  */
@@ -54,6 +54,9 @@ function initGame() {
   if (window.playCartoonThemeSong) {
     window.playCartoonThemeSong('ninja');
   }
+
+  // Apply Stage 1 UI theme
+  if (window.StageUI) window.StageUI.apply(1, 'ninja-shadow-blade-3d', false);
 
   animate();
 }
@@ -217,6 +220,7 @@ function setupControls() {
 function select30Stage(val) {
   currentStage = parseInt(val);
   document.getElementById('hud-stage-num').innerText = `LEVEL ${currentStage} / 30`;
+  if (window.StageUI && typeof currentStage !== 'undefined') window.StageUI.apply(currentStage, 'ninja-shadow-blade-3d');
   if (window.gameAIAgent) window.gameAIAgent.onStageChange(`Level ${currentStage}`);
 }
 
@@ -352,3 +356,4 @@ function onWindowResize() {
 }
 
 window.addEventListener('DOMContentLoaded', initGame);
+

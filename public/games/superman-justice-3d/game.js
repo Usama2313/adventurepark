@@ -1,4 +1,4 @@
-/**
+﻿/**
  * SUPERMAN: PROTECTOR OF METROPOLIS 3D 🦸‍♂️
  * Complete Superhero Simulator:
  * - High-Detail Realistic 3D Superman Model with Billowing Cape & S-Shield
@@ -851,3 +851,4 @@ function onWindowResize() {
 }
 
 window.addEventListener('DOMContentLoaded', initEngine);
+

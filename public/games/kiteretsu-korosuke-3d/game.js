@@ -1,4 +1,4 @@
-/**
+﻿/**
  * KITERETSU & KOROSUKE KARAKURI ROBO 3D - REAL-WORLD EDO TELEMETRY EDITION
  * Smooth 60 FPS physics, modular streaming track, Karakuri Katana slashes & voice speech
  */
@@ -55,6 +55,9 @@ function initGame() {
   if (window.speakCartoonLine) {
     setTimeout(() => window.speakCartoonLine('korosuke', 0), 1000);
   }
+
+  // Apply Stage 1 UI theme
+  if (window.StageUI) window.StageUI.apply(1, 'kiteretsu-korosuke-3d', false);
 
   animate();
 }
@@ -483,3 +486,4 @@ function onWindowResize() {
 }
 
 window.addEventListener('DOMContentLoaded', initGame);
+

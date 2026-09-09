@@ -56,6 +56,9 @@ function initGame() {
     window.playCartoonThemeSong('doraemon');
   }
 
+  // Apply Stage 1 UI theme
+  if (window.StageUI) window.StageUI.apply(1, 'doraemon-sky-ocean-3d', false);
+
   animate();
 }
 
@@ -382,6 +385,9 @@ function loadNextStage() {
   currentStage = Math.min(30, currentStage + 1);
   const sel = document.getElementById('stage-select');
   if (sel) sel.value = String(currentStage);
+  document.getElementById('hud-stage-num').innerText = `LEVEL ${currentStage} / 30`;
+  // Apply unique UI for the new stage
+  if (window.StageUI) window.StageUI.apply(currentStage, 'doraemon-sky-ocean-3d');
   restartDoraemonGame();
 }
 window.loadNextStage = loadNextStage;
@@ -431,6 +437,8 @@ function select30Stage(val) {
   currentStage = parseInt(val);
   document.getElementById('hud-stage-num').innerText = `LEVEL ${currentStage} / 30`;
   if (window.gameAIAgent) window.gameAIAgent.onStageChange(`Level ${currentStage}`);
+  // Apply unique stage UI theme
+  if (window.StageUI) window.StageUI.apply(currentStage, 'doraemon-sky-ocean-3d');
 }
 
 function switchGameStage(stage) {
@@ -562,24 +570,33 @@ function handleGameOver() {
   const ticketsWon = Math.max(25, dorayakiCollected * 4 + Math.floor(score / 60));
   if (window.SmartCardBridge) SmartCardBridge.claimPayout('Doraemon 4D Quest', score, ticketsWon);
 
+  // Get next stage label for the modal
+  const nextStage = Math.min(30, currentStage + 1);
+  const stageLabel = window.StageUI ? window.StageUI.getLabel('doraemon-sky-ocean-3d', currentStage) : `Stage ${currentStage}`;
+  const nextLabel  = window.StageUI ? window.StageUI.getLabel('doraemon-sky-ocean-3d', nextStage)  : `Stage ${nextStage}`;
+  const theme      = window.StageUI ? window.StageUI.getTheme(currentStage) : { accent: '#00f0ff', secondary: '#38bdf8' };
+
   const modal = document.createElement('div');
   modal.className = 'game-modal-overlay';
   modal.innerHTML = `
-    <div class="game-modal-card">
+    <div class="game-modal-card" style="border: 2px solid ${theme.accent}; box-shadow: 0 0 40px rgba(0,0,0,0.8), 0 0 20px ${theme.accent}44;">
       <div class="game-modal-icon">🐱 🚪 🥞 🏆</div>
-      <h2 class="game-modal-title">STAGE ${currentStage} CLEAR!</h2>
+      <div style="font-size:0.85rem; color:${theme.accent}; font-family:'Orbitron',sans-serif; letter-spacing:0.08em; margin-bottom:4px;">${stageLabel}</div>
+      <h2 class="game-modal-title" style="color:${theme.accent};">STAGE ${currentStage} CLEAR!</h2>
       <p style="color: #94a3b8; margin-top: 6px;">Dorayaki Pancakes: ${dorayakiCollected}</p>
-      <div class="payout-box">
-        <div style="color: #fff; font-size: 1.1rem;">COSMIC SCORE: <strong style="color: var(--neon-gold);">${score}</strong></div>
-        <div class="payout-tickets">+${ticketsWon} ARCADE TICKETS WON!</div>
+      <div class="payout-box" style="border-color:${theme.accent};">
+        <div style="color: #fff; font-size: 1.1rem;">COSMIC SCORE: <strong style="color: ${theme.secondary};">${score}</strong></div>
+        <div class="payout-tickets" style="color:${theme.accent};">+${ticketsWon} ARCADE TICKETS WON!</div>
       </div>
       <div class="modal-actions">
-        <button class="btn-action-primary" onclick="restartGame()">🔄 NEXT STAGE</button>
+        <button class="btn-action-primary" style="background:${theme.accent}; color:#000; border:none; box-shadow:0 0 20px ${theme.accent}88;" onclick="loadNextStage()">▶ NEXT STAGE: ${nextLabel}</button>
+        <button class="btn-action-secondary" onclick="restartDoraemonGame()">🔄 REPLAY STAGE ${currentStage}</button>
         <button class="btn-action-secondary" onclick="exitToHub()">🏰 RETURN TO PARK</button>
       </div>
     </div>
   `;
   document.getElementById('game-container').appendChild(modal);
+  isGameOver = false;
 }
 
 function restartGame() {

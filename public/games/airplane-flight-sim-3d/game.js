@@ -1,4 +1,4 @@
-/**
+﻿/**
  * GLOBAL AIRPLANE FLIGHT SIMULATOR ✈️
  * Commercial Jetliner Glass Cockpit Avionics, ATC Radar Corridors,
  * Precision Runway Streaming, Crosswind Turbulence & ILS Glideslope.
@@ -622,3 +622,4 @@ function restartFlightGame() {
 window.restartFlightGame = restartFlightGame;
 
 window.addEventListener('DOMContentLoaded', initEngine);
+

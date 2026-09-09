@@ -1,4 +1,4 @@
-/**
+﻿/**
  * BARBIE, BRATZ & PRINCESS: RUNWAY & SPY ADVENTURE 3D 💖
  * Complete Multi-Franchise Experience:
  * - Real-world Beverly Hills / Rodeo Drive boulevard with palm trees & catwalk spotlights
@@ -523,3 +523,4 @@ function restartBarbieGame() {
 window.restartBarbieGame = restartBarbieGame;
 
 window.addEventListener('DOMContentLoaded', initEngine);
+

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * SUPER SAIYAN KI FIGHTER ⚡
  * Real-World Scouter Combat Telemetry, Kamehameha Beams,
  * Planet Namek Modular Streaming, Lord Frieza Boss Attacks & Instant Transmission.
@@ -519,3 +519,4 @@ function onWindowResize() {
 }
 
 window.addEventListener('DOMContentLoaded', initEngine);
+

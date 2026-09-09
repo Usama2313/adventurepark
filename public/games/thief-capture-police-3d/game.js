@@ -1,4 +1,4 @@
-/**
+﻿/**
  * THIEF CAPTURE: DISTRICT PATROL 👮‍♂️🚓
  * Real-World Police Tactical MDT Pursuit with Highway Interceptors,
  * Tactical GPS Radar, Spike Strips, Roadblock Cruiser Barricades & Siren Audio.
@@ -443,3 +443,4 @@ function onWindowResize() {
 }
 
 window.addEventListener('DOMContentLoaded', initEngine);
+

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * SONIC SEGA DASH: GENERATIONS 🦔⚡
  * Real-World Supersonic 3D Running Engine with Green Hill Zone Modular Streaming,
  * Loop-de-Loop Speedometers, Badnik Motobugs, Spin Dash Revs & Chaos Emeralds.
@@ -617,3 +617,4 @@ function onWindowResize() {
 }
 
 window.addEventListener('DOMContentLoaded', initEngine);
+

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ROBO BOMBERMAN: ALIEN BLAST & CUTE ANIMAL RESCUE 3D - REAL-WORLD ORDNANCE EDITION
  * Smooth 60 FPS physics, tactical sonar blips, blast temperature gauge & voice speech
  */
@@ -60,6 +60,9 @@ function initGame() {
   if (window.speakCartoonLine) {
     setTimeout(() => window.speakCartoonLine('bomberman', 0), 1000);
   }
+
+  // Apply Stage 1 UI theme
+  if (window.StageUI) window.StageUI.apply(1, 'bomberman-rescue-3d', false);
 
   animate();
 }
@@ -571,3 +574,4 @@ function onWindowResize() {
 }
 
 window.addEventListener('DOMContentLoaded', initGame);
+

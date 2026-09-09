@@ -1,4 +1,4 @@
-/**
+﻿/**
  * SWEET BLAST: JELLY PARADISE 🍬🍰
  * Real-World 3D Confectionery Match-3 Engine with Sugar Rush Telemetry,
  * Candy Radar, Striped Jelly Blasts, Rainbow Donuts & Chocolate Hurdles.
@@ -351,3 +351,4 @@ function onWindowResize() {
 }
 
 window.addEventListener('DOMContentLoaded', initEngine);
+

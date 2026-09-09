@@ -1,4 +1,4 @@
-/**
+﻿/**
  * BATMAN: ARKHAM SHADOWS 3D 🦇
  * Complete Detective & Vigilante Simulator:
  * - High-Detail Realistic 3D Batman with Cowl, Bat-Ears, Utility Belt & Dual-Wing Bat-Cape
@@ -788,3 +788,4 @@ function onWindowResize() {
 }
 
 window.addEventListener('DOMContentLoaded', initEngine);
+

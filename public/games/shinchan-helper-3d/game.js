@@ -1,4 +1,4 @@
-/**
+﻿/**
  * SHIN-CHAN: THE GREAT KASUKABE RUN! 🏃‍♂️💨
  * Next-Gen 3D Platform Runner with Real-World Telemetry, Kasukabe GPS Radar,
  * Moving Modular City Chunks, Comprehensive Villains & Hurdles Roster.
@@ -117,6 +117,9 @@ function initEngine() {
   }
 
   clock = new THREE.Clock();
+  // Apply Stage 1 UI theme
+  if (window.StageUI) window.StageUI.apply(1, 'shinchan-helper-3d', false);
+
   animate();
 }
 
@@ -1816,3 +1819,4 @@ function onResize() {
 
 /* ─── BOOTSTRAP ─── */
 window.addEventListener('DOMContentLoaded', initEngine);
+

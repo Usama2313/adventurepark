@@ -1,4 +1,4 @@
-/**
+﻿/**
  * HELICOPTER: EMERGENCY RESPONSE 3D 🚁
  * Real-World Search & Rescue Flight Simulation with Barometric Altimeters,
  * Beacon Sonar, Alpine Canyon Streaming, Winch Cable Extractions & Storm Hazards.
@@ -517,3 +517,4 @@ function onWindowResize() {
 }
 
 window.addEventListener('DOMContentLoaded', initEngine);
+

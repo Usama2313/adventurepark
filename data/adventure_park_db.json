@@ -9,11 +9,235 @@
       "pin": "1234",
       "cashCredits": 165,
       "bonusCredits": 70,
-      "tickets": 1042,
+      "tickets": 1842,
       "vipTier": "VIP Gold",
       "hasFreePass": true,
       "createdAt": "2026-09-03T23:18:46.869Z",
       "history": [
+        {
+          "id": "h_1788949584373",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:26:24.373Z"
+        },
+        {
+          "id": "h_1788949569971",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:26:09.971Z"
+        },
+        {
+          "id": "h_1788949503220",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:25:03.220Z"
+        },
+        {
+          "id": "h_1788949501913",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:25:01.913Z"
+        },
+        {
+          "id": "h_1788949482143",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:24:42.143Z"
+        },
+        {
+          "id": "h_1788949440865",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:24:00.865Z"
+        },
+        {
+          "id": "h_1788949399721",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:23:19.721Z"
+        },
+        {
+          "id": "h_1788949388114",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:23:08.114Z"
+        },
+        {
+          "id": "h_1788949359455",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:22:39.455Z"
+        },
+        {
+          "id": "h_1788949345370",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:22:25.370Z"
+        },
+        {
+          "id": "h_1788949317406",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:21:57.406Z"
+        },
+        {
+          "id": "h_1788949280366",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:21:20.366Z"
+        },
+        {
+          "id": "h_1788949237815",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:20:37.815Z"
+        },
+        {
+          "id": "h_1788949225221",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:20:25.221Z"
+        },
+        {
+          "id": "h_1788949220036",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:20:20.036Z"
+        },
+        {
+          "id": "h_1788949202760",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:20:02.760Z"
+        },
+        {
+          "id": "h_1788949198551",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:19:58.551Z"
+        },
+        {
+          "id": "h_1788949192135",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:19:52.135Z"
+        },
+        {
+          "id": "h_1788949152488",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:19:12.488Z"
+        },
+        {
+          "id": "h_1788949126774",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:18:46.774Z"
+        },
+        {
+          "id": "h_1788949091216",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:18:11.216Z"
+        },
+        {
+          "id": "h_1788949030329",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:17:10.329Z"
+        },
+        {
+          "id": "h_1788948996150",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:16:36.150Z"
+        },
+        {
+          "id": "h_1788948921889",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:15:21.889Z"
+        },
+        {
+          "id": "h_1788948888073",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:14:48.073Z"
+        },
+        {
+          "id": "h_1788948862417",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:14:22.417Z"
+        },
+        {
+          "id": "h_1788948854421",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:14:14.421Z"
+        },
+        {
+          "id": "h_1788948810240",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:13:30.240Z"
+        },
+        {
+          "id": "h_1788948798012",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:13:18.012Z"
+        },
+        {
+          "id": "h_1788948767399",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:12:47.399Z"
+        },
+        {
+          "id": "h_1788948743795",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:12:23.795Z"
+        },
+        {
+          "id": "h_1788948692955",
+          "type": "TICKETS_WON",
+          "desc": "Won 25 Tickets in Doraemon 4D Quest (Score: 0)",
+          "amount": 25,
+          "timestamp": "2026-09-09T10:11:32.956Z"
+        },
         {
           "id": "h_1788879780243",
           "type": "TICKETS_WON",
