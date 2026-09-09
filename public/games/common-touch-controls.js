@@ -83,17 +83,27 @@
     }
 
     cleanIntrusiveElements() {
+      // Inject global stylesheet to permanently ensure clutter is hidden and player is unobstructed
+      if (!document.getElementById('universal-no-clutter-style')) {
+        const style = document.createElement('style');
+        style.id = 'universal-no-clutter-style';
+        style.textContent = `
+          #ability-bar, .action-ability-bar, #mobile-pad, #touch-controls {
+            display: none !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+          }
+        `;
+        document.head.appendChild(style);
+      }
+
       // Hide or reposition center ability-bars so they never block the player
       const hideCenteredClutter = () => {
-        const centerBars = document.querySelectorAll('#ability-bar, .action-ability-bar');
+        const centerBars = document.querySelectorAll('#ability-bar, .action-ability-bar, #mobile-pad, #touch-controls');
         centerBars.forEach(bar => {
           bar.style.setProperty('display', 'none', 'important');
-        });
-
-        // Hide legacy oversized touch pads if present
-        const legacyPads = document.querySelectorAll('#mobile-pad, #touch-controls');
-        legacyPads.forEach(pad => {
-          pad.style.setProperty('display', 'none', 'important');
+          bar.style.setProperty('visibility', 'hidden', 'important');
+          bar.style.setProperty('pointer-events', 'none', 'important');
         });
       };
 
@@ -102,6 +112,7 @@
         document.addEventListener('DOMContentLoaded', hideCenteredClutter);
       }
       window.addEventListener('load', hideCenteredClutter);
+      setInterval(hideCenteredClutter, 1000);
     }
 
     handleTouchStart(e) {
@@ -298,7 +309,9 @@
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
             <div style="display: flex; align-items: center; gap: 8px;">
               <span style="font-size: 1.6rem;">🎮</span>
-              <h2 style="font-family: 'Orbitron', sans-serif; font-size: 1.25rem; color: #00f0ff; margin: 0; letter-spacing: 1px;">GAME CONTROLS GUIDE</h2>
+              <h2 style="font-family: 'Orbitron', sans-serif; font-size: 1.15rem; color: #00f0ff; margin: 0; letter-spacing: 1px;">
+                ${(document.title || 'GAME').replace(/[^\w\s:!'-]/g, '').trim()} CONTROLS
+              </h2>
             </div>
             <button onclick="window.arcadeTouchController.toggleControlsModal()" style="background: transparent; border: none; color: #94a3b8; font-size: 1.4rem; cursor: pointer; padding: 4px 8px;">✕</button>
           </div>
