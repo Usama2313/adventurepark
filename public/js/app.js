@@ -1503,6 +1503,11 @@ class AdventureParkApp {
               <input type="text" id="auth-phone" required placeholder="e.g. +923211808390" value="${this.currentUser ? this.currentUser.phone : '+923211808390'}" style="width: 100%; background: #070a18; border: 1px solid var(--border-glass); border-radius: 8px; padding: 10px; color: #fff;">
             </div>
 
+            <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
+              <input type="checkbox" id="auth-remember" checked>
+              <label for="auth-remember" style="font-size: 0.8rem; color: var(--text-secondary);">Remember me on this device</label>
+            </div>
+
             <button type="submit" class="btn-neon" style="padding: 14px; font-size: 1rem; margin-top: 6px;">
               ✨ ENTER PARK & ACTIVATE 100 FREE CREDITS
             </button>
@@ -1654,6 +1659,15 @@ class AdventureParkApp {
       window.open(game.url, '_blank');
       return;
     }
+    
+    // Check first launch per game
+    const helpKey = 'helpSeen_' + game.id;
+    if (!localStorage.getItem(helpKey)) {
+      this.openHelpModal(game);
+      localStorage.setItem(helpKey, 'true');
+      return;
+    }
+
     this.activeGame = game;
     const modalRoot = document.getElementById('modal-root');
     if (!modalRoot) return;
@@ -1722,6 +1736,37 @@ class AdventureParkApp {
   }
 
   closeModal() {
+    const modalRoot = document.getElementById('modal-root');
+    if (modalRoot) modalRoot.innerHTML = '';
+  }
+
+  // Open Help Modal for a specific game
+  openHelpModal(game) {
+    const modalRoot = document.getElementById('modal-root');
+    if (!modalRoot) return;
+    modalRoot.innerHTML = `
+      <div class="modal-backdrop" id="help-modal">
+        <div class="modal-container" style="padding: 28px; max-width: 500px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <div>
+              <span class="neon-badge badge-cyan">🎮 CONTROLS GUIDE</span>
+              <h3 style="font-family: var(--font-display); font-size: 1.3rem; color: #ffffff; margin-top: 4px;">
+                ${game.title} Controls
+              </h3>
+            </div>
+            <button class="btn-glass" onclick="window.parkApp.closeHelpModal()" style="font-size: 1.2rem; padding: 6px 12px;">✕</button>
+          </div>
+          <p style="color: var(--text-secondary); font-size: 0.9rem;">
+            Use Arrow Keys / Spacebar on desktop or touch gestures on mobile to play. Tap the screen to jump, swipe to dodge, and hold for power‑up.
+          </p>
+          <button class="btn-neon" onclick="window.parkApp.closeHelpModal(); window.parkApp.launchGameModal(${JSON.stringify({title: '${game.title}', icon: '${game.icon}', id: '${game.id}', initFn: '${game.initFn}'}).replace(/\\"/g, '\\u0022')});" style="margin-top: 12px;">▶️ PLAY NOW</button>
+        </div>
+      </div>
+    `;
+  }
+
+  // Close Help Modal
+  closeHelpModal() {
     const modalRoot = document.getElementById('modal-root');
     if (modalRoot) modalRoot.innerHTML = '';
   }
