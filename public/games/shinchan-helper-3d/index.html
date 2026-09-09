@@ -513,10 +513,11 @@
         <button class="btn-real btn-real-primary" onclick="startGame()">🏃 START RUNNING NOW!</button>
         <button class="btn-real btn-real-secondary" onclick="openModal('roster')">👨‍👩‍👦 FAMILY ROSTER & ABILITIES</button>
         <button class="btn-real btn-real-secondary" onclick="openModal('prizes')">🏆 PRIZE VAULT & REWARDS</button>
+        <button class="btn-real btn-real-secondary" onclick="document.getElementById('hidden-controls').classList.toggle('active')">⌨️ SHOW CONTROLS</button>
         <button class="btn-real btn-real-danger" onclick="window.location.href='../../index.html'">✕ EXIT TO ADVENTURE PARK</button>
       </div>
 
-      <div class="control-deck">
+      <div class="control-deck" id="hidden-controls" style="display:none;">
         <div><span class="key-badge">⬅️ ➡️</span> or <span class="key-badge">A / D</span> Change Lane</div>
         <div><span class="key-badge">⬆️ / W</span> Jump Hurdle</div>
         <div><span class="key-badge">⬇️ / S</span> Slide Under</div>
